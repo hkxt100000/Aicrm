@@ -1,0 +1,132 @@
+/* ========== 操作按钮样式 ========== */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+button.btn-action {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px !important;
+    border: 1px solid !important;
+    border-radius: 6px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    line-height: 1.5;
+}
+
+button.btn-action i {
+    font-size: 12px;
+}
+
+button.btn-view {
+    background: rgba(0, 184, 217, 0.08) !important;
+    color: #00B8D9 !important;
+    border-color: rgba(0, 184, 217, 0.24) !important;
+}
+
+button.btn-view:hover {
+    background: rgba(0, 184, 217, 0.16) !important;
+    border-color: #00B8D9 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 184, 217, 0.24) !important;
+}
+
+button.btn-edit {
+    background: rgba(255, 171, 0, 0.08) !important;
+    color: #FFAB00 !important;
+    border-color: rgba(255, 171, 0, 0.24) !important;
+}
+
+button.btn-edit:hover {
+    background: rgba(255, 171, 0, 0.16) !important;
+    border-color: #FFAB00 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(255, 171, 0, 0.24) !important;
+}
+
+button.btn-action:active {
+    transform: translateY(0) !important;
+}
+
+/* ========== 同步按钮样式 ========== */
+.sync-buttons {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+button.btn-sync {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px !important;
+    border: 1px solid !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    line-height: 1.5;
+}
+
+button.btn-sync i {
+    font-size: 14px;
+}
+
+/* 增量同步按钮 - 蓝色 */
+button.btn-sync-incremental {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    border-color: transparent !important;
+}
+
+button.btn-sync-incremental:hover {
+    background: linear-gradient(135deg, #5568d3 0%, #63408a 100%) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4) !important;
+}
+
+/* 全量同步按钮 - 橙色 */
+button.btn-sync-full {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
+    color: white !important;
+    border-color: transparent !important;
+}
+
+button.btn-sync-full:hover {
+    background: linear-gradient(135deg, #e082ea 0%, #e4465b 100%) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 87, 108, 0.4) !important;
+}
+
+button.btn-sync:active {
+    transform: translateY(0) !important;
+}
+
+button.btn-sync:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* 同步按钮图标旋转动画 */
+button.btn-sync.syncing i {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

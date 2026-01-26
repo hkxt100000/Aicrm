@@ -1,0 +1,70 @@
+================================================================================
+数据库查询结果
+================================================================================
+
+【1】customer_tags 表 - 标签库：
+  ID=etq58uBwAAxePuJwHTWcEoSoQ-Y-TyNw, 标签名=18岁以下, 标签组=用户专属-年龄
+  ID=etq58uBwAAkfcapPKLphx2migpCCpMDA, 标签名=18-30岁, 标签组=用户专属-年龄
+  ID=etq58uBwAAGcMXToXRTBlKOsfb9Rvz4w, 标签名=30-49岁, 标签组=用户专属-年龄
+  ID=etq58uBwAAO5XdTGRCkaeqUL4cotCubQ, 标签名=49-60岁, 标签组=用户专属-年龄
+  ID=etq58uBwAAAJefIfbyO5AB9Bar34jHTw, 标签名=60岁以上, 标签组=用户专属-年龄
+  ID=etq58uBwAAHeKdSl1soIQ_v1ALyZxC9Q, 标签名=小红书, 标签组=用户来源
+  ID=etq58uBwAAAr3N0bvIA9OBirS3ah3f4g, 标签名=B站, 标签组=用户来源
+  ID=etq58uBwAAicFVHXSdlvTmjqgA1ZHcHg, 标签名=抖音, 标签组=用户来源
+  ID=etq58uBwAAoy15roAPi_M4R8vynP4HKQ, 标签名=私域, 标签组=用户来源
+  ID=etq58uBwAAh3VdnKA_GHkfKgQ-Km46iw, 标签名=转介绍, 标签组=用户来源
+  ID=etq58uBwAA8TxfpBncY5faAQdMBGpfGg, 标签名=已参加（赏金活动）, 标签组=用户专属-赏金活动
+  ID=etq58uBwAAwgih_fTgl3JEYNtfwhKmEg, 标签名=未参加（赏金活动）, 标签组=用户专属-赏金活动
+  ID=etq58uBwAAcYYQQaN3KSgI4LaN8D50-A, 标签名=已下单（小）, 标签组=小红书 专属跟单专用
+  ID=etq58uBwAAoLfLj8PKwd_phvll0f_Kug, 标签名=待跟进（小）, 标签组=小红书 专属跟单专用
+  ID=etq58uBwAAEBGlotm02U8m5NqkxMlwUQ, 标签名=2023年, 标签组=下单年份
+  ID=etq58uBwAA7WnSQSx6FNSiOxQsdwrD0Q, 标签名=2024年, 标签组=下单年份
+  ID=etq58uBwAAO0s9VWU8papCa5dKuD4IBg, 标签名=2025年, 标签组=下单年份
+  ID=etq58uBwAAW8UtR2K58EEWg1AdqKfxaA, 标签名=2026年, 标签组=下单年份
+  ID=etq58uBwAAKnexBFliX-nqZj91OS1Rwg, 标签名=2027年, 标签组=下单年份
+  ID=etq58uBwAAXk7WQ4abPhJE3UXpPCgIZQ, 标签名=3（订单数）, 标签组=用户号卡-订单数
+
+【2】customers 表 - 客户标签示例：
+  客户: 杜麒麟
+  标签: []
+
+  客户: 左玉婷
+  标签: [{"tag_id": "etq58uBwAArITOtV_XHA8ziFmEZhs07g", "tag_name": "原有老代理商", "group_name": "历史-代理"}]
+
+  客户: 驿氪助手
+  标签: []
+
+  客户: 政企业务渠道对接
+  标签: [{"tag_id": "etq58uBwAArITOtV_XHA8ziFmEZhs07g", "tag_name": "原有老代理商", "group_name": "历史-代理"}]
+
+  客户: Good man
+  标签: [{"tag_id": "etq58uBwAArITOtV_XHA8ziFmEZhs07g", "tag_name": "原有老代理商", "group_name": "历史-代理"}]
+
+
+【3】add_way 字段分布：
+  add_way=0: 59人
+  add_way=1: 1149人
+  add_way=2: 3893人
+  add_way=3: 681人
+  add_way=4: 623人
+  add_way=6: 2人
+  add_way=8: 7人
+  add_way=16: 3164人
+  add_way=22: 4人
+  add_way=24: 730人
+  add_way=201: 5人
+  add_way=202: 9284人
+
+【4】gender 字段分布：
+  gender=0: 2199人
+  gender=1: 12135人
+  gender=2: 5267人
+
+【5】统计信息：
+  客户总数: 19601
+  标签总数: 410
+  有标签的客户: 19601
+
+================================================================================
+查询完成！
+================================================================================

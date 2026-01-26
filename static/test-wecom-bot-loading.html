@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>wecom-bot.js 加载诊断</title>
+</head>
+<body>
+    <h1>wecom-bot.js 加载诊断</h1>
+    
+    <div id="test-results"></div>
+    
+    <button onclick="testFunction()">测试 showAddWebhookDialog</button>
+    
+    <script>
+        const results = document.getElementById('test-results');
+        
+        function log(message) {
+            const p = document.createElement('p');
+            p.textContent = message;
+            results.appendChild(p);
+            console.log(message);
+        }
+        
+        log('1. 开始加载 wecom-bot.js 之前...');
+        log('   typeof showAddWebhookDialog: ' + typeof showAddWebhookDialog);
+    </script>
+    
+    <!-- 加载 wecom-bot.js -->
+    <script src="/static/wecom-bot.js?v=20260126026"></script>
+    
+    <script>
+        log('2. wecom-bot.js 加载完成后...');
+        log('   typeof showAddWebhookDialog: ' + typeof showAddWebhookDialog);
+        log('   typeof window.showAddWebhookDialog: ' + typeof window.showAddWebhookDialog);
+        
+        // 列出所有 window 上以 show 开头的函数
+        const showFunctions = Object.keys(window).filter(k => k.startsWith('show'));
+        log('3. window 上所有 show* 函数: ' + showFunctions.join(', '));
+        
+        // 测试函数
+        function testFunction() {
+            try {
+                if (typeof showAddWebhookDialog === 'function') {
+                    log('✅ showAddWebhookDialog 存在且是函数');
+                    showAddWebhookDialog('supplier');
+                } else {
+                    log('❌ showAddWebhookDialog 不存在或不是函数');
+                }
+            } catch (e) {
+                log('❌ 调用 showAddWebhookDialog 出错: ' + e.message);
+            }
+        }
+    </script>
+</body>
+</html>

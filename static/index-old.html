@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>企业微信 CRM - 客户管理</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部导航 -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-users-cog"></i>
+                <h1>企业微信 CRM</h1>
+            </div>
+            <nav class="nav">
+                <a href="#" class="nav-item" data-module="dashboard">
+                    <i class="fas fa-th-large"></i> 工作台
+                </a>
+                <a href="#" class="nav-item" data-module="contacts">
+                    <i class="fas fa-address-book"></i> 通讯录
+                </a>
+                <a href="#" class="nav-item active" data-module="customers">
+                    <i class="fas fa-users"></i> 客户
+                </a>
+                <a href="#" class="nav-item" data-module="operations">
+                    <i class="fas fa-chart-line"></i> 运营
+                </a>
+                <a href="#" class="nav-item" data-module="data">
+                    <i class="fas fa-database"></i> 数据
+                </a>
+                <a href="#" class="nav-item" data-module="spreadsheet">
+                    <i class="fas fa-table"></i> 智能表格
+                </a>
+            </nav>
+            <div class="header-actions">
+                <button class="btn-sync" onclick="syncData()">
+                    <i class="fas fa-sync-alt"></i> 同步数据
+                </button>
+                <button class="btn-config" onclick="showConfig()">
+                    <i class="fas fa-cog"></i> 配置
+                </button>
+            </div>
+        </header>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <!-- 客户模块 -->
+            <section id="module-customers" class="module active">
+                <div class="page-header">
+                    <h2><i class="fas fa-users"></i> 客户列表</h2>
+                    <div class="page-actions">
+                        <button class="btn-primary" onclick="showCustomerDetail('new')">
+                            <i class="fas fa-plus"></i> 添加客户
+                        </button>
+                        <button class="btn-secondary" onclick="exportCustomers()">
+                            <i class="fas fa-download"></i> 导出
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 筛选区域 -->
+                <div class="filter-section">
+                    <div class="filter-row">
+                        <div class="filter-item">
+                            <label>客户自选</label>
+                            <input type="text" id="filter-search" placeholder="搜索客户姓名/备注" onchange="applyFilters()">
+                        </div>
+                        <div class="filter-item">
+                            <label>添加员工</label>
+                            <select id="filter-employee" onchange="applyFilters()">
+                                <option value="">全部员工</option>
+                            </select>
+                        </div>
+                        <div class="filter-item">
+                            <label>所属群组</label>
+                            <select id="filter-group" onchange="applyFilters()">
+                                <option value="">选择所属群组</option>
+                            </select>
+                        </div>
+                        <div class="filter-item">
+                            <label>企业标签</label>
+                            <select id="filter-tag" onchange="applyFilters()">
+                                <option value="">选择企业标签</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-item">
+                            <label>添加时间</label>
+                            <input type="date" id="filter-date-start" onchange="applyFilters()">
+                            <span>至</span>
+                            <input type="date" id="filter-date-end" onchange="applyFilters()">
+                        </div>
+                        <div class="filter-item">
+                            <label>客户阶段</label>
+                            <select id="filter-stage" onchange="applyFilters()">
+                                <option value="">选择客户阶段</option>
+                                <option value="潜在客户">潜在客户</option>
+                                <option value="意向客户">意向客户</option>
+                                <option value="成交客户">成交客户</option>
+                                <option value="老客户">老客户</option>
+                            </select>
+                        </div>
+                        <div class="filter-item">
+                            <label>跟进状态</label>
+                            <select id="filter-follow-status" onchange="applyFilters()">
+                                <option value="">选择跟进状态</option>
+                                <option value="未跟进">未跟进</option>
+                                <option value="跟进中">跟进中</option>
+                                <option value="已成交">已成交</option>
+                                <option value="已流失">已流失</option>
+                            </select>
+                        </div>
+                        <div class="filter-item">
+                            <label>满意度评</label>
+                            <select id="filter-satisfaction" onchange="applyFilters()">
+                                <option value="">选择满意度评价</option>
+                                <option value="满意">满意</option>
+                                <option value="一般">一般</option>
+                                <option value="不满意">不满意</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filter-actions">
+                        <button class="btn-filter" onclick="applyFilters()">
+                            <i class="fas fa-search"></i> 筛选
+                        </button>
+                        <button class="btn-reset" onclick="resetFilters()">
+                            <i class="fas fa-undo"></i> 重置
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 批量操作区域 -->
+                <div class="batch-actions">
+                    <label>
+                        <input type="checkbox" id="select-all" onchange="toggleSelectAll()">
+                        全选
+                    </label>
+                    <span class="selected-count">已选择 <strong id="selected-count">0</strong> 个客户</span>
+                    <button class="btn-batch" onclick="batchUpdateOwner()">
+                        <i class="fas fa-user-edit"></i> 修改跟进人
+                    </button>
+                    <button class="btn-batch" onclick="batchUpdateTags()">
+                        <i class="fas fa-tags"></i> 批量打标签
+                    </button>
+                    <button class="btn-batch" onclick="batchSendMessage()">
+                        <i class="fas fa-paper-plane"></i> 群发等待
+                    </button>
+                </div>
+
+                <!-- 客户列表表格 -->
+                <div class="table-container">
+                    <table class="customer-table">
+                        <thead>
+                            <tr>
+                                <th width="50"><input type="checkbox" id="thead-select-all" onchange="toggleSelectAll()"></th>
+                                <th width="300">客户信息</th>
+                                <th width="120">所属员工</th>
+                                <th width="80">性别</th>
+                                <th width="200">客户标签</th>
+                                <th width="150">添加/退群会员</th>
+                                <th width="150">添加时间</th>
+                                <th width="120">跟进状态</th>
+                                <th width="150">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customer-table-body">
+                            <!-- 数据由 JS 填充 -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 分页 -->
+                <div class="pagination">
+                    <button class="btn-page" onclick="changePage(-1)">
+                        <i class="fas fa-chevron-left"></i> 上一页
+                    </button>
+                    <span class="page-info">
+                        第 <strong id="current-page">1</strong> 页 / 共 <strong id="total-pages">1</strong> 页
+                        （共 <strong id="total-count">0</strong> 条）
+                    </span>
+                    <button class="btn-page" onclick="changePage(1)">
+                        下一页 <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- 通讯录模块 -->
+            <section id="module-contacts" class="module">
+                <div class="page-header">
+                    <h2><i class="fas fa-address-book"></i> 通讯录</h2>
+                    <div class="page-actions">
+                        <button class="btn-primary" onclick="syncEmployees()">
+                            <i class="fas fa-sync-alt"></i> 同步通讯录
+                        </button>
+                        <button class="btn-secondary" onclick="exportEmployees()">
+                            <i class="fas fa-download"></i> 导出
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 搜索区域 -->
+                <div class="search-section">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="employee-search" placeholder="搜索员工姓名、手机号、邮箱..." onkeyup="searchEmployees()">
+                    </div>
+                    <div class="filter-group">
+                        <select id="employee-dept-filter" onchange="filterEmployees()">
+                            <option value="">全部部门</option>
+                        </select>
+                        <select id="employee-status-filter" onchange="filterEmployees()">
+                            <option value="">全部状态</option>
+                            <option value="1">已激活</option>
+                            <option value="2">已禁用</option>
+                            <option value="4">未激活</option>
+                            <option value="5">已退出</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 员工列表 -->
+                <div class="contacts-grid">
+                    <div id="contacts-list" class="contacts-container">
+                        <!-- 由 JS 动态生成 -->
+                    </div>
+                </div>
+
+                <!-- 分页 -->
+                <div class="pagination">
+                    <button class="btn-page" onclick="changeEmployeePage(-1)">
+                        <i class="fas fa-chevron-left"></i> 上一页
+                    </button>
+                    <span class="page-info">
+                        第 <strong id="employee-current-page">1</strong> 页 / 共 <strong id="employee-total-pages">1</strong> 页
+                        （共 <strong id="employee-total-count">0</strong> 人）
+                    </span>
+                    <button class="btn-page" onclick="changeEmployeePage(1)">
+                        下一页 <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- 其他模块（暂时隐藏） -->
+            <section id="module-dashboard" class="module">
+                <div class="coming-soon">
+                    <i class="fas fa-th-large"></i>
+                    <h2>工作台</h2>
+                    <p>该模块暂未开放</p>
+                </div>
+            </section>
+
+            <section id="module-operations" class="module">
+                <div class="coming-soon">
+                    <i class="fas fa-chart-line"></i>
+                    <h2>运营</h2>
+                    <p>该模块暂未开放</p>
+                </div>
+            </section>
+
+            <section id="module-data" class="module">
+                <div class="coming-soon">
+                    <i class="fas fa-database"></i>
+                    <h2>数据</h2>
+                    <p>该模块暂未开放</p>
+                </div>
+            </section>
+
+            <!-- 智能表格模块 -->
+            <section id="module-spreadsheet" class="module">
+                <div class="page-header">
+                    <h2><i class="fas fa-table"></i> 智能表格</h2>
+                    <div class="page-actions">
+                        <button class="btn-primary" id="btn-create-table">
+                            <i class="fas fa-plus"></i> 手工创建表格
+                        </button>
+                        <button class="btn-secondary" id="btn-upload-excel">
+                            <i class="fas fa-file-upload"></i> 上传 Excel
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 表格列表 -->
+                <div class="spreadsheet-list" id="spreadsheet-list">
+                    <!-- 动态加载 -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 配置弹窗 -->
+    <div id="config-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-cog"></i> 企业微信配置</h3>
+                <button class="btn-close" onclick="closeConfig()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>企业 ID（CorpID）</label>
+                    <input type="text" id="config-corpid" placeholder="请输入企业 ID">
+                    <small>登录企业微信管理后台 → 我的企业 → 企业信息 → 企业 ID</small>
+                </div>
+                <div class="form-group">
+                    <label>通讯录 Secret（可选）</label>
+                    <input type="text" id="config-contact-secret" placeholder="请输入通讯录应用 Secret">
+                    <small>企业微信管理后台 → 管理工具 → 通讯录同步 → Secret</small>
+                </div>
+                <div class="form-group">
+                    <label>自建应用 Secret（推荐）⭐</label>
+                    <input type="text" id="config-app-secret" placeholder="请输入自建应用 Secret">
+                    <small>应用管理 → 自建应用 → 点击应用 → 查看 Secret（推荐使用此方式）</small>
+                </div>
+                <div class="form-group">
+                    <label>客户联系 Secret（可选）</label>
+                    <input type="text" id="config-customer-secret" placeholder="请输入客户联系应用 Secret">
+                    <small>企业微信管理后台 → 客户联系 → API → Secret</small>
+                </div>
+                <div class="form-group">
+                    <label>应用 AgentId</label>
+                    <input type="text" id="config-agentid" placeholder="请输入自建应用 AgentId">
+                    <small>企业微信管理后台 → 应用管理 → 自建应用 → AgentId</small>
+                </div>
+                <div class="form-group">
+                    <label>API Token</label>
+                    <input type="text" id="config-api-token" placeholder="请输入 API Token">
+                    <small>用于后端 API 认证，默认值：crm-default-token</small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeConfig()">取消</button>
+                <button class="btn-primary" onclick="saveConfig()">保存配置</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 提示弹窗 -->
+    <div id="toast" class="toast"></div>
+
+    <!-- 手工创建表格对话框 -->
+    <div id="create-table-modal" class="modal">
+        <div class="modal-content" style="max-width: 900px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-plus-circle"></i> 手工创建智能表格</h3>
+                <button class="btn-close" onclick="closeCreateTableDialog()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- 基本信息 -->
+                <div class="form-group">
+                    <label>表格名称 <span style="color: red;">*</span></label>
+                    <input type="text" id="table-name" placeholder="请输入表格名称">
+                </div>
+
+                <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>数据类型 <span style="color: red;">*</span></label>
+                        <select id="table-data-type" onchange="onDataTypeChange()">
+                            <option value="order">订单信息</option>
+                            <option value="supplier">代理商信息</option>
+                            <option value="product">产品信息</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>数据范围 <span style="color: red;">*</span></label>
+                        <select id="table-data-scope" onchange="onDataScopeChange()">
+                            <option value="global">全局数据</option>
+                            <option value="supplier">指定供应商</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" id="supplier-select-group" style="display: none;">
+                    <label>选择供应商 <span style="color: red;">*</span></label>
+                    <select id="table-supplier-code">
+                        <!-- 动态加载 -->
+                    </select>
+                </div>
+
+                <div style="margin: 30px 0; padding: 20px; background: #f9fafb; border-radius: 8px; border: 1px solid #e5e7eb;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h4 style="margin: 0;">字段配置 <span id="field-count-badge" style="color: #8b5cf6; font-size: 14px;">(0/150)</span></h4>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn-secondary" onclick="showTemplateSelector()">
+                                <i class="fas fa-file-import"></i> 从模板导入
+                            </button>
+                            <button class="btn-primary" onclick="showAddFieldDialog()">
+                                <i class="fas fa-plus"></i> 添加字段
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="fields-list" style="max-height: 300px; overflow-y: auto;">
+                        <!-- 字段列表 -->
+                        <div style="text-align: center; padding: 40px; color: #9ca3af;">
+                            <i class="fas fa-list" style="font-size: 48px; margin-bottom: 10px;"></i>
+                            <p>还没有字段，请添加或从模板导入</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="display: flex; gap: 10px; justify-content: flex-end;">
+                    <button class="btn-secondary" onclick="closeCreateTableDialog()">取消</button>
+                    <button class="btn-primary" onclick="createTableManual()">
+                        <i class="fas fa-check"></i> 创建表格
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 选择模板对话框 -->
+    <div id="template-selector-modal" class="modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-file-import"></i> 选择字段模板</h3>
+                <button class="btn-close" onclick="closeTemplateSelector()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="template-list">
+                    <!-- 动态加载模板列表 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加字段对话框 -->
+    <div id="add-field-modal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-plus"></i> 添加字段</h3>
+                <button class="btn-close" onclick="closeAddFieldDialog()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>字段显示名称（企业微信）<span style="color: red;">*</span></label>
+                    <input type="text" id="field-wecom-name" placeholder="例如：客户姓名">
+                </div>
+
+                <div class="form-group">
+                    <label>系统字段名（自有系统）<span style="color: red;">*</span></label>
+                    <input type="text" id="field-system-name" placeholder="例如：customer_name">
+                    <small>用于映射自有系统的字段，建议使用英文下划线命名</small>
+                </div>
+
+                <div class="form-group">
+                    <label>字段类型</label>
+                    <select id="field-type">
+                        <option value="text">文本</option>
+                        <option value="number">数字</option>
+                        <option value="datetime">日期时间</option>
+                    </select>
+                </div>
+
+                <div class="modal-footer" style="display: flex; gap: 10px; justify-content: flex-end;">
+                    <button class="btn-secondary" onclick="closeAddFieldDialog()">取消</button>
+                    <button class="btn-primary" onclick="addFieldToList()">
+                        <i class="fas fa-check"></i> 添加
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 上传 Excel 对话框 -->
+    <div id="upload-excel-modal" class="modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-file-upload"></i> 上传 Excel 创建智能表格</h3>
+                <button class="btn-close" onclick="closeUploadExcelDialog()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="upload-area" id="upload-area">
+                    <input type="file" id="excel-file-input" accept=".xlsx,.xls" style="display: none;" onchange="handleFileSelect(event)">
+                    <div class="upload-placeholder" onclick="document.getElementById('excel-file-input').click()">
+                        <i class="fas fa-cloud-upload-alt" style="font-size: 48px; color: #8b5cf6; margin-bottom: 20px;"></i>
+                        <p style="font-size: 16px; margin-bottom: 10px;">点击或拖拽 Excel 文件到此处</p>
+                        <p style="font-size: 14px; color: #666;">支持 .xlsx 和 .xls 格式</p>
+                    </div>
+                </div>
+
+                <!-- Excel 预览区 -->
+                <div id="excel-preview-area" style="display: none; margin-top: 20px;">
+                    <div class="form-group">
+                        <label>表格名称</label>
+                        <input type="text" id="spreadsheet-name" placeholder="请输入表格名称">
+                    </div>
+
+                    <div style="margin: 20px 0;">
+                        <h4 style="margin-bottom: 10px;">数据预览</h4>
+                        <div class="table-preview" id="excel-preview-table" style="max-height: 300px; overflow: auto; border: 1px solid #e5e7eb; border-radius: 8px;">
+                            <!-- 动态加载预览表格 -->
+                        </div>
+                        <p style="margin-top: 10px; font-size: 14px; color: #666;" id="excel-info">
+                            <!-- 文件信息 -->
+                        </p>
+                    </div>
+
+                    <div class="modal-footer" style="display: flex; gap: 10px; justify-content: flex-end;">
+                        <button class="btn" onclick="closeUploadExcelDialog()">取消</button>
+                        <button class="btn btn-primary" onclick="createSpreadsheetFromExcel()">
+                            <i class="fas fa-check"></i> 创建表格
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 表格详情对话框 -->
+    <div id="spreadsheet-detail-modal" class="modal">
+        <div class="modal-content" style="max-width: 900px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-table"></i> <span id="spreadsheet-detail-title">表格详情</span></h3>
+                <button class="btn-close" onclick="closeSpreadsheetDetail()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="spreadsheet-info" id="spreadsheet-info">
+                    <!-- 动态加载 -->
+                </div>
+
+                <div style="margin: 20px 0;">
+                    <h4 style="margin-bottom: 10px;">数据</h4>
+                    <div class="table-preview" id="spreadsheet-data-table" style="max-height: 400px; overflow: auto; border: 1px solid #e5e7eb; border-radius: 8px;">
+                        <!-- 动态加载 -->
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="display: flex; gap: 10px; justify-content: space-between;">
+                    <div>
+                        <button class="btn btn-danger" onclick="deleteSpreadsheet()">
+                            <i class="fas fa-trash"></i> 删除
+                        </button>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn" onclick="syncSpreadsheet()">
+                            <i class="fas fa-sync-alt"></i> 手动同步
+                        </button>
+                        <button class="btn btn-primary" onclick="openInWecom()">
+                            <i class="fas fa-external-link-alt"></i> 在企业微信中打开
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

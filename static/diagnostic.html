@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>诊断页面</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>诊断信息</h1>
+    <div id="info"></div>
+    
+    <script>
+        const info = document.getElementById('info');
+        
+        // 检查CSS是否加载
+        const testDiv = document.createElement('div');
+        testDiv.className = 'card';
+        testDiv.style.cssText = 'width: 200px; height: 100px;';
+        document.body.appendChild(testDiv);
+        
+        const styles = window.getComputedStyle(testDiv);
+        
+        info.innerHTML = `
+            <p>CSS加载状态: ${styles.backgroundColor ? '✅ 已加载' : '❌ 未加载'}</p>
+            <p>Card背景色: ${styles.backgroundColor}</p>
+            <p>Card边框圆角: ${styles.borderRadius}</p>
+            <p>Card阴影: ${styles.boxShadow}</p>
+            <hr>
+            <h2>CSS变量测试</h2>
+            <p>--primary-main: ${styles.getPropertyValue('--primary-main') || '未定义'}</p>
+            <p>--grey-900: ${styles.getPropertyValue('--grey-900') || '未定义'}</p>
+            <hr>
+            <h2>页面信息</h2>
+            <p>当前URL: ${window.location.href}</p>
+            <p>CSS文件数: ${document.styleSheets.length}</p>
+        `;
+        
+        // 列出所有CSS文件
+        Array.from(document.styleSheets).forEach((sheet, i) => {
+            try {
+                info.innerHTML += `<p>CSS ${i+1}: ${sheet.href || '内联样式'}</p>`;
+            } catch(e) {
+                info.innerHTML += `<p>CSS ${i+1}: 无法访问</p>`;
+            }
+        });
+    </script>
+</body>
+</html>

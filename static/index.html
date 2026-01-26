@@ -1,0 +1,3185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天号城CRM - 客户关系管理系统</title>
+    <link rel="stylesheet" href="/static/style.css?v=20260126022">
+    <link rel="stylesheet" href="/static/tag-selection-styles.css?v=20260125006">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+</head>
+<body>
+    <div class="app-container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar" id="sidebar">
+            <!-- Logo区域 -->
+            <div class="sidebar-logo">
+                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #FF6B1A 0%, #E65100 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px;">天</div>
+                <span class="sidebar-logo-text">天号城CRM</span>
+            </div>
+            
+            <!-- 导航菜单 -->
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item" data-module="dashboard">
+                    <i class="fas fa-th-large"></i>
+                    <span>工作台</span>
+                </a>
+                
+                <!-- 客户管理 -->
+                <div class="nav-group">
+                    <a href="#" class="nav-item nav-group-toggle" onclick="toggleNavGroup(event, 'customer-manage')">
+                        <i class="fas fa-users"></i>
+                        <span>客户管理</span>
+                        <i class="fas fa-chevron-down nav-arrow"></i>
+                    </a>
+                    <div class="nav-group-content" id="nav-customer-manage">
+                        <a href="#" class="nav-item nav-sub-item" data-module="customers">
+                            <i class="fas fa-list"></i>
+                            <span>客户列表</span>
+                        </a>
+                        <a href="#" class="nav-item nav-sub-item" data-module="customer-profile">
+                            <i class="fas fa-user-circle"></i>
+                            <span>客户画像</span>
+                        </a>
+                        <a href="#" class="nav-item nav-sub-item" data-module="enterprise-tags">
+                            <i class="fas fa-tag"></i>
+                            <span>企业标签</span>
+                        </a>
+                        <a href="#" class="nav-item nav-sub-item" data-module="enterprise-contacts">
+                            <i class="fas fa-address-book"></i>
+                            <span>企业通讯录</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 客户群管理 -->
+                <div class="nav-group">
+                    <a href="#" class="nav-item nav-group-toggle" onclick="toggleNavGroup(event, 'customer-groups')">
+                        <i class="fas fa-user-friends"></i>
+                        <span>客户群管理</span>
+                        <i class="fas fa-chevron-down nav-arrow"></i>
+                    </a>
+                    <div class="nav-group-content" id="nav-customer-groups">
+                        <a href="#" class="nav-item nav-sub-item" data-module="customer-groups">
+                            <i class="fas fa-list-ul"></i>
+                            <span>客户群列表</span>
+                        </a>
+                        <a href="#" class="nav-item nav-sub-item" data-module="group-tags">
+                            <i class="fas fa-tags"></i>
+                            <span>客户群标签</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 客户运营 -->
+                <div class="nav-group">
+                    <a href="#" class="nav-item nav-group-toggle" onclick="toggleNavGroup(event, 'customer-ops')">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>客户运营</span>
+                        <i class="fas fa-chevron-down nav-arrow"></i>
+                    </a>
+                    <div class="nav-group-content" id="nav-customer-ops">
+                        <a href="#" class="nav-item nav-sub-item" data-module="welcome-msg">
+                            <i class="fas fa-hand-paper"></i>
+                            <span>欢迎语设置</span>
+                        </a>
+                        <a href="#" class="nav-item nav-sub-item" data-module="customer-broadcast">
+                            <i class="fas fa-paper-plane"></i>
+                            <span>客户群发</span>
+                        </a>
+                        <a href="#" class="nav-item nav-sub-item" data-module="moments-publish">
+                            <i class="fas fa-share-alt"></i>
+                            <span>发朋友圈</span>
+                        </a>
+                        <a href="#" class="nav-item nav-sub-item" data-module="moments-record">
+                            <i class="fas fa-history"></i>
+                            <span>朋友圈记录</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 客户群运营 -->
+                <div class="nav-group">
+                    <a href="#" class="nav-item nav-group-toggle" onclick="toggleNavGroup(event, 'group-ops')">
+                        <i class="fas fa-comments"></i>
+                        <span>客户群运营</span>
+                        <i class="fas fa-chevron-down nav-arrow"></i>
+                    </a>
+                    <div class="nav-group-content" id="nav-group-ops">
+                        <a href="#" class="nav-item nav-sub-item" data-module="group-welcome">
+                            <i class="fas fa-door-open"></i>
+                            <span>进群欢迎语</span>
+                        </a>
+                        <a href="#" class="nav-item nav-sub-item" data-module="group-broadcast">
+                            <i class="fas fa-broadcast-tower"></i>
+                            <span>客户群群发</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 企微机器人 -->
+                <div class="nav-group">
+                    <a href="#" class="nav-item nav-group-toggle" onclick="toggleNavGroup(event, 'wecom-bot')">
+                        <i class="fas fa-robot"></i>
+                        <span>企微机器人</span>
+                        <i class="fas fa-chevron-down nav-arrow"></i>
+                    </a>
+                    <div class="nav-group-content" id="nav-wecom-bot">
+                        <a href="#" class="nav-item nav-sub-item" data-module="supplier-notify">
+                            <i class="fas fa-bell"></i>
+                            <span>供应商通知群</span>
+                        </a>
+                        <a href="#" class="nav-item nav-sub-item" data-module="agent-notify">
+                            <i class="fas fa-bullhorn"></i>
+                            <span>代理商通知群</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 天号城数据 -->
+                <div class="nav-group">
+                    <a href="#" class="nav-item nav-group-toggle" onclick="toggleNavGroup(event, 'tianhao-data')">
+                        <i class="fas fa-chart-line"></i>
+                        <span>天号城数据</span>
+                        <i class="fas fa-chevron-down nav-arrow"></i>
+                    </a>
+                    <div class="nav-group-content" id="nav-tianhao-data">
+                        <a href="#" class="nav-item nav-sub-item" data-module="order-data">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>订单数据</span>
+                        </a>
+                        <a href="#" class="nav-item nav-sub-item" data-module="supplier-data">
+                            <i class="fas fa-truck"></i>
+                            <span>供应商数据</span>
+                        </a>
+                        <a href="#" class="nav-item nav-sub-item" data-module="product-data">
+                            <i class="fas fa-box"></i>
+                            <span>产品数据</span>
+                        </a>
+                        <a href="#" class="nav-item nav-sub-item" data-module="agent-data">
+                            <i class="fas fa-users"></i>
+                            <span>代理商数据</span>
+                        </a>
+                        <a href="#" class="nav-item nav-sub-item" data-module="finance-data">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span>财务数据</span>
+                        </a>
+                        <a href="#" class="nav-item nav-sub-item" data-module="business-data">
+                            <i class="fas fa-briefcase"></i>
+                            <span>商务数据</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <a href="#" class="nav-item active" data-module="spreadsheet">
+                    <i class="fas fa-table"></i>
+                    <span>企微智能表</span>
+                </a>
+                <a href="#" class="nav-item" data-module="promoter">
+                    <i class="fas fa-user-plus"></i>
+                    <span>推客管理</span>
+                </a>
+                <a href="#" class="nav-item" data-module="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>系统设置</span>
+                </a>
+            </nav>
+            
+            <!-- 用户信息 -->
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">管</div>
+                    <div class="user-details">
+                        <div class="user-name">管理员</div>
+                        <div class="user-role">系统管理员</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- 主内容区 -->
+        <div class="main-wrapper">
+            <!-- 顶部Header -->
+            <header class="main-header">
+                <div class="header-left">
+                    <button class="btn-icon" id="btn-menu-toggle" style="display: none;">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="breadcrumb">
+                        <a href="#" class="breadcrumb-item">首页</a>
+                        <span>/</span>
+                        <span class="breadcrumb-item active" id="breadcrumb-current">智能表格</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <!-- 顶部配置按钮已删除，配置功能移至"系统配置"模块 -->
+                </div>
+            </header>
+            
+            <!-- 主内容 -->
+            <main class="main-content">
+                <!-- 工作台模块 -->
+                <section id="module-dashboard" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-th-large"></i>
+                            工作台
+                        </h1>
+                    </div>
+                    
+                    <div class="empty-state" style="padding: 100px 20px; text-align: center;">
+                        <div style="font-size: 64px; opacity: 0.3; margin-bottom: 20px;">🚧</div>
+                        <h3 style="color: var(--grey-700); margin-bottom: 10px;">功能开发中</h3>
+                        <p style="color: var(--grey-500);">工作台功能正在开发中，敬请期待...</p>
+                    </div>
+                </section>
+                
+                <!-- 客户管理模块 -->
+                <section id="module-customers" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-users"></i>
+                            客户管理
+                        </h1>
+                        <div class="page-actions">
+                            <div class="sync-buttons">
+                                <button class="btn-sync btn-sync-incremental" onclick="syncCustomers(false)" title="仅同步新增和最近6小时有变化的客户">
+                                    <i class="fas fa-sync-alt"></i>
+                                    增量同步
+                                </button>
+                                <button class="btn-sync btn-sync-full" onclick="syncCustomers(true)" title="同步所有客户（耗时较长）">
+                                    <i class="fas fa-redo"></i>
+                                    全量同步
+                                </button>
+                            </div>
+                            <button class="btn btn-outlined" onclick="exportCustomers()">
+                                <i class="fas fa-download"></i>
+                                导出
+                            </button>
+                            <button class="btn btn-primary" onclick="addCustomer()">
+                                <i class="fas fa-user-plus"></i>
+                                添加客户
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 筛选区域 -->
+                    <div class="card mb-6">
+                        <div class="filter-container">
+                            <!-- 筛选条件行 -->
+                            <div class="filter-row">
+                                <div class="filter-item">
+                                    <input type="text" class="filter-input" id="filter-search" placeholder="客户信息">
+                                </div>
+                                <div class="filter-item">
+                                    <select class="filter-select" id="filter-employee">
+                                        <option value="">所属员工</option>
+                                    </select>
+                                </div>
+                                <div class="filter-item">
+                                    <select class="filter-select" id="filter-user-type">
+                                        <option value="">用户属性</option>
+                                        <option value="用户|客户">用户</option>
+                                        <option value="代理商">代理商</option>
+                                        <option value="合伙人">合伙人</option>
+                                        <option value="供应商">供应商</option>
+                                        <option value="同行">同行</option>
+                                    </select>
+                                </div>
+                                <div class="filter-item">
+                                    <select class="filter-select" id="filter-add-way">
+                                        <option value="">添加方式</option>
+                                        <option value="1">直接添加</option>
+                                        <option value="2">扫码添加</option>
+                                        <option value="3">搜索添加</option>
+                                        <option value="4">名片分享</option>
+                                    </select>
+                                </div>
+                                <div class="filter-item">
+                                    <div class="filter-tag-select" onclick="showTagSelector()">
+                                        <span id="selected-tags-display">企业标签</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                                <div class="filter-item">
+                                    <input type="date" class="filter-input" id="filter-date-start" placeholder="开始日期">
+                                </div>
+                                <div class="filter-item">
+                                    <input type="date" class="filter-input" id="filter-date-end" placeholder="结束日期">
+                                </div>
+                                <div class="filter-item">
+                                    <select class="filter-select" id="filter-gender">
+                                        <option value="">性别</option>
+                                        <option value="1">男</option>
+                                        <option value="2">女</option>
+                                        <option value="0">未知</option>
+                                    </select>
+                                </div>
+                                <div class="filter-item">
+                                    <div class="filter-tag-select" onclick="showProvinceSelector()">
+                                        <span id="selected-province-display">省份</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                                
+                                <!-- 右侧操作区域 -->
+                                <div class="filter-actions">
+                                    <div id="filter-result-count" style="color: var(--grey-600); font-size: 13px; white-space: nowrap;">
+                                        <!-- 显示筛选结果数量 -->
+                                    </div>
+                                    <button class="btn btn-primary btn-sm" onclick="applyFilters()">
+                                        <i class="fas fa-search"></i> 查询
+                                    </button>
+                                    <button class="btn btn-outlined btn-sm" onclick="resetFilters()">
+                                        <i class="fas fa-redo"></i> 重置
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 批量操作 -->
+                    <div class="card mb-6" id="batch-actions" style="display: none;">
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <span style="color: var(--grey-700); font-size: 14px;">
+                                已选择 <strong id="selected-count" style="color: var(--primary-main);">0</strong> 个客户
+                            </span>
+                            <button class="btn btn-outlined btn-sm" onclick="batchUpdateOwner()">
+                                <i class="fas fa-user-edit"></i>
+                                修改跟进人
+                            </button>
+                            <button class="btn btn-outlined btn-sm" onclick="batchUpdateTags()">
+                                <i class="fas fa-tags"></i>
+                                批量打标签
+                            </button>
+                            <button class="btn btn-outlined btn-sm" onclick="batchSendMessage()">
+                                <i class="fas fa-paper-plane"></i>
+                                群发消息
+                            </button>
+                            <button class="btn btn-text btn-sm" onclick="cancelSelection()" style="margin-left: auto;">
+                                取消选择
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 客户列表 -->
+                    <div class="table-container">
+                        <table class="table" id="customers-table">
+                            <thead>
+                                <tr>
+                                    <th width="50">
+                                        <input type="checkbox" id="select-all" onchange="toggleSelectAll()" style="cursor: pointer;">
+                                    </th>
+                                    <th width="60">用户头像</th>
+                                    <th width="120">用户昵称</th>
+                                    <th width="150">用户备注</th>
+                                    <th width="120">所属员工</th>
+                                    <th width="120">所属群</th>
+                                    <th width="60">性别</th>
+                                    <th width="150">客户标签</th>
+                                    <th width="150">添加时间</th>
+                                    <th width="100">跟进状态</th>
+                                    <th width="150">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customer-table-body">
+                                <tr>
+                                    <td colspan="11" style="text-align: center; padding: 60px 0; color: var(--grey-500);">
+                                        <i class="fas fa-users" style="font-size: 48px; margin-bottom: 16px; display: block; opacity: 0.3;"></i>
+                                        <p style="font-size: 16px; margin-bottom: 8px;">暂无客户数据</p>
+                                        <p style="font-size: 14px; color: var(--grey-400);">点击右上角"同步客户"按钮从企业微信同步客户数据</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- 分页 -->
+                    <div class="card" style="margin-top: 24px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px;">
+                            <div style="color: var(--grey-600); font-size: 14px;">
+                                共 <strong id="total-count" style="color: var(--grey-900);">0</strong> 条记录
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 16px;">
+                                <button class="btn btn-outlined btn-sm" onclick="changePage(-1)" id="btn-prev-page">
+                                    <i class="fas fa-chevron-left"></i>
+                                    上一页
+                                </button>
+                                <span style="color: var(--grey-700); font-size: 14px;">
+                                    第 <strong id="current-page" style="color: var(--primary-main);">1</strong> 页 / 
+                                    共 <strong id="total-pages" style="color: var(--grey-900);">1</strong> 页
+                                </span>
+                                <button class="btn btn-outlined btn-sm" onclick="changePage(1)" id="btn-next-page">
+                                    下一页
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 客户画像模块 -->
+                <section id="module-customer-profile" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-chart-pie"></i>
+                            客户画像分析
+                        </h1>
+                        <div class="page-actions">
+                            <button class="btn btn-primary" onclick="refreshCustomerPortrait()">
+                                <i class="fas fa-sync-alt"></i> 刷新数据
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 模块1：标签维度统计 -->
+                    <div class="portrait-section" style="padding: 24px; background: #F9FAFB;">
+                        
+                        <!-- 1.1 重点标签统计 -->
+                        <div style="margin-bottom: 24px;">
+                            <h2 style="font-size: 18px; font-weight: 700; color: #212B36; margin-bottom: 20px; letter-spacing: -0.5px;">
+                                核心标签统计
+                            </h2>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                                <div class="stat-card-minimal" id="stat-user" onclick="showCustomersByTag('user', '用户标签')" style="cursor: pointer;">
+                                    <div class="stat-icon-minimal" style="background: rgba(0, 184, 217, 0.12);">
+                                        <i class="fas fa-user" style="color: #00B8D9;"></i>
+                                    </div>
+                                    <div class="stat-content-minimal">
+                                        <div class="stat-label-minimal">用户标签</div>
+                                        <div class="stat-value-minimal">-</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="stat-card-minimal" id="stat-agent" onclick="showCustomersByTag('agent', '代理商')" style="cursor: pointer;">
+                                    <div class="stat-icon-minimal" style="background: rgba(255, 171, 0, 0.12);">
+                                        <i class="fas fa-handshake" style="color: #FFAB00;"></i>
+                                    </div>
+                                    <div class="stat-content-minimal">
+                                        <div class="stat-label-minimal">代理商</div>
+                                        <div class="stat-value-minimal">-</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="stat-card-minimal" id="stat-partner" onclick="showCustomersByTag('partner', '合伙人')" style="cursor: pointer;">
+                                    <div class="stat-icon-minimal" style="background: rgba(94, 53, 177, 0.12);">
+                                        <i class="fas fa-users-cog" style="color: #5E35B1;"></i>
+                                    </div>
+                                    <div class="stat-content-minimal">
+                                        <div class="stat-label-minimal">合伙人</div>
+                                        <div class="stat-value-minimal">-</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="stat-card-minimal" id="stat-supplier" onclick="showCustomersByTag('supplier', '供应商')" style="cursor: pointer;">
+                                    <div class="stat-icon-minimal" style="background: rgba(54, 179, 126, 0.12);">
+                                        <i class="fas fa-truck" style="color: #36B37E;"></i>
+                                    </div>
+                                    <div class="stat-content-minimal">
+                                        <div class="stat-label-minimal">供应商</div>
+                                        <div class="stat-value-minimal">-</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="stat-card-minimal" id="stat-peer" onclick="showCustomersByTag('peer', '同行')" style="cursor: pointer;">
+                                    <div class="stat-icon-minimal" style="background: rgba(255, 86, 48, 0.12);">
+                                        <i class="fas fa-briefcase" style="color: #FF5630;"></i>
+                                    </div>
+                                    <div class="stat-content-minimal">
+                                        <div class="stat-label-minimal">同行</div>
+                                        <div class="stat-value-minimal">-</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="stat-card-minimal" id="stat-old-agent" onclick="showCustomersByTag('old-agent', '原有老代理')" style="cursor: pointer;">
+                                    <div class="stat-icon-minimal" style="background: rgba(99, 115, 129, 0.12);">
+                                        <i class="fas fa-history" style="color: #637381;"></i>
+                                    </div>
+                                    <div class="stat-content-minimal">
+                                        <div class="stat-label-minimal">原有老代理</div>
+                                        <div class="stat-value-minimal">-</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 1.2 省份标签统计 -->
+                        <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 0 2px 0 rgba(145, 158, 171, 0.2), 0 12px 24px -4px rgba(145, 158, 171, 0.12); margin-bottom: 24px;">
+                            <h3 style="margin: 0 0 20px 0; font-size: 15px; font-weight: 700; color: #212B36; letter-spacing: -0.5px;">
+                                地域分布
+                            </h3>
+                            <div id="province-list" style="display: flex; flex-wrap: wrap; gap: 10px;">
+                                <div style="color: #637381; padding: 20px; font-size: 14px;">加载中...</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 1.3 添加方式统计 & 1.4 性别统计 -->
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 24px;">
+                            <!-- 添加方式 -->
+                            <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 0 2px 0 rgba(145, 158, 171, 0.2), 0 12px 24px -4px rgba(145, 158, 171, 0.12);">
+                                <h3 style="margin: 0 0 20px 0; font-size: 15px; font-weight: 700; color: #212B36; letter-spacing: -0.5px;">
+                                    添加方式分析
+                                </h3>
+                                <div id="add-way-chart" style="min-height: 250px;"></div>
+                            </div>
+                            
+                            <!-- 性别统计 + 时间维度统计 -->
+                            <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 0 2px 0 rgba(145, 158, 171, 0.2), 0 12px 24px -4px rgba(145, 158, 171, 0.12);">
+                                <h3 style="margin: 0 0 20px 0; font-size: 15px; font-weight: 700; color: #212B36; letter-spacing: -0.5px;">
+                                    性别分布
+                                </h3>
+                                <div id="gender-chart" style="min-height: 120px; margin-bottom: 24px;"></div>
+                                
+                                <!-- 时间维度统计 -->
+                                <div style="border-top: 2px solid rgba(145, 158, 171, 0.12); padding-top: 24px; margin-top: 24px;">
+                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 20px;">
+                                        <i class="fas fa-chart-line" style="color: #00A76F; font-size: 18px;"></i>
+                                        <h4 style="margin: 0; font-size: 15px; font-weight: 700; color: #212B36; letter-spacing: -0.5px;">
+                                            新增客户统计
+                                        </h4>
+                                    </div>
+                                    <div id="time-stats-chart" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                                        <div style="color: #637381; text-align: center; padding: 20px;">加载中...</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 模块2：月度增长趋势 -->
+                        <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 0 2px 0 rgba(145, 158, 171, 0.2), 0 12px 24px -4px rgba(145, 158, 171, 0.12); margin-top: 40px; margin-bottom: 24px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                                <h3 style="margin: 0; font-size: 15px; font-weight: 700; color: #212B36; letter-spacing: -0.5px;">
+                                    月度增长趋势
+                                </h3>
+                                <div style="display: flex; gap: 12px;">
+                                    <select id="growth-year-filter" onchange="loadMonthlyGrowth()" style="padding: 8px 12px; border: 1px solid rgba(145, 158, 171, 0.24); border-radius: 8px; font-size: 13px; color: #212B36; background: white; cursor: pointer;">
+                                        <!-- 年份选项将由JS生成 -->
+                                    </select>
+                                    <select id="growth-tag-filter" onchange="loadMonthlyGrowth()" style="padding: 8px 12px; border: 1px solid rgba(145, 158, 171, 0.24); border-radius: 8px; font-size: 13px; color: #212B36; background: white; cursor: pointer;">
+                                        <option value="all">全部客户</option>
+                                        <option value="user">用户标签</option>
+                                        <option value="agent">代理商</option>
+                                        <option value="partner">合伙人</option>
+                                        <option value="supplier">供应商</option>
+                                        <option value="peer">同行</option>
+                                        <option value="old-agent">原有老代理</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- 统计数据卡片 -->
+                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+                                <div style="padding: 16px; background: rgba(0, 184, 217, 0.08); border-radius: 12px;">
+                                    <div style="font-size: 12px; color: #637381; margin-bottom: 4px;">总增长</div>
+                                    <div id="growth-total" style="font-size: 24px; font-weight: 700; color: #00B8D9;">-</div>
+                                </div>
+                                <div style="padding: 16px; background: rgba(255, 171, 0, 0.08); border-radius: 12px;">
+                                    <div style="font-size: 12px; color: #637381; margin-bottom: 4px;">平均月增</div>
+                                    <div id="growth-avg" style="font-size: 24px; font-weight: 700; color: #FFAB00;">-</div>
+                                </div>
+                                <div style="padding: 16px; background: rgba(54, 179, 126, 0.08); border-radius: 12px;">
+                                    <div style="font-size: 12px; color: #637381; margin-bottom: 4px;">最高月份</div>
+                                    <div id="growth-max" style="font-size: 14px; font-weight: 600; color: #36B37E;">-</div>
+                                </div>
+                                <div style="padding: 16px; background: rgba(255, 86, 48, 0.08); border-radius: 12px;">
+                                    <div style="font-size: 12px; color: #637381; margin-bottom: 4px;">最低月份</div>
+                                    <div id="growth-min" style="font-size: 14px; font-weight: 600; color: #FF5630;">-</div>
+                                </div>
+                            </div>
+                            
+                            <!-- 图表 -->
+                            <canvas id="monthly-growth-chart" style="max-height: 350px;"></canvas>
+                        </div>
+                        
+                        <!-- 模块3：员工排行榜 -->
+                        <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 0 2px 0 rgba(145, 158, 171, 0.2), 0 12px 24px -4px rgba(145, 158, 171, 0.12); margin-top: 40px; margin-bottom: 24px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                                <h3 style="margin: 0; font-size: 15px; font-weight: 700; color: #212B36; letter-spacing: -0.5px;">
+                                    员工排行榜
+                                </h3>
+                                <select id="ranking-tag-filter" onchange="loadEmployeeRanking()" style="padding: 8px 12px; border: 1px solid rgba(145, 158, 171, 0.24); border-radius: 8px; font-size: 13px; color: #212B36; background: white; cursor: pointer;">
+                                    <option value="all">全部客户</option>
+                                    <option value="user">用户标签</option>
+                                    <option value="agent">代理商</option>
+                                    <option value="partner">合伙人</option>
+                                    <option value="supplier">供应商</option>
+                                    <option value="peer">同行</option>
+                                    <option value="old-agent">原有老代理</option>
+                                </select>
+                            </div>
+                            
+                            <div id="employee-ranking-list" style="min-height: 200px;">
+                                <div style="color: #637381; padding: 40px; text-align: center; font-size: 14px;">加载中...</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 模块4：标签组合分析 -->
+                        <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 0 2px 0 rgba(145, 158, 171, 0.2), 0 12px 24px -4px rgba(145, 158, 171, 0.12); margin-top: 40px; margin-bottom: 24px;">
+                            <h3 style="margin: 0 0 20px 0; font-size: 15px; font-weight: 700; color: #212B36; letter-spacing: -0.5px;">
+                                标签组合分析
+                            </h3>
+                            
+                            <!-- 标签选择器 -->
+                            <div style="margin-bottom: 24px;">
+                                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                                    <div style="flex: 1;">
+                                        <input type="text" id="combo-tag-input" placeholder="输入标签名，用逗号分隔，例如：四川,代理商" 
+                                               style="width: 100%; padding: 12px 16px; border: 1px solid rgba(145, 158, 171, 0.24); border-radius: 8px; font-size: 14px; color: #212B36;">
+                                    </div>
+                                    <button onclick="searchTagCombination()" class="btn btn-primary" style="white-space: nowrap;">
+                                        <i class="fas fa-search"></i> 查询
+                                    </button>
+                                </div>
+                                <div id="combo-result" style="margin-top: 16px; padding: 16px; background: rgba(0, 184, 217, 0.08); border-radius: 8px; display: none;">
+                                    <div style="font-size: 14px; color: #212B36;">
+                                        找到 <strong id="combo-count" style="color: #00B8D9; font-size: 18px;">0</strong> 位客户
+                                        <button onclick="showCombinationCustomers()" style="margin-left: 12px; padding: 6px 12px; border: 1px solid #00B8D9; border-radius: 6px; background: white; color: #00B8D9; font-size: 13px; cursor: pointer;">
+                                            查看列表
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 分隔线 -->
+                            <div style="height: 1px; background: rgba(145, 158, 171, 0.12); margin: 32px 0;"></div>
+                            
+                            <!-- 热门组合 -->
+                            <div>
+                                <h4 style="font-size: 14px; font-weight: 600; color: #212B36; margin-bottom: 16px; letter-spacing: -0.3px;">
+                                    <i class="fas fa-fire" style="color: #FF5630; margin-right: 6px;"></i>
+                                    热门标签组合 TOP 10
+                                </h4>
+                                <div id="hot-combinations-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px;">
+                                    <div style="color: #637381; padding: 20px; font-size: 14px;">加载中...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 企业标签模块 -->
+                <section id="module-enterprise-tags" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-tag"></i>
+                            企业标签管理
+                        </h1>
+                        <div class="page-actions">
+                            <button class="btn btn-outlined" onclick="syncEnterpriseTags()">
+                                <i class="fas fa-sync-alt"></i>
+                                同步标签
+                            </button>
+                            <button class="btn btn-primary" onclick="addTagGroup()">
+                                <i class="fas fa-plus"></i>
+                                新建标签组
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 标签组列表 -->
+                    <div class="card">
+                        <div id="tag-groups-container">
+                            <div style="text-align: center; padding: 60px 0; color: var(--grey-500);">
+                                <i class="fas fa-tags" style="font-size: 48px; margin-bottom: 16px; opacity: 0.3;"></i>
+                                <p>暂无标签数据</p>
+                                <p style="font-size: 13px;">点击右上角"同步标签"按钮从企业微信同步标签</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 企业通讯录模块 -->
+                <section id="module-enterprise-contacts" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-address-book"></i>
+                            企业通讯录
+                        </h1>
+                        <div class="page-actions">
+                            <button class="btn btn-outlined" onclick="syncEmployees()">
+                                <i class="fas fa-sync-alt"></i>
+                                同步通讯录
+                            </button>
+                            <button class="btn btn-outlined" onclick="exportEmployees()">
+                                <i class="fas fa-download"></i>
+                                导出
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 搜索和筛选 -->
+                    <div class="card mb-6">
+                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px; padding: 20px;">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label class="form-label">搜索员工</label>
+                                <input type="text" class="form-control" id="employee-search" 
+                                       placeholder="搜索姓名、手机号、邮箱..." onkeyup="searchEmployees()">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label class="form-label">部门筛选</label>
+                                <select class="form-control" id="employee-dept-filter" onchange="filterEmployees()">
+                                    <option value="">全部部门</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 员工列表（卡片式） -->
+                    <div id="contacts-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 24px;">
+                        <!-- 空状态 -->
+                        <div style="grid-column: 1/-1; text-align: center; padding: 80px 20px; color: var(--grey-500);">
+                            <i class="fas fa-address-book" style="font-size: 64px; margin-bottom: 16px; display: block; opacity: 0.3;"></i>
+                            <p style="font-size: 16px; margin-bottom: 8px;">暂无员工数据</p>
+                            <p style="font-size: 14px; color: var(--grey-400); margin-bottom: 24px;">
+                                点击右上角"同步通讯录"按钮从企业微信同步员工数据
+                            </p>
+                            <button class="btn btn-primary" onclick="syncEmployees()">
+                                <i class="fas fa-sync-alt"></i>
+                                立即同步
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 分页 -->
+                    <div class="card" style="margin-top: 24px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px;">
+                            <div style="color: var(--grey-600); font-size: 14px;">
+                                共 <strong id="employee-total-count" style="color: var(--grey-900);">0</strong> 人
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 16px;">
+                                <button class="btn btn-outlined btn-sm" onclick="changeEmployeePage(-1)" id="btn-emp-prev">
+                                    <i class="fas fa-chevron-left"></i>
+                                    上一页
+                                </button>
+                                <span style="color: var(--grey-700); font-size: 14px;">
+                                    第 <strong id="employee-current-page" style="color: var(--primary-main);">1</strong> 页 / 
+                                    共 <strong id="employee-total-pages" style="color: var(--grey-900);">1</strong> 页
+                                </span>
+                                <button class="btn btn-outlined btn-sm" onclick="changeEmployeePage(1)" id="btn-emp-next">
+                                    下一页
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 客户群列表模块 -->
+                <section id="module-customer-groups" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-user-friends"></i>
+                            客户群列表
+                        </h1>
+                        <div class="page-actions">
+                            <button class="btn btn-primary" onclick="showBatchTagDialog()" id="batch-tag-btn" style="display:none;">
+                                <i class="fas fa-tags"></i> 批量打标签
+                            </button>
+                            <button class="btn btn-secondary" onclick="syncCustomerGroups()">
+                                <i class="fas fa-sync"></i> 同步群聊
+                            </button>
+                            <button class="btn btn-outlined" onclick="exportGroups()">
+                                <i class="fas fa-download"></i> 导出
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 筛选区域 -->
+                    <div class="card mb-6">
+                        <div class="filter-container">
+                            <div class="filter-row">
+                                <div class="filter-item">
+                                    <input type="text" 
+                                           class="filter-input" 
+                                           id="group-filter-search" 
+                                           placeholder="搜索群聊名称/群主"
+                                           onkeyup="filterGroups()">
+                                </div>
+                                
+                                <div class="filter-item">
+                                    <select class="filter-select" id="group-filter-owner" onchange="filterGroups()">
+                                        <option value="">群主</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="filter-item">
+                                    <select class="filter-select" id="group-filter-type" onchange="filterGroups()">
+                                        <option value="">群类型</option>
+                                        <option value="internal">内部群</option>
+                                        <option value="external">外部群</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="filter-item">
+                                    <input type="date" class="filter-input" id="group-filter-date-start" onchange="filterGroups()">
+                                </div>
+                                
+                                <div class="filter-item">
+                                    <input type="date" class="filter-input" id="group-filter-date-end" onchange="filterGroups()">
+                                </div>
+                                
+                                <div class="filter-item">
+                                    <select class="filter-select" id="group-filter-tag" onchange="filterGroups()">
+                                        <option value="">群标签</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="filter-actions">
+                                    <span id="group-filter-result-count"></span>
+                                    <button class="btn btn-primary" onclick="applyGroupFilters()">
+                                        <i class="fas fa-search"></i> 查询
+                                    </button>
+                                    <button class="btn btn-outlined" onclick="resetGroupFilters()">
+                                        <i class="fas fa-redo"></i> 重置
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 客户群列表表格 -->
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 50px;">
+                                        <input type="checkbox" id="select-all-groups" onchange="toggleSelectAllGroups()">
+                                    </th>
+                                    <th style="width: 60px;">序号</th>
+                                    <th>群聊</th>
+                                    <th>群主</th>
+                                    <th style="width: 100px;">总人数</th>
+                                    <th style="width: 100px;">外部客户</th>
+                                    <th style="width: 100px;">内部员工</th>
+                                    <th>群公告</th>
+                                    <th style="width: 100px;">群类型</th>
+                                    <th style="width: 100px;">群状态</th>
+                                    <th style="width: 200px;">群标签</th>
+                                    <th style="width: 150px;">创建时间</th>
+                                    <th style="width: 150px;">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customer-groups-list">
+                                <!-- 群聊列表将通过 JavaScript 动态渲染 -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 分页 -->
+                    <div class="card mt-4" style="padding: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="color: var(--grey-600); font-size: 14px;">
+                                共 <strong id="group-total-count" style="color: var(--primary-main);">0</strong> 个群聊
+                            </div>
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <button class="btn btn-outlined btn-sm" onclick="changeGroupPage(-1)">
+                                    <i class="fas fa-chevron-left"></i> 上一页
+                                </button>
+                                <span style="color: var(--grey-600); font-size: 14px;">
+                                    第 <strong id="group-current-page" style="color: var(--primary-main);">1</strong> 页 / 
+                                    共 <strong id="group-total-pages" style="color: var(--primary-main);">1</strong> 页
+                                </span>
+                                <button class="btn btn-outlined btn-sm" onclick="changeGroupPage(1)">
+                                    下一页 <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 客户群标签模块 -->
+                <section id="module-group-tags" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-tags"></i>
+                            客户群标签
+                        </h1>
+                        <div class="page-actions">
+                            <button class="btn btn-primary" onclick="syncGroupTags()" title="检查当前标签数据">
+                                <i class="fas fa-sync-alt"></i>
+                                检查标签
+                            </button>
+                            <button class="btn btn-primary" onclick="showAddGroupTagDialog()">
+                                <i class="fas fa-plus"></i>
+                                新建标签组
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 搜索区域 -->
+                    <div class="card mb-6">
+                        <div style="padding: 16px 20px;">
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <input type="text" id="group-tag-search" placeholder="搜索标签组或标签..." 
+                                    style="flex: 1; height: 36px; padding: 0 12px; border: 1px solid #DFE3E8; border-radius: 6px; font-size: 14px;"
+                                    oninput="searchGroupTags()">
+                                <button class="btn btn-outlined" onclick="searchGroupTags()">
+                                    <i class="fas fa-search"></i> 搜索
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 标签组列表 -->
+                    <div id="group-tags-container">
+                        <!-- 标签组卡片将动态插入这里 -->
+                    </div>
+                    
+                    <!-- 空状态 -->
+                    <div id="group-tags-empty" class="empty-state" style="display: none; padding: 100px 20px; text-align: center;">
+                        <div style="font-size: 64px; opacity: 0.3; margin-bottom: 20px;">📋</div>
+                        <h3 style="color: var(--grey-700); margin-bottom: 10px;">暂无标签组</h3>
+                        <p style="color: var(--grey-500); margin-bottom: 24px;">
+                            本系统使用自建标签系统，标签完全由您自主创建管理。<br>
+                            点击「新建标签组」开始创建您的第一个标签组。
+                        </p>
+                        <button class="btn btn-primary" onclick="showAddGroupTagDialog()">
+                            <i class="fas fa-plus"></i> 新建标签组
+                        </button>
+                    </div>
+                </section>
+                
+                <!-- 欢迎语设置模块 -->
+                <section id="module-welcome-msg" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-hand-paper"></i>
+                            欢迎语设置
+                        </h1>
+                    </div>
+                    <div class="empty-state" style="padding: 100px 20px; text-align: center;">
+                        <div style="font-size: 64px; opacity: 0.3; margin-bottom: 20px;">🚧</div>
+                        <h3 style="color: var(--grey-700); margin-bottom: 10px;">功能开发中</h3>
+                        <p style="color: var(--grey-500);">欢迎语设置功能正在开发中...</p>
+                    </div>
+                </section>
+                
+                <!-- 客户群发模块 -->
+                <section id="module-customer-broadcast" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-paper-plane"></i>
+                            客户群发
+                        </h1>
+                    </div>
+                    <div class="empty-state" style="padding: 100px 20px; text-align: center;">
+                        <div style="font-size: 64px; opacity: 0.3; margin-bottom: 20px;">🚧</div>
+                        <h3 style="color: var(--grey-700); margin-bottom: 10px;">功能开发中</h3>
+                        <p style="color: var(--grey-500);">客户群发功能正在开发中...</p>
+                    </div>
+                </section>
+                
+                <!-- 发朋友圈模块 -->
+                <section id="module-moments-publish" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-share-alt"></i>
+                            发朋友圈
+                        </h1>
+                    </div>
+                    <div class="empty-state" style="padding: 100px 20px; text-align: center;">
+                        <div style="font-size: 64px; opacity: 0.3; margin-bottom: 20px;">🚧</div>
+                        <h3 style="color: var(--grey-700); margin-bottom: 10px;">功能开发中</h3>
+                        <p style="color: var(--grey-500);">发朋友圈功能正在开发中...</p>
+                    </div>
+                </section>
+                
+                <!-- 朋友圈记录模块 -->
+                <section id="module-moments-record" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-history"></i>
+                            朋友圈记录
+                        </h1>
+                    </div>
+                    <div class="empty-state" style="padding: 100px 20px; text-align: center;">
+                        <div style="font-size: 64px; opacity: 0.3; margin-bottom: 20px;">🚧</div>
+                        <h3 style="color: var(--grey-700); margin-bottom: 10px;">功能开发中</h3>
+                        <p style="color: var(--grey-500);">朋友圈记录功能正在开发中...</p>
+                    </div>
+                </section>
+                
+                <!-- 进群欢迎语模块 -->
+                <section id="module-group-welcome" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-door-open"></i>
+                            进群欢迎语
+                        </h1>
+                    </div>
+                    <div class="empty-state" style="padding: 100px 20px; text-align: center;">
+                        <div style="font-size: 64px; opacity: 0.3; margin-bottom: 20px;">🚧</div>
+                        <h3 style="color: var(--grey-700); margin-bottom: 10px;">功能开发中</h3>
+                        <p style="color: var(--grey-500);">进群欢迎语功能正在开发中...</p>
+                    </div>
+                </section>
+                
+                <!-- 客户群群发模块 -->
+                <section id="module-group-broadcast" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-broadcast-tower"></i>
+                            客户群群发
+                        </h1>
+                    </div>
+                    <div class="empty-state" style="padding: 100px 20px; text-align: center;">
+                        <div style="font-size: 64px; opacity: 0.3; margin-bottom: 20px;">🚧</div>
+                        <h3 style="color: var(--grey-700); margin-bottom: 10px;">功能开发中</h3>
+                        <p style="color: var(--grey-500);">客户群群发功能正在开发中...</p>
+                    </div>
+                </section>
+                
+                <!-- 客户运营模块（删除） -->
+                <!-- 客户群运营模块（删除） -->
+                
+                <!-- 供应商通知群模块 -->
+                <section id="module-supplier-notify" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-bell"></i>
+                            供应商通知群
+                        </h1>
+                        <div class="page-actions">
+                            <button class="btn btn-outlined" onclick="showAddWebhookDialog('supplier')">
+                                <i class="fas fa-plus-circle"></i>
+                                添加群
+                            </button>
+                            <button class="btn btn-primary" onclick="showCreateNotificationDialog('supplier')">
+                                <i class="fas fa-paper-plane"></i>
+                                创建通知
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 已配置的群 -->
+                    <div class="card" style="margin-bottom: 20px;">
+                        <div class="card-header">
+                            <h3>已配置的群</h3>
+                            <p class="text-muted">
+                                <i class="fas fa-info-circle"></i> 
+                                提醒：群机器人仅支持<strong>内部群</strong>（纯员工群），不支持外部群
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <div id="supplier-webhook-list">
+                                <div class="text-center" style="padding: 40px; color: #999;">
+                                    <i class="fas fa-robot" style="font-size: 48px; margin-bottom: 16px; opacity: 0.3;"></i>
+                                    <p>暂无配置，点击"添加群"开始配置</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 通知记录 -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>通知记录</h3>
+                            <p class="text-muted">最近的消息推送记录</p>
+                        </div>
+                        <div class="card-body">
+                            <div id="supplier-notification-list">
+                                <div class="text-center" style="padding: 40px; color: #999;">
+                                    <i class="fas fa-history" style="font-size: 48px; margin-bottom: 16px; opacity: 0.3;"></i>
+                                    <p>暂无通知记录</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 代理商通知群模块 -->
+                <section id="module-agent-notify" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-bullhorn"></i>
+                            代理商通知群
+                        </h1>
+                        <div class="page-actions">
+                            <button class="btn btn-outlined" onclick="showAddWebhookDialog('agent')">
+                                <i class="fas fa-plus-circle"></i>
+                                添加群
+                            </button>
+                            <button class="btn btn-primary" onclick="showCreateNotificationDialog('agent')">
+                                <i class="fas fa-paper-plane"></i>
+                                创建通知
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 已配置的群 -->
+                    <div class="card" style="margin-bottom: 20px;">
+                        <div class="card-header">
+                            <h3>已配置的群</h3>
+                            <p class="text-muted">
+                                <i class="fas fa-info-circle"></i> 
+                                提醒：群机器人仅支持<strong>内部群</strong>（纯员工群），不支持外部群
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <div id="agent-webhook-list">
+                                <div class="text-center" style="padding: 40px; color: #999;">
+                                    <i class="fas fa-robot" style="font-size: 48px; margin-bottom: 16px; opacity: 0.3;"></i>
+                                    <p>暂无配置，点击"添加群"开始配置</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 通知记录 -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>通知记录</h3>
+                            <p class="text-muted">最近的消息推送记录</p>
+                        </div>
+                        <div class="card-body">
+                            <div id="agent-notification-list">
+                                <div class="text-center" style="padding: 40px; color: #999;">
+                                    <i class="fas fa-history" style="font-size: 48px; margin-bottom: 16px; opacity: 0.3;"></i>
+                                    <p>暂无通知记录</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 订单数据模块 -->
+                <section id="module-order-data" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-shopping-cart"></i>
+                            订单数据
+                        </h1>
+                        <div class="page-actions">
+                            <button class="btn btn-outlined">
+                                <i class="fas fa-filter"></i>
+                                筛选
+                            </button>
+                            <button class="btn btn-outlined">
+                                <i class="fas fa-download"></i>
+                                导出
+                            </button>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-plus"></i>
+                                新建订单
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="empty-state" style="padding: 80px 20px; text-align: center;">
+                                <i class="fas fa-shopping-cart" style="font-size: 64px; opacity: 0.3; margin-bottom: 20px; display: block; color: #00B8D9;"></i>
+                                <h3 style="color: var(--grey-700); margin-bottom: 10px;">订单数据管理</h3>
+                                <p style="color: var(--grey-500); margin-bottom: 20px;">查看和管理所有订单信息</p>
+                                <button class="btn btn-primary">开始导入订单数据</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 供应商数据模块 -->
+                <section id="module-supplier-data" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-truck"></i>
+                            供应商数据
+                        </h1>
+                        <div class="page-actions">
+                            <button class="btn btn-outlined">
+                                <i class="fas fa-filter"></i>
+                                筛选
+                            </button>
+                            <button class="btn btn-outlined">
+                                <i class="fas fa-download"></i>
+                                导出
+                            </button>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-plus"></i>
+                                新增供应商
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="empty-state" style="padding: 80px 20px; text-align: center;">
+                                <i class="fas fa-truck" style="font-size: 64px; opacity: 0.3; margin-bottom: 20px; display: block; color: #00A76F;"></i>
+                                <h3 style="color: var(--grey-700); margin-bottom: 10px;">供应商数据管理</h3>
+                                <p style="color: var(--grey-500); margin-bottom: 20px;">管理供应商信息、合作记录、评价等</p>
+                                <button class="btn btn-primary">开始导入供应商数据</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 产品数据模块 -->
+                <section id="module-product-data" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-box"></i>
+                            产品数据
+                        </h1>
+                        <div class="page-actions">
+                            <button class="btn btn-outlined">
+                                <i class="fas fa-filter"></i>
+                                筛选
+                            </button>
+                            <button class="btn btn-outlined">
+                                <i class="fas fa-download"></i>
+                                导出
+                            </button>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-plus"></i>
+                                新增产品
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="empty-state" style="padding: 80px 20px; text-align: center;">
+                                <i class="fas fa-box" style="font-size: 64px; opacity: 0.3; margin-bottom: 20px; display: block; color: #FF6B2C;"></i>
+                                <h3 style="color: var(--grey-700); margin-bottom: 10px;">产品数据管理</h3>
+                                <p style="color: var(--grey-500); margin-bottom: 20px;">产品库存、SKU、价格、规格等信息管理</p>
+                                <button class="btn btn-primary">开始导入产品数据</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 代理商数据模块 -->
+                <section id="module-agent-data" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-users"></i>
+                            代理商数据
+                        </h1>
+                        <div class="page-actions">
+                            <button class="btn btn-outlined">
+                                <i class="fas fa-filter"></i>
+                                筛选
+                            </button>
+                            <button class="btn btn-outlined">
+                                <i class="fas fa-download"></i>
+                                导出
+                            </button>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-plus"></i>
+                                新增代理商
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="empty-state" style="padding: 80px 20px; text-align: center;">
+                                <i class="fas fa-users" style="font-size: 64px; opacity: 0.3; margin-bottom: 20px; display: block; color: #7635DC;"></i>
+                                <h3 style="color: var(--grey-700); margin-bottom: 10px;">代理商数据管理</h3>
+                                <p style="color: var(--grey-500); margin-bottom: 20px;">代理商信息、级别、销售业绩、返点等</p>
+                                <button class="btn btn-primary">开始导入代理商数据</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 财务数据模块 -->
+                <section id="module-finance-data" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-dollar-sign"></i>
+                            财务数据
+                        </h1>
+                        <div class="page-actions">
+                            <button class="btn btn-outlined">
+                                <i class="fas fa-calendar-alt"></i>
+                                时间范围
+                            </button>
+                            <button class="btn btn-outlined">
+                                <i class="fas fa-download"></i>
+                                导出
+                            </button>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-plus"></i>
+                                记录收支
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="empty-state" style="padding: 80px 20px; text-align: center;">
+                                <i class="fas fa-dollar-sign" style="font-size: 64px; opacity: 0.3; margin-bottom: 20px; display: block; color: #FFAB00;"></i>
+                                <h3 style="color: var(--grey-700); margin-bottom: 10px;">财务数据管理</h3>
+                                <p style="color: var(--grey-500); margin-bottom: 20px;">收入、支出、应收应付、利润分析等</p>
+                                <button class="btn btn-primary">开始导入财务数据</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 商务数据模块 -->
+                <section id="module-business-data" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-briefcase"></i>
+                            商务数据
+                        </h1>
+                        <div class="page-actions">
+                            <button class="btn btn-outlined">
+                                <i class="fas fa-filter"></i>
+                                筛选
+                            </button>
+                            <button class="btn btn-outlined">
+                                <i class="fas fa-download"></i>
+                                导出
+                            </button>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-plus"></i>
+                                新建商机
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="empty-state" style="padding: 80px 20px; text-align: center;">
+                                <i class="fas fa-briefcase" style="font-size: 64px; opacity: 0.3; margin-bottom: 20px; display: block; color: #FF5630;"></i>
+                                <h3 style="color: var(--grey-700); margin-bottom: 10px;">商务数据管理</h3>
+                                <p style="color: var(--grey-500); margin-bottom: 20px;">商机管理、合同管理、销售跟进等</p>
+                                <button class="btn btn-primary">开始导入商务数据</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 推客管理模块 -->
+                <section id="module-promoter" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-user-plus"></i>
+                            推客管理
+                        </h1>
+                    </div>
+                    <div class="empty-state" style="padding: 100px 20px; text-align: center;">
+                        <div style="font-size: 64px; opacity: 0.3; margin-bottom: 20px;">🚧</div>
+                        <h3 style="color: var(--grey-700); margin-bottom: 10px;">功能开发中</h3>
+                        <p style="color: var(--grey-500);">推客管理功能正在开发中...</p>
+                    </div>
+                </section>
+                
+                <!-- 智能表格模块 -->
+                <section id="module-spreadsheet" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-table"></i>
+                            智能表格
+                        </h1>
+                        <div class="page-actions">
+                            <button class="btn btn-outlined" id="btn-upload-excel">
+                                <i class="fas fa-file-upload"></i>
+                                上传 Excel
+                            </button>
+                            <button class="btn btn-primary" id="btn-create-table">
+                                <i class="fas fa-plus"></i>
+                                手工创建
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 表格列表 -->
+                    <div id="spreadsheet-list" style="display: grid; gap: 24px;">
+                        <!-- 动态加载 -->
+                        <div style="text-align: center; padding: 80px 0; color: var(--grey-500);">
+                            <i class="fas fa-table" style="font-size: 64px; margin-bottom: 16px; display: block; opacity: 0.3;"></i>
+                            <p style="font-size: 18px; margin-bottom: 8px;">还没有智能表格</p>
+                            <p style="font-size: 14px; margin-bottom: 24px;">点击上方按钮创建第一个表格</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 数据分析模块 -->
+                <!-- 系统设置模块 -->
+                <section id="module-settings" class="module" style="display: none;">
+                    <div class="page-header">
+                        <h1 class="page-title">
+                            <i class="fas fa-cog"></i>
+                            系统设置
+                        </h1>
+                    </div>
+                    
+                    <!-- 企业微信配置 -->
+                    <div class="card mb-6">
+                        <div class="card-header">
+                            <h3 class="card-title">企业微信配置</h3>
+                        </div>
+                        <div class="card-body">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                                <div class="form-group">
+                                    <label class="form-label required">企业 ID（CorpID）</label>
+                                    <input type="text" class="form-control" id="settings-corpid" placeholder="请输入企业 ID">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label required">自建应用 Secret</label>
+                                    <input type="password" class="form-control" id="settings-app-secret" placeholder="请输入自建应用 Secret">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label required">应用 AgentId</label>
+                                    <input type="text" class="form-control" id="settings-agentid" placeholder="请输入 AgentId">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">通讯录 Secret</label>
+                                    <input type="password" class="form-control" id="settings-contact-secret" placeholder="请输入通讯录 Secret（可选）">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">客户联系 Secret</label>
+                                    <input type="password" class="form-control" id="settings-customer-secret" placeholder="请输入客户联系 Secret（可选）">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-outlined" onclick="resetWecomConfig()">
+                                <i class="fas fa-undo"></i>
+                                重置
+                            </button>
+                            <button class="btn btn-primary" onclick="saveWecomConfig()">
+                                <i class="fas fa-save"></i>
+                                保存配置
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 配置历史记录 -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-history"></i>
+                                配置历史记录
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-container">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th width="60">序号</th>
+                                            <th width="150">配置类型</th>
+                                            <th>配置内容</th>
+                                            <th width="150">保存时间</th>
+                                            <th width="100">操作人</th>
+                                            <th width="120">操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="config-history-list">
+                                        <tr>
+                                            <td colspan="6" style="text-align: center; padding: 60px 20px; color: var(--grey-500);">
+                                                <i class="fas fa-history" style="font-size: 48px; margin-bottom: 16px; display: block; opacity: 0.3;"></i>
+                                                <p style="font-size: 16px;">暂无配置历史记录</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Toast 提示 -->
+    <div id="toast" class="toast" style="display: none;">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">操作成功</span>
+    </div>
+    
+    <!-- 客户列表弹窗 -->
+    <div id="customer-list-modal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 1200px; width: 90%; max-height: 85vh; overflow: hidden; display: flex; flex-direction: column;">
+            <div class="modal-header" style="padding: 24px; border-bottom: 1px solid rgba(145, 158, 171, 0.12); flex-shrink: 0;">
+                <h3 class="modal-title" style="margin: 0; font-size: 18px; font-weight: 700; color: #212B36;" id="customer-modal-title">客户列表</h3>
+                <button class="modal-close" onclick="closeCustomerModal()" style="background: none; border: none; font-size: 24px; color: #637381; cursor: pointer; padding: 0; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 8px; transition: all 0.2s;" onmouseover="this.style.background='rgba(145, 158, 171, 0.08)'" onmouseout="this.style.background='none'">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" style="padding: 24px; overflow-y: auto; overflow-x: auto; flex: 1;">
+                <div id="customer-list-content">
+                    <div style="text-align: center; padding: 40px; color: #637381;">
+                        <i class="fas fa-spinner fa-spin" style="font-size: 32px; margin-bottom: 16px;"></i>
+                        <div>加载中...</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding: 16px 24px; border-top: 1px solid rgba(145, 158, 171, 0.12); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;">
+                <div id="customer-modal-pagination" style="font-size: 14px; color: #637381;"></div>
+                <button class="btn btn-secondary" onclick="closeCustomerModal()">关闭</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 配置弹窗 -->
+    <div id="config-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-cog"></i>
+                    企业微信配置
+                </div>
+                <button class="modal-close" onclick="closeConfig()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">企业 ID（CorpID）*</label>
+                    <input type="text" class="form-control" id="config-corpid" placeholder="请输入企业 ID">
+                    <small style="color: var(--grey-500); font-size: 12px; margin-top: 4px; display: block;">
+                        登录企业微信管理后台 → 我的企业 → 企业信息 → 企业 ID
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">通讯录 Secret（可选）</label>
+                    <input type="text" class="form-control" id="config-contact-secret" placeholder="请输入通讯录应用 Secret">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">自建应用 Secret（推荐）⭐</label>
+                    <input type="text" class="form-control" id="config-app-secret" placeholder="请输入自建应用 Secret">
+                    <small style="color: var(--grey-500); font-size: 12px; margin-top: 4px; display: block;">
+                        应用管理 → 自建应用 → 点击应用 → 查看 Secret（推荐使用此方式）
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">客户联系 Secret（可选）</label>
+                    <input type="text" class="form-control" id="config-customer-secret" placeholder="请输入客户联系应用 Secret">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">应用 AgentId *</label>
+                    <input type="text" class="form-control" id="config-agentid" placeholder="请输入自建应用 AgentId">
+                    <small style="color: var(--grey-500); font-size: 12px; margin-top: 4px; display: block;">
+                        企业微信管理后台 → 应用管理 → 自建应用 → AgentId
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">API Token</label>
+                    <input type="text" class="form-control" id="config-api-token" placeholder="crm-default-token">
+                    <small style="color: var(--grey-500); font-size: 12px; margin-top: 4px; display: block;">
+                        用于后端 API 认证，默认值：crm-default-token
+                    </small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outlined" onclick="closeConfig()">取消</button>
+                <button class="btn btn-primary" onclick="saveConfig()">
+                    <i class="fas fa-save"></i>
+                    保存配置
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 手工创建表格对话框 -->
+    <div id="create-table-modal" class="modal">
+        <div class="modal-content" style="max-width: 900px;">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-plus-circle"></i>
+                    手工创建智能表格
+                </div>
+                <button class="modal-close" onclick="closeCreateTableDialog()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- 基本信息 -->
+                <div class="form-group">
+                    <label class="form-label">表格名称 <span style="color: var(--danger);">*</span></label>
+                    <input type="text" class="form-control" id="table-name" placeholder="请输入表格名称">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label class="form-label">数据类型 <span style="color: var(--danger);">*</span></label>
+                        <select class="form-control" id="table-data-type" onchange="onDataTypeChange()">
+                            <option value="order">订单信息</option>
+                            <option value="supplier">代理商信息</option>
+                            <option value="product">产品信息</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">数据范围 <span style="color: var(--danger);">*</span></label>
+                        <select class="form-control" id="table-data-scope" onchange="onDataScopeChange()">
+                            <option value="global">全局数据</option>
+                            <option value="supplier">指定供应商</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" id="supplier-select-group" style="display: none;">
+                    <label class="form-label">选择供应商 <span style="color: var(--danger);">*</span></label>
+                    <select class="form-control" id="table-supplier-code">
+                        <!-- 动态加载 -->
+                    </select>
+                </div>
+
+                <div class="card" style="margin: 24px 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h4 style="margin: 0; font-size: 16px; font-weight: 600; color: var(--grey-900);">
+                            字段配置 
+                            <span id="field-count-badge" style="color: var(--primary); font-size: 14px; font-weight: 400;">(0/150)</span>
+                        </h4>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn btn-outlined btn-sm" onclick="showTemplateSelector()">
+                                <i class="fas fa-file-import"></i> 从模板导入
+                            </button>
+                            <button class="btn btn-primary btn-sm" onclick="showAddFieldDialog()">
+                                <i class="fas fa-plus"></i> 添加字段
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="fields-list" style="max-height: 400px; overflow-y: auto;">
+                        <!-- 字段列表 -->
+                        <div style="text-align: center; padding: 60px 20px; color: var(--grey-500);">
+                            <i class="fas fa-list" style="font-size: 48px; margin-bottom: 12px; display: block; opacity: 0.3;"></i>
+                            <p style="font-size: 14px;">还没有字段，请添加或从模板导入</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outlined" onclick="closeCreateTableDialog()">取消</button>
+                <button class="btn btn-primary" onclick="createTableManual()">
+                    <i class="fas fa-check"></i> 创建表格
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 选择模板对话框 -->
+    <div id="template-selector-modal" class="modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-file-import"></i>
+                    选择字段模板
+                </div>
+                <button class="modal-close" onclick="closeTemplateSelector()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="template-list">
+                    <!-- 动态加载模板列表 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加字段对话框 -->
+    <div id="add-field-modal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-plus"></i>
+                    添加字段
+                </div>
+                <button class="modal-close" onclick="closeAddFieldDialog()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">字段显示名称（企业微信）<span style="color: var(--danger);">*</span></label>
+                    <input type="text" class="form-control" id="field-wecom-name" placeholder="例如：客户姓名">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">系统字段名（自有系统）<span style="color: var(--danger);">*</span></label>
+                    <input type="text" class="form-control" id="field-system-name" placeholder="例如：customer_name">
+                    <small style="color: var(--grey-500); font-size: 12px; display: block; margin-top: 4px;">
+                        用于映射自有系统的字段，建议使用英文下划线命名
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">字段类型</label>
+                    <select class="form-control" id="field-type">
+                        <option value="text">文本</option>
+                        <option value="number">数字</option>
+                        <option value="datetime">日期时间</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outlined" onclick="closeAddFieldDialog()">取消</button>
+                <button class="btn btn-primary" onclick="addFieldToList()">
+                    <i class="fas fa-check"></i> 添加
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 上传 Excel 对话框 -->
+    <div id="upload-excel-modal" class="modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-file-upload"></i>
+                    上传 Excel 创建智能表格
+                </div>
+                <button class="modal-close" onclick="closeUploadExcelDialog()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="upload-area" id="upload-area">
+                    <input type="file" id="excel-file-input" accept=".xlsx,.xls" style="display: none;" onchange="handleFileSelect(event)">
+                    <div class="upload-placeholder" onclick="document.getElementById('excel-file-input').click()" 
+                         style="cursor: pointer; padding: 60px 20px; text-align: center; border: 2px dashed var(--grey-300); border-radius: 12px; background: var(--grey-50);">
+                        <i class="fas fa-cloud-upload-alt" style="font-size: 48px; color: var(--primary); margin-bottom: 16px; display: block;"></i>
+                        <p style="font-size: 16px; margin-bottom: 8px; color: var(--grey-900);">点击或拖拽 Excel 文件到此处</p>
+                        <p style="font-size: 14px; color: var(--grey-500);">支持 .xlsx 和 .xls 格式</p>
+                    </div>
+                </div>
+
+                <!-- Excel 预览区 -->
+                <div id="excel-preview-area" style="display: none; margin-top: 20px;">
+                    <div class="form-group">
+                        <label class="form-label">表格名称</label>
+                        <input type="text" class="form-control" id="spreadsheet-name" placeholder="请输入表格名称">
+                    </div>
+
+                    <div style="margin: 20px 0;">
+                        <h4 style="margin-bottom: 12px; font-size: 14px; font-weight: 600; color: var(--grey-900);">数据预览</h4>
+                        <div class="table-container" id="excel-preview-table" style="max-height: 300px; overflow: auto;">
+                            <!-- 动态加载预览表格 -->
+                        </div>
+                        <p style="margin-top: 12px; font-size: 14px; color: var(--grey-500);" id="excel-info">
+                            <!-- 文件信息 -->
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" id="excel-modal-footer" style="display: none;">
+                <button class="btn btn-outlined" onclick="closeUploadExcelDialog()">取消</button>
+                <button class="btn btn-primary" onclick="createSpreadsheetFromExcel()">
+                    <i class="fas fa-check"></i> 创建表格
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 表格详情对话框 -->
+    <div id="spreadsheet-detail-modal" class="modal">
+        <div class="modal-content" style="max-width: 900px;">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-table"></i>
+                    <span id="spreadsheet-detail-title">表格详情</span>
+                </div>
+                <button class="modal-close" onclick="closeSpreadsheetDetail()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="spreadsheet-info" id="spreadsheet-info">
+                    <!-- 动态加载 -->
+                </div>
+
+                <div style="margin: 24px 0;">
+                    <h4 style="margin-bottom: 12px; font-size: 16px; font-weight: 600; color: var(--grey-900);">表格数据</h4>
+                    <div class="table-container" id="spreadsheet-data-table" style="max-height: 400px; overflow: auto;">
+                        <!-- 动态加载 -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content: space-between;">
+                <button class="btn btn-danger" onclick="deleteSpreadsheet()">
+                    <i class="fas fa-trash"></i> 删除
+                </button>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-outlined" onclick="syncSpreadsheet()">
+                        <i class="fas fa-sync-alt"></i> 手动同步
+                    </button>
+                    <button class="btn btn-primary" onclick="openInWecom()">
+                        <i class="fas fa-external-link-alt"></i> 在企业微信中打开
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 企业标签选择器弹窗 -->
+    <div id="tag-selector-modal" class="modal" style="display: none;">
+        <div class="modal-dialog" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-tags"></i>
+                    选择企业标签
+                </h3>
+                <button class="modal-close" onclick="closeTagSelector()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom: 16px;">
+                    <input type="text" class="form-control" id="tag-search" placeholder="搜索标签..." onkeyup="searchTags()">
+                </div>
+                <div id="tag-groups-list" style="max-height: 400px; overflow-y: auto;">
+                    <!-- 动态加载标签组 -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outlined" onclick="closeTagSelector()">取消</button>
+                <button class="btn btn-primary" onclick="confirmTagSelection()">
+                    <i class="fas fa-check"></i> 确定
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 省份选择器弹窗 -->
+    <div id="province-selector-modal" class="modal" style="display: none;">
+        <div class="modal-dialog" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-map-marker-alt"></i>
+                    选择省份
+                </h3>
+                <button class="modal-close" onclick="closeProvinceSelector()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom: 16px;">
+                    <input type="text" class="form-control" id="province-search" placeholder="搜索省份..." onkeyup="searchProvinces()">
+                </div>
+                <div id="provinces-list" style="max-height: 400px; overflow-y: auto;">
+                    <!-- 动态加载省份列表 -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outlined" onclick="closeProvinceSelector()">取消</button>
+                <button class="btn btn-primary" onclick="confirmProvinceSelection()">
+                    <i class="fas fa-check"></i> 确定
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 客户群同步进度弹窗 -->
+    <div id="group-sync-progress-modal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-sync fa-spin"></i> 正在同步客户群
+                </h3>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom: 24px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span id="group-sync-status-text" style="color: var(--grey-700); font-size: 14px;">准备中...</span>
+                        <span id="group-sync-progress-text" style="color: var(--primary-main); font-weight: 600;">0%</span>
+                    </div>
+                    <div style="background: var(--grey-200); height: 10px; border-radius: 10px; overflow: hidden;">
+                        <div id="group-sync-progress-bar" style="width: 0%; height: 100%; background: var(--gradient-primary); transition: width 0.3s;"></div>
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px;">
+                    <div style="background: var(--grey-50); padding: 16px; border-radius: 8px;">
+                        <div style="color: var(--grey-600); font-size: 12px; margin-bottom: 4px;">总数</div>
+                        <div style="color: var(--grey-900); font-size: 24px; font-weight: 600;" id="group-sync-total">0</div>
+                    </div>
+                    <div style="background: var(--grey-50); padding: 16px; border-radius: 8px;">
+                        <div style="color: var(--grey-600); font-size: 12px; margin-bottom: 4px;">已处理</div>
+                        <div style="color: var(--primary-main); font-size: 24px; font-weight: 600;" id="group-sync-processed">0</div>
+                    </div>
+                    <div style="background: rgba(34, 197, 94, 0.1); padding: 16px; border-radius: 8px;">
+                        <div style="color: var(--success); font-size: 12px; margin-bottom: 4px;">新增</div>
+                        <div style="color: var(--success); font-size: 24px; font-weight: 600;" id="group-sync-added">0</div>
+                    </div>
+                    <div style="background: rgba(33, 150, 243, 0.1); padding: 16px; border-radius: 8px;">
+                        <div style="color: var(--secondary-main); font-size: 12px; margin-bottom: 4px;">更新</div>
+                        <div style="color: var(--secondary-main); font-size: 24px; font-weight: 600;" id="group-sync-updated">0</div>
+                    </div>
+                </div>
+                
+                <div id="group-sync-error" style="display: none; padding: 12px; background: var(--error-light); border-radius: 8px; color: var(--error); font-size: 14px; margin-top: 16px;"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outlined" onclick="cancelGroupSync()" id="group-sync-cancel-btn">
+                    <i class="fas fa-times"></i> 取消同步
+                </button>
+                <button class="btn btn-primary" onclick="closeGroupSyncProgress()" id="group-sync-close-btn" style="display: none;">
+                    <i class="fas fa-check"></i> 完成
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 新建/编辑标签组对话框 -->
+    <div id="group-tag-dialog" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2 id="group-tag-dialog-title">选择标签</h2>
+                <button class="modal-close" onclick="closeGroupTagDialog()">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="dialog-tags-container" style="max-height: 400px; overflow-y: auto;">
+                    <!-- 标签选择区域将动态加载 -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outlined" onclick="closeGroupTagDialog()">取消</button>
+                <button class="btn btn-primary" onclick="saveGroupTags()">确定</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 新建/编辑标签组对话框 -->
+    <div id="group-tag-edit-dialog" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2 id="group-tag-edit-dialog-title">新建标签组</h2>
+                <button class="modal-close" onclick="closeGroupTagEditDialog()">×</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="group-tag-group-id">
+                
+                <div class="form-group">
+                    <label for="group-tag-group-name">标签组名称 <span style="color: var(--error);">*</span></label>
+                    <input type="text" id="group-tag-group-name" class="form-control" placeholder="例如：客户群分类">
+                </div>
+                
+                <div class="form-group">
+                    <label for="group-tag-order">排序（数字越小越靠前）</label>
+                    <input type="number" id="group-tag-order" class="form-control" value="1" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label>标签列表</label>
+                    <div id="group-tag-tags-container" style="margin-bottom: 12px;">
+                        <!-- 标签输入框将动态添加 -->
+                    </div>
+                    <button type="button" class="btn btn-outlined btn-sm" onclick="addTagInput()">
+                        <i class="fas fa-plus"></i> 添加标签
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outlined" onclick="closeGroupTagEditDialog()">取消</button>
+                <button class="btn btn-primary" onclick="saveGroupTag()">保存</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 编辑单个标签对话框 -->
+    <div id="edit-tag-dialog" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2>编辑标签</h2>
+                <button class="modal-close" onclick="closeEditTagDialog()">×</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="edit-tag-id">
+                <input type="hidden" id="edit-tag-group-id">
+                
+                <div class="form-group">
+                    <label for="edit-tag-name">标签名称 <span style="color: var(--error);">*</span></label>
+                    <input type="text" id="edit-tag-name" class="form-control" placeholder="请输入标签名称">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit-tag-order">排序</label>
+                    <input type="number" id="edit-tag-order" class="form-control" value="1" min="0">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outlined" onclick="closeEditTagDialog()">取消</button>
+                <button class="btn btn-primary" onclick="saveEditTag()">保存</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/script.js?v=20260126004"></script>
+<script src="/static/wecom-bot.js?v=20260126026"></script>
+    <script src="/static/group-tags-v2.js?v=20260125010"></script>
+    <script>
+        // ========== 初始化检查 ==========
+        console.log('[DEBUG] toggleNavGroup:', typeof window.toggleNavGroup);
+        console.log('[DEBUG] showGroupTagDialog:', typeof window.showGroupTagDialog);
+        console.log('[DEBUG] showBatchTagDialog:', typeof window.showBatchTagDialog);
+        
+        // ========== 客户群标签模块检查 ==========
+        console.log('[初始化] 检查 group-tags.js 是否加载...');
+        console.log('[初始化] loadGroupTags 类型:', typeof window.loadGroupTags);
+        console.log('[初始化] syncGroupTags 类型:', typeof window.syncGroupTags);
+        
+        // 如果函数不存在，等待脚本加载
+        if (typeof window.loadGroupTags === 'undefined') {
+            console.warn('[警告] group-tags.js 未正确加载，尝试重新加载...');
+            const script = document.createElement('script');
+            script.src = '/static/group-tags.js?t=' + new Date().getTime();
+            script.onload = () => {
+                console.log('[初始化] group-tags.js 重新加载成功');
+            };
+            script.onerror = () => {
+                console.error('[错误] group-tags.js 加载失败');
+            };
+            document.body.appendChild(script);
+        }
+        
+        // ========== 客户画像模块（内联代码）==========
+
+        // 加载客户画像数据
+        async function loadCustomerPortrait() {
+            console.log('[客户画像] 开始加载数据...');
+            try {
+                initYearSelector(); // 初始化年份选择器
+                await loadTagStats();
+                await loadProvinceStats();
+                await loadAddWayStats();
+                await loadGenderStats();
+                await loadTimeStats();
+                await loadMonthlyGrowth();
+                await loadEmployeeRanking();
+                await loadHotCombinations();
+                console.log('[客户画像] 所有数据加载完成');
+            } catch (error) {
+                console.error('[客户画像] 加载失败:', error);
+            }
+        }
+
+        // 加载标签统计
+        async function loadTagStats() {
+            try {
+                const response = await fetch(`/api/customer-portrait/tag-stats?api_token=${apiToken}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    const keyTags = result.data.key_tags;
+                    // 修复：更新选择器，匹配新的 class 名称
+                    document.querySelector('#stat-user .stat-value-minimal').textContent = keyTags['用户标签'] + '人';
+                    document.querySelector('#stat-agent .stat-value-minimal').textContent = keyTags['代理商'] + '人';
+                    document.querySelector('#stat-partner .stat-value-minimal').textContent = keyTags['合伙人'] + '人';
+                    document.querySelector('#stat-supplier .stat-value-minimal').textContent = keyTags['供应商'] + '人';
+                    document.querySelector('#stat-peer .stat-value-minimal').textContent = keyTags['同行'] + '人';
+                    document.querySelector('#stat-old-agent .stat-value-minimal').textContent = keyTags['原有老代理'] + '人';
+                }
+            } catch (error) {
+                console.error('[标签统计] 失败:', error);
+            }
+        }
+
+        // 加载省份统计
+        async function loadProvinceStats() {
+            try {
+                const response = await fetch(`/api/customer-portrait/province-stats?api_token=${apiToken}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    const provinceList = document.getElementById('province-list');
+                    const provinces = result.data;
+                    
+                    if (Object.keys(provinces).length === 0) {
+                        provinceList.innerHTML = '<div style="color: #637381; padding: 20px; font-size: 14px;">暂无省份数据</div>';
+                        return;
+                    }
+                    
+                    // Minimal 风格配色
+                    const colors = [
+                        { bg: 'rgba(0, 184, 217, 0.16)', text: '#006C9C' },
+                        { bg: 'rgba(255, 171, 0, 0.16)', text: '#B76E00' },
+                        { bg: 'rgba(255, 86, 48, 0.16)', text: '#B71D18' },
+                        { bg: 'rgba(54, 179, 126, 0.16)', text: '#118D57' },
+                        { bg: 'rgba(94, 53, 177, 0.16)', text: '#4527A0' },
+                        { bg: 'rgba(0, 167, 111, 0.16)', text: '#005249' },
+                        { bg: 'rgba(99, 115, 129, 0.16)', text: '#454F5B' }
+                    ];
+                    
+                    let html = '';
+                    let colorIndex = 0;
+                    
+                    for (const [province, count] of Object.entries(provinces)) {
+                        const color = colors[colorIndex % colors.length];
+                        html += `<div class="province-tag" onclick="showCustomersByProvince('${province}')" style="background: ${color.bg}; color: ${color.text}; cursor: pointer;">${province}<span class="count" style="color: ${color.text};">${count}人</span></div>`;
+                        colorIndex++;
+                    }
+                    
+                    provinceList.innerHTML = html;
+                }
+            } catch (error) {
+                console.error('[省份统计] 失败:', error);
+            }
+        }
+
+        // 加载添加方式统计
+        async function loadAddWayStats() {
+            try {
+                const response = await fetch(`/api/customer-portrait/add-way-stats?api_token=${apiToken}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    renderPieChart('add-way-chart', result.data.items, 'way', 'count');
+                }
+            } catch (error) {
+                console.error('[添加方式统计] 失败:', error);
+            }
+        }
+
+        // 加载性别统计
+        async function loadGenderStats() {
+            try {
+                const response = await fetch(`/api/customer-portrait/gender-stats?api_token=${apiToken}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    renderPieChart('gender-chart', result.data.items, 'gender', 'count');
+                }
+            } catch (error) {
+                console.error('[性别统计] 失败:', error);
+            }
+        }
+
+        // 加载时间维度统计
+        async function loadTimeStats() {
+            try {
+                const response = await fetch(`/api/customer-portrait/time-stats?api_token=${apiToken}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    const data = result.data;
+                    const container = document.getElementById('time-stats-chart');
+                    
+                    const timeItems = [
+                        { label: '今日新增', value: data.today, color: '#00B8D9', bgColor: 'rgba(0, 184, 217, 0.12)', icon: '📅' },
+                        { label: '昨日新增', value: data.yesterday, color: '#637381', bgColor: 'rgba(99, 115, 129, 0.12)', icon: '📆' },
+                        { label: '本周新增', value: data.this_week, color: '#FFAB00', bgColor: 'rgba(255, 171, 0, 0.12)', icon: '📊' },
+                        { label: '上周新增', value: data.last_week, color: '#B78103', bgColor: 'rgba(183, 129, 3, 0.12)', icon: '📈' },
+                        { label: '本月新增', value: data.this_month, color: '#36B37E', bgColor: 'rgba(54, 179, 126, 0.12)', icon: '🗓️' },
+                        { label: '上月新增', value: data.last_month, color: '#5E35B1', bgColor: 'rgba(94, 53, 177, 0.12)', icon: '📅' }
+                    ];
+                    
+                    let html = '';
+                    timeItems.forEach(item => {
+                        html += `
+                            <div style="
+                                padding: 20px; 
+                                background: ${item.bgColor}; 
+                                border-radius: 12px; 
+                                border: 2px solid transparent;
+                                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                                cursor: pointer;
+                            " 
+                            onmouseenter="this.style.borderColor='${item.color}'; this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(145, 158, 171, 0.16)';"
+                            onmouseleave="this.style.borderColor='transparent'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                                    <span style="font-size: 24px; line-height: 1;">${item.icon}</span>
+                                    <span style="font-size: 13px; color: #637381; font-weight: 600;">${item.label}</span>
+                                </div>
+                                <div style="font-size: 28px; font-weight: 800; color: ${item.color}; line-height: 1;">
+                                    ${item.value.toLocaleString()}
+                                </div>
+                                <div style="font-size: 11px; color: #919EAB; margin-top: 4px;">
+                                    人
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    container.innerHTML = html;
+                }
+            } catch (error) {
+                console.error('[时间统计] 失败:', error);
+            }
+        }
+
+        // 渲染饼图（Minimal 风格）
+        function renderPieChart(containerId, data, labelKey, valueKey) {
+            const container = document.getElementById(containerId);
+            if (!container || !data || data.length === 0) {
+                if (container) container.innerHTML = '<div style="color: #919EAB; padding: 50px; text-align: center; font-size: 14px;">暂无数据</div>';
+                return;
+            }
+            
+            const total = data.reduce((sum, item) => sum + item[valueKey], 0);
+            
+            // Minimal 配色方案：低饱和度专业色
+            const colors = [
+                '#00B8D9', // info
+                '#FFAB00', // warning
+                '#FF5630', // error
+                '#36B37E', // success
+                '#5E35B1', // purple
+                '#00A76F', // primary
+                '#637381', // grey
+                '#078DEE'  // blue
+            ];
+            
+            // 判断是添加方式还是性别
+            const isAddWay = containerId === 'add-way-chart';
+            const isGender = containerId === 'gender-chart';
+            
+            // 使用3列网格布局
+            let html = `<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">`;
+            
+            // 只显示前9条数据（3x3正好）
+            const displayData = data.slice(0, 9);
+            
+            displayData.forEach((item, index) => {
+                const color = colors[index % colors.length];
+                const percentage = ((item[valueKey] / total) * 100).toFixed(1);
+                
+                // 判断是添加方式还是性别，添加点击事件
+                const clickHandler = isAddWay 
+                    ? `onclick="showCustomersByAddWay('${item[labelKey].replace(/'/g, "\\'")}')"` 
+                    : isGender 
+                    ? `onclick="showCustomersByGender('${item[labelKey]}')"` 
+                    : '';
+                
+                html += `
+                    <div ${clickHandler} style="position: relative; padding: 14px; background: #FFFFFF; border: 1px solid rgba(145, 158, 171, 0.12); border-radius: 8px; transition: all 0.2s ease; cursor: ${isAddWay || isGender ? 'pointer' : 'default'};" 
+                         onmouseover="this.style.borderColor='${color}'; this.style.boxShadow='0 0 2px 0 rgba(145, 158, 171, 0.2), 0 8px 16px -4px rgba(145, 158, 171, 0.12)';" 
+                         onmouseout="this.style.borderColor='rgba(145, 158, 171, 0.12)'; this.style.boxShadow='none';">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                            <div style="width: 10px; height: 10px; border-radius: 2px; background: ${color}; flex-shrink: 0;"></div>
+                            <div style="font-size: 13px; color: #212B36; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1;">
+                                ${item[labelKey]}
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="font-size: 20px; font-weight: 700; color: #212B36;">
+                                ${item[valueKey].toLocaleString()}
+                            </span>
+                            <span style="font-size: 11px; color: #637381; font-weight: 600;">
+                                ${percentage}%
+                            </span>
+                        </div>
+                        <!-- 进度条 -->
+                        <div style="width: 100%; height: 5px; background: rgba(145, 158, 171, 0.12); border-radius: 2.5px; overflow: hidden;">
+                            <div style="width: ${percentage}%; height: 100%; background: ${color}; border-radius: 2.5px; transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);"></div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // 如果有更多数据，显示"其他"
+            if (data.length > 9) {
+                const othersCount = data.slice(9).reduce((sum, item) => sum + item[valueKey], 0);
+                const othersPercentage = ((othersCount / total) * 100).toFixed(1);
+                
+                html += `
+                    <div style="padding: 14px; background: #F4F6F8; border: 1px solid rgba(145, 158, 171, 0.08); border-radius: 8px;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                            <div style="width: 10px; height: 10px; border-radius: 2px; background: #919EAB; flex-shrink: 0;"></div>
+                            <div style="font-size: 13px; color: #637381; font-weight: 600;">
+                                其他 (${data.length - 9})
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="font-size: 20px; font-weight: 700; color: #212B36;">
+                                ${othersCount.toLocaleString()}
+                            </span>
+                            <span style="font-size: 11px; color: #637381; font-weight: 600;">
+                                ${othersPercentage}%
+                            </span>
+                        </div>
+                        <div style="width: 100%; height: 5px; background: rgba(145, 158, 171, 0.12); border-radius: 2.5px; overflow: hidden;">
+                            <div style="width: ${othersPercentage}%; height: 100%; background: #919EAB; border-radius: 2.5px;"></div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        // 刷新客户画像
+        function refreshCustomerPortrait() {
+            loadCustomerPortrait();
+            loadMonthlyGrowth();
+            loadEmployeeRanking();
+            loadHotCombinations();
+        }
+
+        // ========== 模块2：月度增长趋势 ==========
+        let monthlyGrowthChart = null;
+        
+        // 初始化年份选择器
+        function initYearSelector() {
+            const yearSelect = document.getElementById('growth-year-filter');
+            const currentYear = new Date().getFullYear();
+            
+            // 生成最近5年的选项
+            for (let i = 0; i < 5; i++) {
+                const year = currentYear - i;
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year + '年';
+                if (i === 0) option.selected = true; // 默认选择当前年份
+                yearSelect.appendChild(option);
+            }
+            
+            // 添加"最近12个月"选项
+            const recentOption = document.createElement('option');
+            recentOption.value = 'recent12';
+            recentOption.textContent = '最近12个月';
+            recentOption.selected = true; // 默认选择最近12个月
+            yearSelect.insertBefore(recentOption, yearSelect.firstChild);
+        }
+        
+        async function loadMonthlyGrowth() {
+            const yearFilter = document.getElementById('growth-year-filter').value;
+            const tagType = document.getElementById('growth-tag-filter').value;
+            
+            try {
+                let months = 12;
+                let apiUrl = '';
+                
+                if (yearFilter === 'recent12') {
+                    // 最近12个月（包含本月）
+                    apiUrl = `/api/customer-portrait/monthly-growth?tag_type=${tagType}&months=12&api_token=${apiToken}`;
+                } else {
+                    // 指定年份（1-12月）
+                    apiUrl = `/api/customer-portrait/monthly-growth-by-year?tag_type=${tagType}&year=${yearFilter}&api_token=${apiToken}`;
+                }
+                
+                const response = await fetch(apiUrl);
+                const result = await response.json();
+                
+                if (result.success) {
+                    const data = result.data;
+                    
+                    // 更新统计卡片
+                    document.getElementById('growth-total').textContent = data.total_growth.toLocaleString();
+                    document.getElementById('growth-avg').textContent = data.avg_growth.toLocaleString();
+                    document.getElementById('growth-max').textContent = data.max_month ? `${data.max_month.display} (${data.max_month.count}人)` : '-';
+                    document.getElementById('growth-min').textContent = data.min_month ? `${data.min_month.display} (${data.min_month.count}人)` : '-';
+                    
+                    // 绘制图表
+                    const ctx = document.getElementById('monthly-growth-chart');
+                    
+                    // 销毁旧图表
+                    if (monthlyGrowthChart) {
+                        monthlyGrowthChart.destroy();
+                    }
+                    
+                    monthlyGrowthChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: data.months.map(m => m.display),
+                            datasets: [{
+                                label: '新增客户数',
+                                data: data.months.map(m => m.count),
+                                borderColor: '#00B8D9',
+                                backgroundColor: 'rgba(0, 184, 217, 0.1)',
+                                borderWidth: 2,
+                                fill: true,
+                                tension: 0.4,
+                                pointRadius: 4,
+                                pointHoverRadius: 6,
+                                pointBackgroundColor: '#00B8D9',
+                                pointBorderColor: '#fff',
+                                pointBorderWidth: 2
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            plugins: {
+                                legend: {
+                                    display: false
+                                },
+                                tooltip: {
+                                    backgroundColor: 'rgba(33, 43, 54, 0.9)',
+                                    titleColor: '#fff',
+                                    bodyColor: '#fff',
+                                    borderColor: 'rgba(145, 158, 171, 0.24)',
+                                    borderWidth: 1,
+                                    padding: 12,
+                                    displayColors: false,
+                                    callbacks: {
+                                        label: function(context) {
+                                            return '新增客户：' + context.parsed.y + '人';
+                                        }
+                                    }
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        color: '#637381',
+                                        font: {
+                                            size: 12
+                                        }
+                                    },
+                                    grid: {
+                                        color: 'rgba(145, 158, 171, 0.08)',
+                                        drawBorder: false
+                                    }
+                                },
+                                x: {
+                                    ticks: {
+                                        color: '#637381',
+                                        font: {
+                                            size: 12
+                                        },
+                                        maxRotation: 45,
+                                        minRotation: 45
+                                    },
+                                    grid: {
+                                        display: false,
+                                        drawBorder: false
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('[月度增长] 加载失败:', error);
+            }
+        }
+
+        // ========== 模块3：员工排行榜 ==========
+        let currentEmployeeCustomers = [];
+        
+        async function loadEmployeeRanking() {
+            const tagType = document.getElementById('ranking-tag-filter').value;
+            const container = document.getElementById('employee-ranking-list');
+            
+            container.innerHTML = '<div style="color: #637381; padding: 40px; text-align: center; font-size: 14px;">加载中...</div>';
+            
+            try {
+                const response = await fetch(`/api/customer-portrait/employee-ranking?tag_type=${tagType}&limit=20&api_token=${apiToken}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    const ranking = result.data.ranking;
+                    
+                    if (ranking.length === 0) {
+                        container.innerHTML = '<div style="color: #637381; padding: 40px; text-align: center; font-size: 14px;">暂无数据</div>';
+                        return;
+                    }
+                    
+                    let html = '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">';
+                    
+                    ranking.forEach((item, index) => {
+                        // 排名颜色
+                        let rankColor = '#637381';
+                        let rankBg = 'rgba(145, 158, 171, 0.12)';
+                        let rankIcon = '';
+                        if (index === 0) {
+                            rankColor = '#FFAB00';
+                            rankBg = 'rgba(255, 171, 0, 0.12)';
+                            rankIcon = '🥇';
+                        } else if (index === 1) {
+                            rankColor = '#919EAB';
+                            rankBg = 'rgba(145, 158, 171, 0.16)';
+                            rankIcon = '🥈';
+                        } else if (index === 2) {
+                            rankColor = '#B78103';
+                            rankBg = 'rgba(183, 129, 3, 0.12)';
+                            rankIcon = '🥉';
+                        }
+                        
+                        html += `
+                            <div style="padding: 20px; background: #FFFFFF; border: 1px solid rgba(145, 158, 171, 0.12); border-radius: 12px; transition: all 0.2s; cursor: pointer;"
+                                 onmouseover="this.style.borderColor='${rankColor}'; this.style.boxShadow='0 0 2px 0 rgba(145, 158, 171, 0.2), 0 8px 16px rgba(145, 158, 171, 0.12)'"
+                                 onmouseout="this.style.borderColor='rgba(145, 158, 171, 0.12)'; this.style.boxShadow='none'"
+                                 onclick="showEmployeeCustomers('${item.userid}', '${item.name}', '${tagType}')">
+                                <div style="display: flex; align-items: center; margin-bottom: 16px;">
+                                    <div style="width: 36px; height: 36px; background: ${rankBg}; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: ${rankColor}; flex-shrink: 0;">
+                                        ${rankIcon ? rankIcon : item.rank}
+                                    </div>
+                                    <div style="flex: 1; margin-left: 12px; min-width: 0;">
+                                        <div style="font-size: 14px; font-weight: 600; color: #212B36; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                            ${item.name}
+                                        </div>
+                                        <div style="font-size: 11px; color: #637381; margin-top: 2px;">
+                                            排名 #${item.rank}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 12px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;">
+                                        <span style="font-size: 12px; color: #637381;">客户数</span>
+                                        <span style="font-size: 24px; font-weight: 700; color: #00B8D9;">${item.count}</span>
+                                    </div>
+                                    <div style="width: 100%; height: 6px; background: rgba(145, 158, 171, 0.12); border-radius: 3px; overflow: hidden;">
+                                        <div style="width: ${item.percentage}%; height: 100%; background: linear-gradient(90deg, #00B8D9 0%, #00A76F 100%); border-radius: 3px; transition: width 0.3s ease;"></div>
+                                    </div>
+                                </div>
+                                <div style="text-align: center; padding: 8px; background: rgba(0, 184, 217, 0.08); border-radius: 6px;">
+                                    <span style="font-size: 13px; font-weight: 600; color: #00B8D9;">占比 ${item.percentage}%</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    html += '</div>';
+                    container.innerHTML = html;
+                }
+            } catch (error) {
+                console.error('[员工排行榜] 加载失败:', error);
+                container.innerHTML = '<div style="color: #FF5630; padding: 40px; text-align: center; font-size: 14px;">加载失败，请重试</div>';
+            }
+        }
+        
+        // 显示员工的客户列表
+        async function showEmployeeCustomers(userid, name, tagType) {
+            const modal = document.getElementById('customer-list-modal');
+            const title = document.getElementById('customer-modal-title');
+            const content = document.getElementById('customer-list-content');
+            
+            title.textContent = `${name} - 客户列表`;
+            modal.style.display = 'flex';
+            
+            content.innerHTML = `
+                <div style="text-align: center; padding: 40px; color: #637381;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 32px; margin-bottom: 16px;"></i>
+                    <div>加载中...</div>
+                </div>
+            `;
+            
+            try {
+                // 这里需要添加一个新的API来按员工查询客户
+                // 暂时使用标签筛选API
+                const response = await fetch(`/api/customer-portrait/customers-by-tag?tag_type=${tagType}&page=1&limit=100&api_token=${apiToken}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    // 筛选出该员工的客户
+                    const employeeCustomers = result.data.customers.filter(c => c.owner_userid === userid);
+                    
+                    renderCustomerList({
+                        customers: employeeCustomers,
+                        total: employeeCustomers.length,
+                        page: 1,
+                        limit: 100,
+                        total_pages: 1
+                    }, 'employee', name);
+                }
+            } catch (error) {
+                console.error('[员工客户列表] 加载失败:', error);
+                content.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #FF5630;">
+                        <i class="fas fa-exclamation-circle" style="font-size: 48px; margin-bottom: 16px;"></i>
+                        <div>加载失败，请重试</div>
+                    </div>
+                `;
+            }
+        }
+
+        // ========== 模块4：标签组合分析 ==========
+        let combinationCustomers = [];
+        
+        async function loadHotCombinations() {
+            const container = document.getElementById('hot-combinations-list');
+            container.innerHTML = '<div style="color: #637381; padding: 20px; font-size: 14px;">加载中...</div>';
+            
+            try {
+                const response = await fetch(`/api/customer-portrait/tag-combinations?limit=10&api_token=${apiToken}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    const combinations = result.data.hot_combinations;
+                    
+                    if (combinations.length === 0) {
+                        container.innerHTML = '<div style="color: #637381; padding: 20px; font-size: 14px;">暂无数据</div>';
+                        return;
+                    }
+                    
+                    let html = '';
+                    
+                    combinations.forEach((combo, index) => {
+                        const color = ['#00B8D9', '#FFAB00', '#FF5630', '#36B37E', '#5E35B1'][index % 5];
+                        
+                        html += `
+                            <div style="padding: 16px; background: white; border: 1px solid rgba(145, 158, 171, 0.12); border-radius: 8px; transition: all 0.2s; cursor: pointer;"
+                                 onmouseover="this.style.borderColor='${color}'; this.style.boxShadow='0 0 2px 0 rgba(145, 158, 171, 0.2), 0 4px 8px rgba(145, 158, 171, 0.12)'"
+                                 onmouseout="this.style.borderColor='rgba(145, 158, 171, 0.12)'; this.style.boxShadow='none'"
+                                 onclick="quickSearchCombination('${combo.tags.join(',')}')">
+                                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                                    <div style="font-size: 14px; font-weight: 600; color: #212B36;">
+                                        ${combo.display}
+                                    </div>
+                                    <div style="font-size: 18px; font-weight: 700; color: ${color};">
+                                        ${combo.count}
+                                    </div>
+                                </div>
+                                <div style="font-size: 12px; color: #637381;">
+                                    点击查看客户列表
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    container.innerHTML = html;
+                }
+            } catch (error) {
+                console.error('[热门组合] 加载失败:', error);
+                container.innerHTML = '<div style="color: #FF5630; padding: 20px; font-size: 14px;">加载失败，请重试</div>';
+            }
+        }
+        
+        // 搜索标签组合
+        async function searchTagCombination() {
+            const input = document.getElementById('combo-tag-input').value.trim();
+            if (!input) {
+                alert('请输入标签名称');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/customer-portrait/tag-combinations?tags=${encodeURIComponent(input)}&api_token=${apiToken}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    combinationCustomers = result.data.customers;
+                    const count = result.data.total;
+                    
+                    document.getElementById('combo-count').textContent = count;
+                    document.getElementById('combo-result').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('[标签组合查询] 失败:', error);
+                alert('查询失败，请重试');
+            }
+        }
+        
+        // 快速搜索组合（点击热门组合时）
+        async function quickSearchCombination(tags) {
+            document.getElementById('combo-tag-input').value = tags;
+            await searchTagCombination();
+            
+            // 自动打开客户列表
+            if (combinationCustomers.length > 0) {
+                showCombinationCustomers();
+            }
+        }
+        
+        // 显示组合客户列表
+        function showCombinationCustomers() {
+            if (combinationCustomers.length === 0) {
+                alert('没有找到匹配的客户');
+                return;
+            }
+            
+            // 打开模态框
+            const modal = document.getElementById('customer-list-modal');
+            const title = document.getElementById('customer-modal-title');
+            modal.style.display = 'flex';
+            title.textContent = '标签组合 - 客户列表';
+            
+            renderCustomerList({
+                customers: combinationCustomers,
+                total: combinationCustomers.length,
+                page: 1,
+                limit: 100,
+                total_pages: 1
+            }, 'combination', '标签组合');
+        }
+
+        // 显示指定标签的客户列表（支持分页）
+        let currentTagType = '';
+        let currentTagName = '';
+        let currentCustomerPage = 1;
+        const customerPageLimit = 10;
+
+        async function showCustomersByTag(tagType, tagName, page = 1) {
+            currentTagType = tagType;
+            currentTagName = tagName;
+            currentCustomerPage = page;
+            
+            const modal = document.getElementById('customer-list-modal');
+            const title = document.getElementById('customer-modal-title');
+            const content = document.getElementById('customer-list-content');
+            
+            title.textContent = `${tagName} - 客户列表`;
+            modal.style.display = 'flex';
+            
+            content.innerHTML = `
+                <div style="text-align: center; padding: 40px; color: #637381;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 32px; margin-bottom: 16px;"></i>
+                    <div>加载中...</div>
+                </div>
+            `;
+            
+            try {
+                const response = await fetch(`/api/customer-portrait/customers-by-tag?tag_type=${tagType}&page=${page}&limit=${customerPageLimit}&api_token=${apiToken}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    const customers = result.data.customers;
+                    const total = result.data.total;
+                    const totalPages = result.data.total_pages;
+                    
+                    if (customers.length === 0) {
+                        content.innerHTML = `
+                            <div style="text-align: center; padding: 40px; color: #637381;">
+                                <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+                                <div>暂无客户数据</div>
+                            </div>
+                        `;
+                        document.getElementById('customer-modal-pagination').innerHTML = '';
+                        return;
+                    }
+                    
+                    // 渲染客户列表表格
+                    let html = `
+                        <table style="width: 100%; border-collapse: separate; border-spacing: 0 8px;">
+                            <thead>
+                                <tr style="background: #F4F6F8;">
+                                    <th style="padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; color: #637381; border-radius: 8px 0 0 8px;">客户头像</th>
+                                    <th style="padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; color: #637381;">用户昵称</th>
+                                    <th style="padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; color: #637381;">用户备注</th>
+                                    <th style="padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; color: #637381;">所属员工</th>
+                                    <th style="padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; color: #637381;">所属群</th>
+                                    <th style="padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; color: #637381;">性别</th>
+                                    <th style="padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; color: #637381;">客户标签</th>
+                                    <th style="padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; color: #637381; border-radius: 0 8px 8px 0;">添加时间</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+                    
+                    customers.forEach((customer, index) => {
+                        const genderText = customer.gender === 1 ? '男' : customer.gender === 2 ? '女' : '未知';
+                        const genderIcon = customer.gender === 1 ? '<i class="fas fa-mars" style="color: #00B8D9; margin-left: 4px;"></i>' : 
+                                          customer.gender === 2 ? '<i class="fas fa-venus" style="color: #FF5630; margin-left: 4px;"></i>' : 
+                                          '<i class="fas fa-genderless" style="color: #637381; margin-left: 4px;"></i>';
+                        
+                        const addTime = customer.add_time ? new Date(customer.add_time * 1000).toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '-';
+                        
+                        const tags = customer.tags.slice(0, 2).map(tag => 
+                            `<span style="display: inline-block; padding: 2px 8px; background: rgba(0, 167, 111, 0.12); color: #005249; border-radius: 4px; font-size: 11px; margin-right: 4px; white-space: nowrap;">${tag}</span>`
+                        ).join('');
+                        
+                        const moreTags = customer.tags.length > 2 ? `<span style="color: #637381; font-size: 11px;">+${customer.tags.length - 2}</span>` : '';
+                        
+                        html += `
+                            <tr style="background: #FFFFFF; border: 1px solid rgba(145, 158, 171, 0.12); transition: all 0.2s;" 
+                                onmouseover="this.style.background='#F4F6F8'; this.style.boxShadow='0 0 2px 0 rgba(145, 158, 171, 0.2), 0 4px 8px rgba(145, 158, 171, 0.12)'" 
+                                onmouseout="this.style.background='#FFFFFF'; this.style.boxShadow='none'">
+                                <td style="padding: 12px 16px; border-radius: 8px 0 0 8px;">
+                                    <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, rgba(0, 184, 217, 0.2) 0%, rgba(0, 184, 217, 0.1) 100%); display: flex; align-items: center; justify-content: center; font-size: 18px; color: #00B8D9;">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                </td>
+                                <td style="padding: 12px 16px;">
+                                    <div style="font-size: 14px; font-weight: 600; color: #212B36;">${customer.name || '-'}</div>
+                                </td>
+                                <td style="padding: 12px 16px;">
+                                    <div style="font-size: 13px; color: #637381;">${customer.remark || '-'}</div>
+                                </td>
+                                <td style="padding: 12px 16px;">
+                                    <div style="font-size: 13px; color: #212B36;">${customer.owner_name || customer.owner_userid || '-'}</div>
+                                </td>
+                                <td style="padding: 12px 16px;">
+                                    <div style="font-size: 13px; color: #637381;">-</div>
+                                </td>
+                                <td style="padding: 12px 16px;">
+                                    <div style="font-size: 13px; color: #212B36; display: flex; align-items: center;">
+                                        ${genderText}${genderIcon}
+                                    </div>
+                                </td>
+                                <td style="padding: 12px 16px;">
+                                    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px;">
+                                        ${tags}
+                                        ${moreTags}
+                                    </div>
+                                </td>
+                                <td style="padding: 12px 16px; border-radius: 0 8px 8px 0;">
+                                    <div style="font-size: 12px; color: #637381; white-space: nowrap;">${addTime}</div>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    
+                    html += '</tbody></table>';
+                    content.innerHTML = html;
+                    
+                    // 更新分页信息
+                    renderCustomerPagination(page, totalPages, total);
+                } else {
+                    content.innerHTML = `
+                        <div style="text-align: center; padding: 40px; color: #FF5630;">
+                            <i class="fas fa-exclamation-circle" style="font-size: 48px; margin-bottom: 16px;"></i>
+                            <div>${result.message || '加载失败'}</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('加载客户列表失败:', error);
+                content.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #FF5630;">
+                        <i class="fas fa-exclamation-circle" style="font-size: 48px; margin-bottom: 16px;"></i>
+                        <div>加载失败，请重试</div>
+                    </div>
+                `;
+            }
+        }
+
+        // 渲染分页组件
+        function renderCustomerPagination(currentPage, totalPages, total) {
+            const paginationContainer = document.getElementById('customer-modal-pagination');
+            
+            let html = `
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <span style="font-size: 14px; color: #637381;">共 ${total} 位客户</span>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <button onclick="showCustomersByTag('${currentTagType}', '${currentTagName}', ${currentPage - 1})" 
+                                ${currentPage === 1 ? 'disabled' : ''}
+                                style="padding: 6px 12px; border: 1px solid rgba(145, 158, 171, 0.24); border-radius: 6px; background: white; color: #637381; font-size: 13px; cursor: pointer; transition: all 0.2s;"
+                                ${currentPage === 1 ? '' : 'onmouseover="this.style.background=\'#F4F6F8\'" onmouseout="this.style.background=\'white\'"'}>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <span style="font-size: 13px; color: #212B36; font-weight: 600;">${currentPage} / ${totalPages}</span>
+                        <button onclick="showCustomersByTag('${currentTagType}', '${currentTagName}', ${currentPage + 1})" 
+                                ${currentPage >= totalPages ? 'disabled' : ''}
+                                style="padding: 6px 12px; border: 1px solid rgba(145, 158, 171, 0.24); border-radius: 6px; background: white; color: #637381; font-size: 13px; cursor: pointer; transition: all 0.2s;"
+                                ${currentPage >= totalPages ? '' : 'onmouseover="this.style.background=\'#F4F6F8\'" onmouseout="this.style.background=\'white\'"'}>
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            paginationContainer.innerHTML = html;
+        }
+
+        // 关闭客户列表弹窗
+        function closeCustomerModal() {
+            document.getElementById('customer-list-modal').style.display = 'none';
+        }
+
+        // 当前筛选状态
+        let currentFilterType = '';
+        let currentFilterValue = '';
+        let currentFilterPage = 1;
+
+        // 根据省份显示客户列表
+        async function showCustomersByProvince(province, page = 1) {
+            currentFilterType = 'province';
+            currentFilterValue = province;
+            currentFilterPage = page;
+            
+            const modal = document.getElementById('customer-list-modal');
+            const title = document.getElementById('customer-modal-title');
+            const content = document.getElementById('customer-list-content');
+            
+            title.textContent = `${province} - 客户列表`;
+            modal.style.display = 'flex';
+            
+            content.innerHTML = `
+                <div style="text-align: center; padding: 40px; color: #637381;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 32px; margin-bottom: 16px;"></i>
+                    <div>加载中...</div>
+                </div>
+            `;
+            
+            try {
+                const response = await fetch(`/api/customer-portrait/customers-by-filter?filter_type=province&filter_value=${encodeURIComponent(province)}&page=${page}&limit=${customerPageLimit}&api_token=${apiToken}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    renderCustomerList(result.data, 'province', province);
+                } else {
+                    content.innerHTML = `
+                        <div style="text-align: center; padding: 40px; color: #FF5630;">
+                            <i class="fas fa-exclamation-circle" style="font-size: 48px; margin-bottom: 16px;"></i>
+                            <div>${result.message || '加载失败'}</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('加载客户列表失败:', error);
+                content.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #FF5630;">
+                        <i class="fas fa-exclamation-circle" style="font-size: 48px; margin-bottom: 16px;"></i>
+                        <div>加载失败，请重试</div>
+                    </div>
+                `;
+            }
+        }
+
+        // 根据添加方式显示客户列表
+        async function showCustomersByAddWay(addWay, page = 1) {
+            currentFilterType = 'add_way';
+            currentFilterValue = addWay;
+            currentFilterPage = page;
+            
+            const modal = document.getElementById('customer-list-modal');
+            const title = document.getElementById('customer-modal-title');
+            const content = document.getElementById('customer-list-content');
+            
+            title.textContent = `${addWay} - 客户列表`;
+            modal.style.display = 'flex';
+            
+            content.innerHTML = `
+                <div style="text-align: center; padding: 40px; color: #637381;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 32px; margin-bottom: 16px;"></i>
+                    <div>加载中...</div>
+                </div>
+            `;
+            
+            try {
+                const response = await fetch(`/api/customer-portrait/customers-by-filter?filter_type=add_way&filter_value=${encodeURIComponent(addWay)}&page=${page}&limit=${customerPageLimit}&api_token=${apiToken}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    renderCustomerList(result.data, 'add_way', addWay);
+                } else {
+                    content.innerHTML = `
+                        <div style="text-align: center; padding: 40px; color: #FF5630;">
+                            <i class="fas fa-exclamation-circle" style="font-size: 48px; margin-bottom: 16px;"></i>
+                            <div>${result.message || '加载失败'}</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('加载客户列表失败:', error);
+                content.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #FF5630;">
+                        <i class="fas fa-exclamation-circle" style="font-size: 48px; margin-bottom: 16px;"></i>
+                        <div>加载失败，请重试</div>
+                    </div>
+                `;
+            }
+        }
+
+        // 根据性别显示客户列表
+        async function showCustomersByGender(gender, page = 1) {
+            currentFilterType = 'gender';
+            currentFilterValue = gender;
+            currentFilterPage = page;
+            
+            const modal = document.getElementById('customer-list-modal');
+            const title = document.getElementById('customer-modal-title');
+            const content = document.getElementById('customer-list-content');
+            
+            title.textContent = `性别：${gender} - 客户列表`;
+            modal.style.display = 'flex';
+            
+            content.innerHTML = `
+                <div style="text-align: center; padding: 40px; color: #637381;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 32px; margin-bottom: 16px;"></i>
+                    <div>加载中...</div>
+                </div>
+            `;
+            
+            try {
+                const response = await fetch(`/api/customer-portrait/customers-by-filter?filter_type=gender&filter_value=${encodeURIComponent(gender)}&page=${page}&limit=${customerPageLimit}&api_token=${apiToken}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    renderCustomerList(result.data, 'gender', gender);
+                } else {
+                    content.innerHTML = `
+                        <div style="text-align: center; padding: 40px; color: #FF5630;">
+                            <i class="fas fa-exclamation-circle" style="font-size: 48px; margin-bottom: 16px;"></i>
+                            <div>${result.message || '加载失败'}</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('加载客户列表失败:', error);
+                content.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #FF5630;">
+                        <i class="fas fa-exclamation-circle" style="font-size: 48px; margin-bottom: 16px;"></i>
+                        <div>加载失败，请重试</div>
+                    </div>
+                `;
+            }
+        }
+
+        // 通用渲染客户列表函数（复用showCustomersByTag的渲染逻辑）
+        function renderCustomerList(data, filterType, filterValue) {
+            const content = document.getElementById('customer-list-content');
+            const customers = data.customers;
+            const total = data.total;
+            const totalPages = data.total_pages;
+            const currentPage = data.page;
+            
+            if (customers.length === 0) {
+                content.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #637381;">
+                        <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+                        <div>暂无客户数据</div>
+                    </div>
+                `;
+                document.getElementById('customer-modal-pagination').innerHTML = '';
+                return;
+            }
+            
+            // 使用与 showCustomersByTag 相同的表格渲染逻辑
+            let html = `
+                <table style="width: 100%; border-collapse: separate; border-spacing: 0 8px;">
+                    <thead>
+                        <tr style="background: #F4F6F8;">
+                            <th style="padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; color: #637381; border-radius: 8px 0 0 8px;">客户头像</th>
+                            <th style="padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; color: #637381;">用户昵称</th>
+                            <th style="padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; color: #637381;">用户备注</th>
+                            <th style="padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; color: #637381;">所属员工</th>
+                            <th style="padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; color: #637381;">所属群</th>
+                            <th style="padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; color: #637381;">性别</th>
+                            <th style="padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; color: #637381;">客户标签</th>
+                            <th style="padding: 12px 16px; text-align: left; font-size: 13px; font-weight: 600; color: #637381; border-radius: 0 8px 8px 0;">添加时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            customers.forEach((customer, index) => {
+                const genderText = customer.gender === 1 ? '男' : customer.gender === 2 ? '女' : '未知';
+                const genderIcon = customer.gender === 1 ? '<i class="fas fa-mars" style="color: #00B8D9; margin-left: 4px;"></i>' : 
+                                  customer.gender === 2 ? '<i class="fas fa-venus" style="color: #FF5630; margin-left: 4px;"></i>' : 
+                                  '<i class="fas fa-genderless" style="color: #637381; margin-left: 4px;"></i>';
+                
+                const addTime = customer.add_time ? new Date(customer.add_time * 1000).toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '-';
+                
+                // 处理标签数据：支持 tags 或 enterprise_tags
+                let customerTags = [];
+                if (customer.tags && Array.isArray(customer.tags)) {
+                    customerTags = customer.tags;
+                } else if (customer.enterprise_tags && Array.isArray(customer.enterprise_tags)) {
+                    customerTags = customer.enterprise_tags.map(t => t.tag_name || t.name || t);
+                }
+                
+                const tags = customerTags.slice(0, 2).map(tag => 
+                    `<span style="display: inline-block; padding: 2px 8px; background: rgba(0, 167, 111, 0.12); color: #005249; border-radius: 4px; font-size: 11px; margin-right: 4px; white-space: nowrap;">${tag}</span>`
+                ).join('');
+                
+                const moreTags = customerTags.length > 2 ? `<span style="color: #637381; font-size: 11px;">+${customerTags.length - 2}</span>` : '';
+                
+                html += `
+                    <tr style="background: #FFFFFF; border: 1px solid rgba(145, 158, 171, 0.12); transition: all 0.2s;" 
+                        onmouseover="this.style.background='#F4F6F8'; this.style.boxShadow='0 0 2px 0 rgba(145, 158, 171, 0.2), 0 4px 8px rgba(145, 158, 171, 0.12)'" 
+                        onmouseout="this.style.background='#FFFFFF'; this.style.boxShadow='none'">
+                        <td style="padding: 12px 16px; border-radius: 8px 0 0 8px;">
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, rgba(0, 184, 217, 0.2) 0%, rgba(0, 184, 217, 0.1) 100%); display: flex; align-items: center; justify-content: center; font-size: 18px; color: #00B8D9;">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </td>
+                        <td style="padding: 12px 16px;">
+                            <div style="font-size: 14px; font-weight: 600; color: #212B36;">${customer.name || '-'}</div>
+                        </td>
+                        <td style="padding: 12px 16px;">
+                            <div style="font-size: 13px; color: #637381;">${customer.remark || '-'}</div>
+                        </td>
+                        <td style="padding: 12px 16px;">
+                            <div style="font-size: 13px; color: #212B36;">${customer.owner_name || customer.owner_userid || '-'}</div>
+                        </td>
+                        <td style="padding: 12px 16px;">
+                            <div style="font-size: 13px; color: #637381;">-</div>
+                        </td>
+                        <td style="padding: 12px 16px;">
+                            <div style="font-size: 13px; color: #212B36; display: flex; align-items: center;">
+                                ${genderText}${genderIcon}
+                            </div>
+                        </td>
+                        <td style="padding: 12px 16px;">
+                            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px;">
+                                ${tags}
+                                ${moreTags}
+                            </div>
+                        </td>
+                        <td style="padding: 12px 16px; border-radius: 0 8px 8px 0;">
+                            <div style="font-size: 12px; color: #637381; white-space: nowrap;">${addTime}</div>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            html += '</tbody></table>';
+            content.innerHTML = html;
+            
+            // 更新分页
+            const paginationContainer = document.getElementById('customer-modal-pagination');
+            let paginationHtml = `
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <span style="font-size: 14px; color: #637381;">共 ${total} 位客户</span>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+            `;
+            
+            // 根据 filterType 生成不同的分页按钮
+            if (filterType === 'province') {
+                paginationHtml += `
+                    <button onclick="showCustomersByProvince('${filterValue}', ${currentPage - 1})" 
+                            ${currentPage === 1 ? 'disabled' : ''}
+                            style="padding: 6px 12px; border: 1px solid rgba(145, 158, 171, 0.24); border-radius: 6px; background: white; color: #637381; font-size: 13px; cursor: pointer; transition: all 0.2s;"
+                            ${currentPage === 1 ? '' : 'onmouseover="this.style.background=\'#F4F6F8\'" onmouseout="this.style.background=\'white\'"'}>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <span style="font-size: 13px; color: #212B36; font-weight: 600;">${currentPage} / ${totalPages}</span>
+                    <button onclick="showCustomersByProvince('${filterValue}', ${currentPage + 1})" 
+                            ${currentPage >= totalPages ? 'disabled' : ''}
+                            style="padding: 6px 12px; border: 1px solid rgba(145, 158, 171, 0.24); border-radius: 6px; background: white; color: #637381; font-size: 13px; cursor: pointer; transition: all 0.2s;"
+                            ${currentPage >= totalPages ? '' : 'onmouseover="this.style.background=\'#F4F6F8\'" onmouseout="this.style.background=\'white\'"'}>
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                `;
+            } else if (filterType === 'add_way') {
+                paginationHtml += `
+                    <button onclick="showCustomersByAddWay('${filterValue}', ${currentPage - 1})" 
+                            ${currentPage === 1 ? 'disabled' : ''}
+                            style="padding: 6px 12px; border: 1px solid rgba(145, 158, 171, 0.24); border-radius: 6px; background: white; color: #637381; font-size: 13px; cursor: pointer; transition: all 0.2s;"
+                            ${currentPage === 1 ? '' : 'onmouseover="this.style.background=\'#F4F6F8\'" onmouseout="this.style.background=\'white\'"'}>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <span style="font-size: 13px; color: #212B36; font-weight: 600;">${currentPage} / ${totalPages}</span>
+                    <button onclick="showCustomersByAddWay('${filterValue}', ${currentPage + 1})" 
+                            ${currentPage >= totalPages ? 'disabled' : ''}
+                            style="padding: 6px 12px; border: 1px solid rgba(145, 158, 171, 0.24); border-radius: 6px; background: white; color: #637381; font-size: 13px; cursor: pointer; transition: all 0.2s;"
+                            ${currentPage >= totalPages ? '' : 'onmouseover="this.style.background=\'#F4F6F8\'" onmouseout="this.style.background=\'white\'"'}>
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                `;
+            } else if (filterType === 'gender') {
+                paginationHtml += `
+                    <button onclick="showCustomersByGender('${filterValue}', ${currentPage - 1})" 
+                            ${currentPage === 1 ? 'disabled' : ''}
+                            style="padding: 6px 12px; border: 1px solid rgba(145, 158, 171, 0.24); border-radius: 6px; background: white; color: #637381; font-size: 13px; cursor: pointer; transition: all 0.2s;"
+                            ${currentPage === 1 ? '' : 'onmouseover="this.style.background=\'#F4F6F8\'" onmouseout="this.style.background=\'white\'"'}>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <span style="font-size: 13px; color: #212B36; font-weight: 600;">${currentPage} / ${totalPages}</span>
+                    <button onclick="showCustomersByGender('${filterValue}', ${currentPage + 1})" 
+                            ${currentPage >= totalPages ? 'disabled' : ''}
+                            style="padding: 6px 12px; border: 1px solid rgba(145, 158, 171, 0.24); border-radius: 6px; background: white; color: #637381; font-size: 13px; cursor: pointer; transition: all 0.2s;"
+                            ${currentPage >= totalPages ? '' : 'onmouseover="this.style.background=\'#F4F6F8\'" onmouseout="this.style.background=\'white\'"'}>
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                `;
+            }
+            
+            paginationHtml += `
+                    </div>
+                </div>
+            `;
+            
+            paginationContainer.innerHTML = paginationHtml;
+        }
+
+        // 点击弹窗外部关闭
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('customer-list-modal');
+            if (e.target === modal) {
+                closeCustomerModal();
+            }
+        });
+
+        // 监听客户画像模块切换
+        document.addEventListener('DOMContentLoaded', () => {
+            const navItems = document.querySelectorAll('.nav-item[data-module="customer-profile"]');
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    setTimeout(() => loadCustomerPortrait(), 200);
+                });
+            });
+        });
+
+        console.log('[客户画像] 模块加载完成');
+    </script>
+    
+
+</body>
+</html>

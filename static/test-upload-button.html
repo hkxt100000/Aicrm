@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>测试 - 智能表格按钮</title>
+    <style>
+        .modal { display: none; }
+        .modal.active { display: block; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 2px solid #333; z-index: 9999; }
+    </style>
+</head>
+<body>
+    <h1>测试上传 Excel 按钮</h1>
+    
+    <button onclick="showUploadExcelDialog()">上传 Excel（测试按钮）</button>
+    
+    <div id="upload-excel-modal" class="modal">
+        <h3>上传 Excel 对话框</h3>
+        <p>如果您看到这个对话框，说明函数正常工作！</p>
+        <button onclick="closeUploadExcelDialog()">关闭</button>
+    </div>
+    
+    <script>
+        // 测试函数定义
+        function showUploadExcelDialog() {
+            console.log('showUploadExcelDialog 被调用');
+            const modal = document.getElementById('upload-excel-modal');
+            if (modal) {
+                modal.classList.add('active');
+                console.log('✅ 对话框已显示');
+            } else {
+                console.error('❌ 找不到模态框元素');
+            }
+        }
+        
+        function closeUploadExcelDialog() {
+            console.log('closeUploadExcelDialog 被调用');
+            document.getElementById('upload-excel-modal').classList.remove('active');
+        }
+        
+        // 页面加载完成后测试
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('=== 页面加载完成，开始测试 ===');
+            
+            // 测试 1: 检查函数是否存在
+            console.log('typeof showUploadExcelDialog:', typeof showUploadExcelDialog);
+            
+            // 测试 2: 检查模态框元素是否存在
+            const modal = document.getElementById('upload-excel-modal');
+            console.log('modal 元素:', modal ? '✅ 存在' : '❌ 不存在');
+            
+            // 测试 3: 手动调用函数
+            console.log('尝试手动调用 showUploadExcelDialog()...');
+            try {
+                showUploadExcelDialog();
+                console.log('✅ 调用成功');
+                setTimeout(() => closeUploadExcelDialog(), 2000);
+            } catch(e) {
+                console.error('❌ 调用失败:', e);
+            }
+        });
+    </script>
+</body>
+</html>
