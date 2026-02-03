@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - 天号城企微CRM</title>
+    <style>
+        /* ========== 基础样式 ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* 苹果设计系统颜色 */
+            --apple-blue: #007AFF;
+            --apple-blue-hover: #0051D5;
+            --apple-gray: #8E8E93;
+            --apple-light-gray: #F2F2F7;
+            --apple-separator: rgba(60, 60, 67, 0.36);
+            --apple-label: rgba(0, 0, 0, 0.85);
+            --apple-secondary-label: rgba(60, 60, 67, 0.6);
+            --apple-background: #FFFFFF;
+            --apple-shadow: rgba(0, 0, 0, 0.1);
+            
+            /* 圆角 */
+            --radius-small: 8px;
+            --radius-medium: 12px;
+            --radius-large: 20px;
+            
+            /* 间距 */
+            --spacing-xs: 8px;
+            --spacing-sm: 12px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'PingFang SC', 'Helvetica Neue', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to bottom, #F5F5F7 0%, #FFFFFF 100%);
+            padding: var(--spacing-lg);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ========== 登录容器 ========== */
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== Logo 区域 ========== */
+        .logo-section {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .logo-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto var(--spacing-md);
+            background: linear-gradient(135deg, var(--apple-blue) 0%, #5AC8FA 100%);
+            border-radius: var(--radius-large);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 122, 255, 0.3);
+        }
+
+        .logo-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--apple-label);
+            letter-spacing: -0.5px;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .logo-subtitle {
+            font-size: 15px;
+            color: var(--apple-secondary-label);
+            font-weight: 400;
+        }
+
+        /* ========== 登录卡片 ========== */
+        .login-card {
+            background: var(--apple-background);
+            border-radius: var(--radius-large);
+            padding: var(--spacing-xl);
+            box-shadow: 
+                0 0 1px rgba(0, 0, 0, 0.04),
+                0 2px 6px rgba(0, 0, 0, 0.04),
+                0 16px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        /* ========== 表单组 ========== */
+        .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .form-group:last-of-type {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--apple-label);
+            margin-bottom: var(--spacing-xs);
+            letter-spacing: -0.1px;
+        }
+
+        /* ========== 输入框 ========== */
+        .form-input {
+            width: 100%;
+            height: 44px;
+            padding: 0 var(--spacing-md);
+            font-size: 17px;
+            font-weight: 400;
+            color: var(--apple-label);
+            background: var(--apple-light-gray);
+            border: 1.5px solid transparent;
+            border-radius: var(--radius-medium);
+            outline: none;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .form-input::placeholder {
+            color: var(--apple-gray);
+        }
+
+        .form-input:focus {
+            background: white;
+            border-color: var(--apple-blue);
+            box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
+        }
+
+        .form-input:hover:not(:focus) {
+            background: #E8E8ED;
+        }
+
+        /* ========== 记住我复选框 ========== */
+        .remember-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .remember-checkbox {
+            width: 20px;
+            height: 20px;
+            margin-right: var(--spacing-xs);
+            cursor: pointer;
+            accent-color: var(--apple-blue);
+        }
+
+        .remember-label {
+            font-size: 15px;
+            color: var(--apple-label);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* ========== 登录按钮 ========== */
+        .login-button {
+            width: 100%;
+            height: 50px;
+            background: var(--apple-blue);
+            color: white;
+            font-size: 17px;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--radius-medium);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            letter-spacing: -0.2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-button:hover {
+            background: var(--apple-blue-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.3);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(0, 122, 255, 0.2);
+        }
+
+        .login-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* 按钮加载状态 */
+        .login-button.loading {
+            pointer-events: none;
+        }
+
+        .login-button .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto;
+        }
+
+        .login-button.loading .spinner {
+            display: block;
+        }
+
+        .login-button.loading .button-text {
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ========== 错误提示 ========== */
+        .error-message {
+            display: none;
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: rgba(255, 59, 48, 0.1);
+            border: 1px solid rgba(255, 59, 48, 0.2);
+            border-radius: var(--radius-small);
+            color: #FF3B30;
+            font-size: 14px;
+            margin-bottom: var(--spacing-md);
+            animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* ========== 页脚 ========== */
+        .login-footer {
+            text-align: center;
+            margin-top: var(--spacing-lg);
+            font-size: 13px;
+            color: var(--apple-secondary-label);
+        }
+
+        .login-footer a {
+            color: var(--apple-blue);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .login-footer a:hover {
+            opacity: 0.7;
+        }
+
+        /* ========== 响应式设计 ========== */
+        @media (max-width: 480px) {
+            body {
+                padding: var(--spacing-md);
+            }
+
+            .login-card {
+                padding: var(--spacing-lg);
+            }
+
+            .logo-icon {
+                width: 64px;
+                height: 64px;
+                font-size: 32px;
+            }
+
+            .logo-title {
+                font-size: 24px;
+            }
+
+            .logo-subtitle {
+                font-size: 14px;
+            }
+        }
+
+        /* ========== 暗黑模式支持 ========== */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --apple-blue: #0A84FF;
+                --apple-blue-hover: #409CFF;
+                --apple-gray: #98989D;
+                --apple-light-gray: #1C1C1E;
+                --apple-separator: rgba(84, 84, 88, 0.6);
+                --apple-label: rgba(255, 255, 255, 0.85);
+                --apple-secondary-label: rgba(235, 235, 245, 0.6);
+                --apple-background: #1C1C1E;
+                --apple-shadow: rgba(0, 0, 0, 0.5);
+            }
+
+            body {
+                background: linear-gradient(to bottom, #000000 0%, #1C1C1E 100%);
+            }
+
+            .form-input {
+                background: #2C2C2E;
+                color: var(--apple-label);
+            }
+
+            .form-input:focus {
+                background: #3A3A3C;
+            }
+
+            .form-input:hover:not(:focus) {
+                background: #3A3A3C;
+            }
+        }
+
+        /* ========== 无障碍辅助 ========== */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* ========== 成功提示 ========== */
+        .success-message {
+            display: none;
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: rgba(52, 199, 89, 0.1);
+            border: 1px solid rgba(52, 199, 89, 0.2);
+            border-radius: var(--spacing-xs);
+            color: #34C759;
+            font-size: 14px;
+            margin-bottom: var(--spacing-md);
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .success-message.show {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .success-icon {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <!-- Logo 区域 -->
+        <div class="logo-section">
+            <div class="logo-icon">
+                <span>🏢</span>
+            </div>
+            <h1 class="logo-title">天号城企微CRM</h1>
+            <p class="logo-subtitle">Enterprise WeChat Customer Relationship Management</p>
+        </div>
+
+        <!-- 登录卡片 -->
+        <div class="login-card">
+            <!-- 错误提示 -->
+            <div id="errorMessage" class="error-message" role="alert"></div>
+            
+            <!-- 成功提示 -->
+            <div id="successMessage" class="success-message" role="status">
+                <span class="success-icon">✓</span>
+                <span>登录成功，正在跳转...</span>
+            </div>
+
+            <!-- 登录表单 -->
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="account" class="form-label">账号</label>
+                    <input 
+                        type="text" 
+                        id="account" 
+                        name="account" 
+                        class="form-input" 
+                        placeholder="请输入账号"
+                        autocomplete="username"
+                        required
+                        autofocus
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">密码</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        class="form-input" 
+                        placeholder="请输入密码"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                <div class="remember-group">
+                    <input 
+                        type="checkbox" 
+                        id="remember" 
+                        name="remember" 
+                        class="remember-checkbox"
+                    >
+                    <label for="remember" class="remember-label">保持登录状态 7 天</label>
+                </div>
+
+                <button type="submit" class="login-button" id="loginButton">
+                    <span class="button-text">登录</span>
+                    <div class="spinner"></div>
+                </button>
+            </form>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="login-footer">
+            <p>&copy; 2027 天号城企微CRM. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        // ========== 配置 ==========
+        const API_BASE = '/api/auth';
+
+        // ========== DOM 元素 ==========
+        const loginForm = document.getElementById('loginForm');
+        const loginButton = document.getElementById('loginButton');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const accountInput = document.getElementById('account');
+        const passwordInput = document.getElementById('password');
+        const rememberCheckbox = document.getElementById('remember');
+
+        // ========== 工具函数 ==========
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('show');
+            setTimeout(() => {
+                errorMessage.classList.remove('show');
+            }, 3000);
+        }
+
+        function showSuccess() {
+            successMessage.classList.add('show');
+        }
+
+        function setLoading(loading) {
+            if (loading) {
+                loginButton.classList.add('loading');
+                loginButton.disabled = true;
+                accountInput.disabled = true;
+                passwordInput.disabled = true;
+                rememberCheckbox.disabled = true;
+            } else {
+                loginButton.classList.remove('loading');
+                loginButton.disabled = false;
+                accountInput.disabled = false;
+                passwordInput.disabled = false;
+                rememberCheckbox.disabled = false;
+            }
+        }
+
+        // ========== 登录处理 ==========
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const account = accountInput.value.trim();
+            const password = passwordInput.value;
+            const remember = rememberCheckbox.checked;
+
+            if (!account || !password) {
+                showError('请输入账号和密码');
+                return;
+            }
+
+            setLoading(true);
+
+            try {
+                const response = await fetch(`${API_BASE}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        account,
+                        password,
+                        remember
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.code === 0) {
+                    // 登录成功
+                    const { token, user } = data.data;
+                    
+                    // 保存 Token 和用户信息
+                    localStorage.setItem('token', token);
+                    localStorage.setItem('userInfo', JSON.stringify(user));
+                    
+                    // 显示成功提示
+                    showSuccess();
+                    
+                    // 延迟跳转，让用户看到成功提示
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 800);
+                } else {
+                    // 登录失败
+                    showError(data.message || '登录失败，请检查账号密码');
+                    setLoading(false);
+                }
+            } catch (error) {
+                console.error('登录错误:', error);
+                showError('网络连接失败，请稍后重试');
+                setLoading(false);
+            }
+        });
+
+        // ========== 输入框焦点效果 ==========
+        const inputs = document.querySelectorAll('.form-input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                errorMessage.classList.remove('show');
+            });
+        });
+
+        // ========== 键盘快捷键 ==========
+        document.addEventListener('keydown', (e) => {
+            // Cmd/Ctrl + Enter 提交表单
+            if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+                loginForm.dispatchEvent(new Event('submit'));
+            }
+        });
+
+        // ========== 自动填充测试账号（开发模式） ==========
+        // 取消注释以在开发时使用
+        // accountInput.value = '19938885888';
+        // passwordInput.value = '8471439';
+
+        // ========== 检查是否已登录 ==========
+        const token = localStorage.getItem('token');
+        if (token) {
+            // 验证 Token 是否有效
+            fetch(`${API_BASE}/current`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.code === 0) {
+                    // Token 有效，直接跳转
+                    window.location.href = '/';
+                }
+            })
+            .catch(() => {
+                // Token 无效，清除并继续登录
+                localStorage.removeItem('token');
+                localStorage.removeItem('userInfo');
+            });
+        }
+    </script>
+</body>
+</html>

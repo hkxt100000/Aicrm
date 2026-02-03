@@ -1,0 +1,1173 @@
+/**
+ * 通用模块页面 - Apple 风格样式
+ * 适用于：企业标签、企业通讯录、客户群列表、客户群标签、客户运营、员工管理等页面
+ * 版本：5.0
+ * 日期：2026-01-27
+ * 更新：添加员工管理模块样式
+ */
+
+/* ==================== 工具类 ==================== */
+
+.mb-6 {
+    margin-bottom: 24px !important;
+}
+
+.mb-4 {
+    margin-bottom: 16px !important;
+}
+
+.mb-3 {
+    margin-bottom: 12px !important;
+}
+
+.mt-6 {
+    margin-top: 24px !important;
+}
+
+/* ==================== 卡片容器 ==================== */
+
+.card {
+    background: white !important;
+    border-radius: 16px !important;
+    padding: 24px !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    margin-bottom: 24px !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.card:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+    border-color: rgba(0, 122, 255, 0.3) !important;
+}
+
+/* ==================== 筛选器 ==================== */
+
+.filter-container {
+    padding: 0 !important;
+}
+
+.filter-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+}
+
+.filter-item {
+    min-width: 200px !important;
+}
+
+.filter-input,
+.filter-select {
+    width: 100% !important;
+    height: 36px !important;
+    padding: 0 12px !important;
+    background: #F5F5F7 !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    border-radius: 10px !important;
+    font-size: 13px !important;
+    color: #212B36 !important;
+    font-weight: 500 !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.filter-input:hover,
+.filter-select:hover {
+    background: #E8E8ED !important;
+    border-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+.filter-input:focus,
+.filter-select:focus {
+    outline: none !important;
+    background: white !important;
+    border-color: var(--color-primary) !important;
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1) !important;
+}
+
+.filter-select {
+    appearance: none !important;
+    padding-right: 32px !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23637381' d='M6 8L2 4h8z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 12px center !important;
+    cursor: pointer !important;
+}
+
+/* ==================== 员工卡片（JS中实际使用的类名） ==================== */
+
+.employee-card-new {
+    background: white !important;
+    border-radius: 12px !important;
+    padding: 20px !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    cursor: pointer !important;
+}
+
+.employee-card-new:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+    border-color: var(--color-primary) !important;
+}
+
+.emp-card-header {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+    margin-bottom: 16px !important;
+    padding-bottom: 16px !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+.emp-avatar-large {
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 12px !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    overflow: hidden !important;
+}
+
+.emp-avatar-large img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+.emp-avatar-text {
+    font-size: 24px !important;
+    font-weight: 600 !important;
+    color: white !important;
+}
+
+.emp-card-info {
+    flex: 1 !important;
+    min-width: 0 !important;
+}
+
+.emp-card-name {
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    color: #212B36 !important;
+    margin: 0 0 8px 0 !important;
+}
+
+.emp-card-id,
+.emp-card-dept,
+.emp-card-position {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-size: 13px !important;
+    color: #637381 !important;
+    margin-bottom: 4px !important;
+}
+
+.emp-card-id i,
+.emp-card-dept i,
+.emp-card-position i {
+    width: 14px !important;
+    text-align: center !important;
+    color: #919EAB !important;
+}
+
+.emp-contact-primary {
+    margin-bottom: 16px !important;
+}
+
+.emp-contact-main {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 8px 12px !important;
+    background: #F9FAFB !important;
+    border-radius: 8px !important;
+    font-size: 13px !important;
+    color: #212B36 !important;
+    margin-bottom: 8px !important;
+}
+
+.emp-contact-main:last-child {
+    margin-bottom: 0 !important;
+}
+
+.emp-contact-main i {
+    width: 16px !important;
+    text-align: center !important;
+    color: var(--color-primary) !important;
+}
+
+.emp-contact-empty {
+    color: #919EAB !important;
+    font-style: italic !important;
+}
+
+.emp-contact-empty i {
+    color: #C4CDD5 !important;
+}
+
+.emp-stats-simple {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 12px !important;
+}
+
+.emp-stat-simple {
+    text-align: center !important;
+    padding: 12px !important;
+    background: #F9FAFB !important;
+    border-radius: 8px !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.emp-stat-simple:hover {
+    background: #F0F0F3 !important;
+}
+
+.emp-stat-value {
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    color: var(--color-primary) !important;
+    line-height: 1 !important;
+    margin-bottom: 8px !important;
+}
+
+.emp-stat-label {
+    font-size: 12px !important;
+    color: #637381 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+}
+
+.emp-stat-label i {
+    font-size: 11px !important;
+}
+
+/* ==================== 空状态 ==================== */
+
+.empty-state {
+    text-align: center !important;
+    padding: 80px 20px !important;
+}
+
+.empty-state-icon {
+    font-size: 64px !important;
+    margin-bottom: 20px !important;
+    opacity: 0.3 !important;
+    color: #919EAB !important;
+}
+
+.empty-state-icon i {
+    color: inherit !important;
+}
+
+.empty-state-title {
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    color: #212B36 !important;
+    margin-bottom: 8px !important;
+}
+
+.empty-state-description {
+    font-size: 14px !important;
+    color: #637381 !important;
+    margin-bottom: 24px !important;
+}
+
+/* ==================== 分页容器 ==================== */
+
+.pagination-container {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0 !important;
+}
+
+.pagination-info {
+    font-size: 14px !important;
+    color: #637381 !important;
+}
+
+.pagination-info strong {
+    color: #212B36 !important;
+    font-weight: 600 !important;
+}
+
+.pagination-controls {
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+}
+
+.pagination-page-info {
+    font-size: 13px !important;
+    color: #637381 !important;
+}
+
+.pagination-page-info strong {
+    color: #212B36 !important;
+    font-weight: 600 !important;
+}
+
+/* ==================== 标签组容器 ==================== */
+
+#tag-groups-container {
+    padding: 0 !important;
+}
+
+.tag-group-item {
+    background: white !important;
+    border-radius: 16px !important;
+    padding: 24px !important;
+    margin-bottom: 20px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+.tag-group-item:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+.tag-group-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-bottom: 16px !important;
+}
+
+.tag-group-title {
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    color: #212B36 !important;
+    margin-bottom: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.tag-group-title i {
+    color: #637381 !important;
+}
+
+.tag-list {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+}
+
+.tag-checkbox-item {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 8px 14px !important;
+    background: #F9FAFB !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-radius: 8px !important;
+    font-size: 13px !important;
+    color: #212B36 !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    user-select: none !important;
+}
+
+.tag-checkbox-item:hover {
+    background: white !important;
+    border-color: var(--color-primary) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+.tag-checkbox-item.selected {
+    background: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+    color: white !important;
+}
+
+.tag-checkbox-item input[type="checkbox"] {
+    width: 16px !important;
+    height: 16px !important;
+    cursor: pointer !important;
+}
+
+.tag-group-actions {
+    display: flex !important;
+    gap: 8px !important;
+}
+
+.tag-items {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+}
+
+.tag-item {
+    display: inline-flex !important;
+    align-items: center !important;
+    height: 32px !important;
+    padding: 0 14px !important;
+    background: #F9FAFB !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-radius: 8px !important;
+    font-size: 13px !important;
+    color: #212B36 !important;
+    font-weight: 500 !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.tag-item:hover {
+    background: white !important;
+    border-color: var(--color-primary) !important;
+    color: var(--color-primary) !important;
+}
+
+/* ==================== 客户群标签模块（JS中实际使用的类名） ==================== */
+
+.group-tag-card {
+    background: white !important;
+    border-radius: 16px !important;
+    padding: 24px !important;
+    margin-bottom: 20px !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.group-tag-card:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+.group-tag-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-bottom: 20px !important;
+    padding-bottom: 16px !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+.group-tag-title {
+    flex: 1 !important;
+}
+
+.group-tag-title h3 {
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    color: #212B36 !important;
+    margin: 0 0 8px 0 !important;
+}
+
+.group-tag-count {
+    font-size: 13px !important;
+    color: #637381 !important;
+}
+
+.group-tag-actions {
+    display: flex !important;
+    gap: 8px !important;
+}
+
+.tag-list-container {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+}
+
+.tag-list-container .tag-item {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    height: auto !important;
+    padding: 10px 14px !important;
+    background: #F9FAFB !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-radius: 8px !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.tag-list-container .tag-item:hover {
+    background: white !important;
+    border-color: var(--color-primary) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+.tag-item-name {
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    color: #212B36 !important;
+}
+
+.tag-item-actions {
+    display: flex !important;
+    gap: 4px !important;
+    margin-left: auto !important;
+}
+
+.tag-item-btn {
+    width: 24px !important;
+    height: 24px !important;
+    border-radius: 6px !important;
+    border: none !important;
+    background: transparent !important;
+    color: #637381 !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.tag-item-btn:hover {
+    background: rgba(0, 0, 0, 0.04) !important;
+    color: #212B36 !important;
+}
+
+.tag-item-btn.delete-btn:hover {
+    background: rgba(255, 86, 48, 0.1) !important;
+    color: #FF5630 !important;
+}
+
+.empty-tag-group {
+    text-align: center !important;
+    padding: 40px 20px !important;
+    color: #919EAB !important;
+}
+
+.empty-tag-group i {
+    font-size: 48px !important;
+    margin-bottom: 12px !important;
+    display: block !important;
+    opacity: 0.3 !important;
+}
+
+.empty-tag-group p {
+    font-size: 14px !important;
+    margin: 0 !important;
+}
+
+/* ==================== 数据源模块（JS中实际使用的类名） ==================== */
+
+.data-source-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)) !important;
+    gap: 24px !important;
+}
+
+.data-source-card {
+    background: white !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    overflow: hidden !important;
+}
+
+.data-source-card:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+.data-source-card .card-header {
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    padding: 20px !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+.data-source-card .card-title {
+    flex: 1 !important;
+}
+
+.data-source-card .card-title h3 {
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    color: #212B36 !important;
+    margin: 8px 0 0 0 !important;
+}
+
+.source-type-badge {
+    display: inline-block !important;
+    padding: 4px 10px !important;
+    background: rgba(0, 122, 255, 0.1) !important;
+    color: var(--color-primary) !important;
+    border-radius: 6px !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+}
+
+.data-source-card .card-body {
+    padding: 20px !important;
+}
+
+.source-desc {
+    font-size: 13px !important;
+    color: #637381 !important;
+    margin-bottom: 16px !important;
+    line-height: 1.6 !important;
+}
+
+.source-stats {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 12px !important;
+}
+
+.source-stats .stat-item {
+    text-align: center !important;
+    padding: 12px !important;
+    background: #F9FAFB !important;
+    border-radius: 8px !important;
+}
+
+.source-stats .stat-value {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    color: var(--color-primary) !important;
+    margin-bottom: 4px !important;
+}
+
+.source-stats .stat-label {
+    font-size: 12px !important;
+    color: #637381 !important;
+}
+
+.data-source-card .card-footer {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    padding: 16px 20px !important;
+    background: #F9FAFB !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+.data-table-container {
+    background: white !important;
+    border-radius: 16px !important;
+    padding: 20px !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+    overflow-x: auto !important;
+}
+
+.data-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+}
+
+.data-table th {
+    background: #F9FAFB !important;
+    padding: 14px 20px !important;
+    text-align: left !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #637381 !important;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.08) !important;
+    white-space: nowrap !important;
+    min-width: 100px !important;
+}
+
+.data-table td {
+    padding: 16px 20px !important;
+    font-size: 14px !important;
+    color: #212B36 !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 300px !important;
+}
+
+.data-table tr:hover {
+    background: #F9FAFB !important;
+}
+
+.toolbar {
+    display: flex !important;
+    gap: 12px !important;
+    margin-bottom: 16px !important;
+}
+
+.search-box {
+    position: relative !important;
+    flex: 1 !important;
+    max-width: 400px !important;
+}
+
+.search-box i {
+    position: absolute !important;
+    left: 12px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    color: #919EAB !important;
+}
+
+.search-box input {
+    width: 100% !important;
+    height: 36px !important;
+    padding: 0 12px 0 36px !important;
+    background: #F5F5F7 !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    border-radius: 10px !important;
+    font-size: 13px !important;
+    color: #212B36 !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.search-box input:focus {
+    outline: none !important;
+    background: white !important;
+    border-color: var(--color-primary) !important;
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1) !important;
+}
+
+/* ==================== 智能表格模块（对内/对外） ==================== */
+
+.spreadsheet-card {
+    background: white !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    cursor: pointer !important;
+    overflow: hidden !important;
+}
+
+.spreadsheet-card:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08) !important;
+    border-color: var(--color-primary) !important;
+}
+
+.spreadsheet-header {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+    padding: 20px !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+.spreadsheet-icon {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 12px !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+}
+
+.spreadsheet-icon i {
+    font-size: 24px !important;
+    color: white !important;
+}
+
+.spreadsheet-info-main {
+    flex: 1 !important;
+    min-width: 0 !important;
+}
+
+.spreadsheet-title {
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    color: #212B36 !important;
+    margin: 0 0 8px 0 !important;
+}
+
+.spreadsheet-meta {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 16px !important;
+    font-size: 13px !important;
+    color: #637381 !important;
+}
+
+.spreadsheet-meta span {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+}
+
+.spreadsheet-meta i {
+    width: 14px !important;
+    text-align: center !important;
+    color: #919EAB !important;
+}
+
+.spreadsheet-footer {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 16px 20px !important;
+    background: #F9FAFB !important;
+}
+
+.last-sync {
+    font-size: 13px !important;
+    color: #637381 !important;
+}
+
+.spreadsheet-actions {
+    display: flex !important;
+    gap: 8px !important;
+}
+
+.btn-icon {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    background: white !important;
+    color: #637381 !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.btn-icon:hover {
+    background: #F5F5F7 !important;
+    border-color: var(--color-primary) !important;
+    color: var(--color-primary) !important;
+}
+
+.btn-icon-danger:hover {
+    background: rgba(255, 86, 48, 0.1) !important;
+    border-color: #FF5630 !important;
+    color: #FF5630 !important;
+}
+
+/* ==================== 员工管理模块 ==================== */
+
+.employee-manage-container {
+    max-width: 1400px !important;
+    margin: 0 auto !important;
+    padding: 32px !important;
+}
+
+.employee-header h2 {
+    font-size: 28px !important;
+    font-weight: 600 !important;
+    color: #212B36 !important;
+    margin: 0 0 24px 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
+
+.employee-header h2 i {
+    color: var(--color-primary) !important;
+}
+
+.employee-toolbar {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 16px !important;
+    margin-bottom: 24px !important;
+    flex-wrap: wrap !important;
+}
+
+.employee-table-container {
+    background: white !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+}
+
+.employee-table-container table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+}
+
+.employee-table-container thead {
+    background: #F9FAFB !important;
+}
+
+.employee-table-container th {
+    padding: 16px 20px !important;
+    text-align: left !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #637381 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+.employee-table-container td {
+    padding: 16px 20px !important;
+    font-size: 14px !important;
+    color: #212B36 !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04) !important;
+}
+
+.employee-table-container tbody tr:hover {
+    background: #F9FAFB !important;
+}
+
+.employee-table-container tbody tr:last-child td {
+    border-bottom: none !important;
+}
+
+/* ==================== 权限管理模块 ==================== */
+
+.permission-manage-container {
+    max-width: 1400px !important;
+    margin: 0 auto !important;
+    padding: 32px !important;
+}
+
+.permission-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 32px !important;
+    flex-wrap: wrap !important;
+    gap: 16px !important;
+}
+
+.permission-header h2 {
+    font-size: 28px !important;
+    font-weight: 600 !important;
+    color: #212B36 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
+
+.permission-header h2 i {
+    color: var(--color-primary) !important;
+}
+
+.department-card {
+    background: white !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-radius: 12px !important;
+    padding: 24px !important;
+    margin-bottom: 16px !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.department-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+    border-color: var(--color-primary) !important;
+}
+
+.dept-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: start !important;
+    margin-bottom: 16px !important;
+    padding-bottom: 16px !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04) !important;
+}
+
+.dept-info {
+    flex: 1 !important;
+}
+
+.dept-name {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: #212B36 !important;
+    margin: 0 0 8px 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.dept-name i {
+    color: var(--color-primary) !important;
+    font-size: 16px !important;
+}
+
+.dept-desc {
+    font-size: 14px !important;
+    color: #637381 !important;
+    margin: 0 !important;
+    line-height: 1.6 !important;
+}
+
+.dept-actions {
+    display: flex !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+}
+
+.dept-stats {
+    display: flex !important;
+    gap: 24px !important;
+    flex-wrap: wrap !important;
+}
+
+.stat-item {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-size: 14px !important;
+    color: #637381 !important;
+}
+
+.stat-item i {
+    color: var(--color-primary) !important;
+}
+
+.stat-item strong {
+    color: #212B36 !important;
+    font-weight: 600 !important;
+}
+
+.btn-danger {
+    color: #FF5630 !important;
+}
+
+.btn-danger:hover {
+    background: rgba(255, 86, 48, 0.1) !important;
+    border-color: #FF5630 !important;
+}
+
+/* ==================== 响应式 ==================== */
+
+@media (max-width: 768px) {
+    .filter-row {
+        flex-direction: column !important;
+    }
+    
+    .filter-item {
+        width: 100% !important;
+        min-width: 100% !important;
+    }
+    
+    .pagination-container {
+        flex-direction: column !important;
+        gap: 16px !important;
+    }
+    
+    .emp-card-header {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+    }
+    
+    .emp-stats-simple {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .data-source-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .source-stats {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .group-tag-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+    }
+}
+
+/* ==================== 暗黑模式 ==================== */
+
+@media (prefers-color-scheme: dark) {
+    .card,
+    .employee-card-new,
+    .tag-group-item,
+    .group-tag-card,
+    .data-source-card,
+    .data-table-container,
+    .spreadsheet-card {
+        background: rgba(255, 255, 255, 0.06) !important;
+        border-color: rgba(255, 255, 255, 0.12) !important;
+    }
+    
+    .card:hover,
+    .employee-card-new:hover,
+    .tag-group-item:hover,
+    .group-tag-card:hover,
+    .data-source-card:hover,
+    .spreadsheet-card:hover {
+        background: rgba(255, 255, 255, 0.08) !important;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    .filter-input,
+    .filter-select,
+    .search-box input {
+        background: rgba(255, 255, 255, 0.06) !important;
+        border-color: rgba(255, 255, 255, 0.12) !important;
+        color: white !important;
+    }
+    
+    .filter-input:hover,
+    .filter-select:hover,
+    .search-box input:hover {
+        background: rgba(255, 255, 255, 0.08) !important;
+    }
+    
+    .filter-input:focus,
+    .filter-select:focus,
+    .search-box input:focus {
+        background: rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    .emp-contact-main,
+    .emp-stat-simple,
+    .source-stats .stat-item,
+    .data-source-card .card-footer,
+    .data-table th,
+    .spreadsheet-footer {
+        background: rgba(255, 255, 255, 0.04) !important;
+    }
+    
+    .emp-stat-simple:hover {
+        background: rgba(255, 255, 255, 0.06) !important;
+    }
+    
+    .tag-item,
+    .tag-list-container .tag-item {
+        background: rgba(255, 255, 255, 0.04) !important;
+        border-color: rgba(255, 255, 255, 0.08) !important;
+    }
+    
+    .tag-item:hover,
+    .tag-list-container .tag-item:hover {
+        background: rgba(255, 255, 255, 0.08) !important;
+    }
+    
+    .data-table tr:hover {
+        background: rgba(255, 255, 255, 0.04) !important;
+    }
+    
+    .emp-card-header,
+    .group-tag-header,
+    .data-source-card .card-header,
+    .data-table th,
+    .data-table td,
+    .spreadsheet-header {
+        border-color: rgba(255, 255, 255, 0.08) !important;
+    }
+    
+    .btn-icon {
+        background: rgba(255, 255, 255, 0.04) !important;
+        border-color: rgba(255, 255, 255, 0.08) !important;
+    }
+    
+    .btn-icon:hover {
+        background: rgba(255, 255, 255, 0.08) !important;
+    }
+}

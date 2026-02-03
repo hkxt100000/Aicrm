@@ -1,0 +1,66 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 数据库文件（包含客户数据，不能上传）
+*.db
+*.sqlite
+*.sqlite3
+data/
+
+# 配置文件（包含 API 密钥，不能上传）
+config.py
+
+# 日志文件
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+
+# 操作系统
+.DS_Store
+Thumbs.db
+
+# 临时文件
+*.tmp
+*.bak
+*.backup
+
+# 环境变量
+.env
+.env.local
+
+# 测试
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 其他
+*.pyc
+.cache/

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>客户详情 - 企业微信 CRM</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/customer-detail.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 头部 -->
+    <header class="header">
+        <div class="header-left">
+            <i class="fas fa-users-cog"></i>
+            <h1>企业微信 CRM</h1>
+        </div>
+        <div class="header-right">
+            <button class="btn btn-secondary" onclick="window.location.href='/'">
+                <i class="fas fa-arrow-left"></i> 返回列表
+            </button>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="container" style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+        <!-- 客户基本信息卡片 -->
+        <div class="customer-detail-card">
+            <div class="customer-header">
+                <div class="customer-avatar-section">
+                    <img id="customer-avatar" src="" alt="客户头像" class="customer-detail-avatar">
+                    <div class="customer-basic-info">
+                        <h2 id="customer-name"></h2>
+                        <div class="customer-meta">
+                            <span id="customer-company"></span>
+                            <span id="customer-position"></span>
+                        </div>
+                        <div class="customer-contact">
+                            <span><i class="fas fa-phone"></i> <span id="customer-mobile"></span></span>
+                            <span><i class="fas fa-envelope"></i> <span id="customer-email"></span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="customer-actions">
+                    <button class="btn btn-primary" onclick="editCustomer()">
+                        <i class="fas fa-edit"></i> 编辑
+                    </button>
+                </div>
+            </div>
+
+            <!-- 详细信息 -->
+            <div class="customer-details">
+                <h3><i class="fas fa-info-circle"></i> 基本信息</h3>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <label>性别：</label>
+                        <span id="customer-gender"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label>客户类型：</label>
+                        <span id="customer-type"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label>所属员工：</label>
+                        <span id="customer-owner"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label>添加时间：</label>
+                        <span id="customer-add-time"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label>客户标签：</label>
+                        <span id="customer-tags"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label>客户阶段：</label>
+                        <span id="customer-stage"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label>跟进状态：</label>
+                        <span id="customer-follow-status"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label>满意度：</label>
+                        <span id="customer-satisfaction"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 跟进记录 -->
+        <div class="customer-detail-card">
+            <div class="follow-header">
+                <h3><i class="fas fa-comments"></i> 跟进记录</h3>
+                <button class="btn btn-primary" onclick="showAddFollowRecord()">
+                    <i class="fas fa-plus"></i> 添加跟进记录
+                </button>
+            </div>
+            <div id="follow-records-list" class="follow-records-list">
+                <!-- 跟进记录将动态加载 -->
+            </div>
+        </div>
+    </main>
+
+    <!-- 添加跟进记录弹窗 -->
+    <div id="add-follow-modal" class="modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3>添加跟进记录</h3>
+                <button class="close-btn" onclick="closeAddFollowRecord()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>跟进方式：</label>
+                    <select id="follow-type" class="form-input">
+                        <option value="电话">电话</option>
+                        <option value="微信">微信</option>
+                        <option value="邮件">邮件</option>
+                        <option value="见面">见面</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>跟进内容：</label>
+                    <textarea id="follow-content" class="form-input" rows="6" placeholder="请输入跟进内容..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeAddFollowRecord()">取消</button>
+                <button class="btn btn-primary" onclick="saveFollowRecord()">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast 提示 -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+        let customerId = null;
+        let apiToken = localStorage.getItem('api_token') || 'crm-default-token';
+
+        // 从 URL 获取客户 ID
+        function getCustomerId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        // 加载客户详情
+        async function loadCustomerDetail() {
+            customerId = getCustomerId();
+            if (!customerId) {
+                showToast('客户 ID 不存在', 'error');
+                setTimeout(() => window.location.href = '/', 2000);
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/customers/${customerId}?api_token=${apiToken}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    displayCustomerDetail(data.data);
+                } else {
+                    showToast(data.message || '加载失败', 'error');
+                }
+            } catch (error) {
+                console.error('[详情] 加载失败:', error);
+                showToast('加载失败', 'error');
+            }
+        }
+
+        // 显示客户详情
+        function displayCustomerDetail(customer) {
+            // 基本信息
+            document.getElementById('customer-avatar').src = customer.avatar || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect fill=%22%23ddd%22 width=%22100%22 height=%22100%22/%3E%3Ctext fill=%22%23999%22 font-family=%22sans-serif%22 font-size=%2230%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22%3E头像%3C/text%3E%3C/svg%3E';
+            document.getElementById('customer-name').textContent = customer.name || '未知';
+            document.getElementById('customer-company').textContent = customer.corp_name || '未知公司';
+            document.getElementById('customer-position').textContent = customer.position || '未知职位';
+            document.getElementById('customer-mobile').textContent = customer.mobile || '无';
+            document.getElementById('customer-email').textContent = customer.email || '无';
+
+            // 详细信息
+            const genderMap = {'1': '男', '2': '女', '0': '未知'};
+            document.getElementById('customer-gender').textContent = genderMap[customer.gender] || '未知';
+            
+            const typeMap = {'1': '微信用户', '2': '企业微信用户'};
+            document.getElementById('customer-type').textContent = typeMap[customer.type] || '未知';
+            
+            document.getElementById('customer-owner').textContent = customer.owner_name || customer.owner_userid || '未知';
+            document.getElementById('customer-add-time').textContent = formatTime(customer.createtime);
+            
+            // 标签
+            const tags = customer.tags ? JSON.parse(customer.tags) : [];
+            document.getElementById('customer-tags').innerHTML = tags.length > 0 
+                ? tags.map(tag => `<span class="tag">${tag}</span>`).join('')
+                : '无';
+            
+            document.getElementById('customer-stage').textContent = customer.stage || '未知';
+            document.getElementById('customer-follow-status').textContent = customer.follow_status || '未跟进';
+            document.getElementById('customer-satisfaction').textContent = customer.satisfaction || '未评价';
+
+            // 跟进记录
+            displayFollowRecords(customer.follow_records || []);
+        }
+
+        // 显示跟进记录
+        function displayFollowRecords(records) {
+            const container = document.getElementById('follow-records-list');
+            
+            if (records.length === 0) {
+                container.innerHTML = '<div class="empty-message">暂无跟进记录</div>';
+                return;
+            }
+
+            container.innerHTML = records.map(record => `
+                <div class="follow-record-item">
+                    <div class="follow-record-header">
+                        <span class="follow-type">${record.follow_type || '电话'}</span>
+                        <span class="follow-time">${formatTime(record.created_at)}</span>
+                        <span class="follow-user">${record.follower_name || record.follower_userid}</span>
+                    </div>
+                    <div class="follow-record-content">${record.content || ''}</div>
+                </div>
+            `).join('');
+        }
+
+        // 格式化时间
+        function formatTime(timestamp) {
+            if (!timestamp) return '-';
+            const date = new Date(timestamp);
+            return date.toLocaleString('zh-CN');
+        }
+
+        // 显示添加跟进记录弹窗
+        function showAddFollowRecord() {
+            document.getElementById('add-follow-modal').style.display = 'flex';
+            document.getElementById('follow-content').value = '';
+        }
+
+        // 关闭添加跟进记录弹窗
+        function closeAddFollowRecord() {
+            document.getElementById('add-follow-modal').style.display = 'none';
+        }
+
+        // 保存跟进记录
+        async function saveFollowRecord() {
+            const followType = document.getElementById('follow-type').value;
+            const content = document.getElementById('follow-content').value.trim();
+
+            if (!content) {
+                showToast('请输入跟进内容', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/follow-records?api_token=${apiToken}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        customer_id: customerId,
+                        content: content,
+                        follow_type: followType
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showToast('跟进记录添加成功', 'success');
+                    closeAddFollowRecord();
+                    // 重新加载客户详情
+                    loadCustomerDetail();
+                } else {
+                    showToast(data.message || '添加失败', 'error');
+                }
+            } catch (error) {
+                console.error('[跟进记录] 添加失败:', error);
+                showToast('添加失败', 'error');
+            }
+        }
+
+        // 编辑客户
+        function editCustomer() {
+            showToast('编辑功能即将上线', 'info');
+        }
+
+        // Toast 提示
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast toast-${type} show`;
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // 页面加载时获取客户详情
+        window.addEventListener('DOMContentLoaded', () => {
+            loadCustomerDetail();
+        });
+    </script>
+</body>
+</html>
