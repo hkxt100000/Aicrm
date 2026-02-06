@@ -64,3 +64,4 @@ htmlcov/
 # 其他
 *.pyc
 .cache/
+data/*.db
