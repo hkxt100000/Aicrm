@@ -1,0 +1,817 @@
+/**
+ * Apple 风格 - 员工管理与权限管理
+ * 设计原则：简洁、优雅、现代
+ * 版本：2.0
+ * 日期：2026-01-27
+ */
+
+/* ==================== 通用样式 ==================== */
+:root {
+    --apple-blue: #007AFF;
+    --apple-green: #34C759;
+    --apple-orange: #FF9500;
+    --apple-red: #FF3B30;
+    --apple-gray-1: #F5F5F7;
+    --apple-gray-2: #E5E5EA;
+    --apple-gray-3: #C7C7CC;
+    --apple-gray-4: #8E8E93;
+    --apple-gray-5: #636366;
+    --apple-gray-6: #48484A;
+    --apple-dark: #1C1C1E;
+    --apple-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+    --apple-shadow-hover: 0 4px 24px rgba(0, 0, 0, 0.08);
+    --apple-radius: 12px;
+    --apple-radius-lg: 16px;
+    --apple-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==================== 容器样式 ==================== */
+.employee-manage-container,
+.permission-manage-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 32px;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==================== 头部样式 ==================== */
+.employee-header,
+.permission-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--apple-gray-2);
+}
+
+.employee-header h2,
+.permission-header h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--apple-dark);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.employee-header h2 i,
+.permission-header h2 i {
+    font-size: 28px;
+    color: var(--apple-blue);
+}
+
+/* ==================== 工具栏样式 ==================== */
+.employee-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 300px;
+    max-width: 500px;
+}
+
+.search-box input {
+    flex: 1;
+    height: 44px;
+    padding: 0 16px;
+    border: 1px solid var(--apple-gray-2);
+    border-radius: 10px;
+    font-size: 15px;
+    background: white;
+    transition: var(--apple-transition);
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: var(--apple-blue);
+    box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
+}
+
+.search-box input::placeholder {
+    color: var(--apple-gray-4);
+}
+
+.btn-search {
+    height: 44px;
+    padding: 0 20px;
+    border: none;
+    border-radius: 10px;
+    background: var(--apple-blue);
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--apple-transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.btn-search:hover {
+    background: #0051D5;
+    transform: translateY(-1px);
+}
+
+.btn-search:active {
+    transform: translateY(0);
+}
+
+/* ==================== 按钮样式 ==================== */
+.btn-primary {
+    height: 44px;
+    padding: 0 24px;
+    border: none;
+    border-radius: 10px;
+    background: var(--apple-blue);
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--apple-transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.btn-primary:hover {
+    background: #0051D5;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-primary i {
+    font-size: 14px;
+}
+
+/* ==================== 卡片式表格容器 ==================== */
+.employee-table-container {
+    background: white;
+    border-radius: var(--apple-radius-lg);
+    box-shadow: var(--apple-shadow);
+    overflow: hidden;
+    transition: var(--apple-transition);
+}
+
+.employee-table-container:hover {
+    box-shadow: var(--apple-shadow-hover);
+}
+
+/* ==================== 表格样式 ==================== */
+#employeeTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#employeeTable thead {
+    background: var(--apple-gray-1);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+#employeeTable thead th {
+    padding: 16px 20px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--apple-gray-5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--apple-gray-2);
+}
+
+#employeeTable tbody tr {
+    border-bottom: 1px solid var(--apple-gray-2);
+    transition: var(--apple-transition);
+}
+
+#employeeTable tbody tr:hover {
+    background: var(--apple-gray-1);
+}
+
+#employeeTable tbody tr:last-child {
+    border-bottom: none;
+}
+
+#employeeTable tbody td {
+    padding: 16px 20px;
+    font-size: 15px;
+    color: var(--apple-dark);
+}
+
+/* ==================== 状态徽章 ==================== */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.status-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.status-active {
+    background: rgba(52, 199, 89, 0.1);
+    color: var(--apple-green);
+}
+
+.status-active::before {
+    background: var(--apple-green);
+}
+
+.status-inactive {
+    background: rgba(142, 142, 147, 0.1);
+    color: var(--apple-gray-4);
+}
+
+.status-inactive::before {
+    background: var(--apple-gray-4);
+}
+
+/* ==================== 超级管理员徽章 ==================== */
+.badge-super-admin {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    margin-left: 8px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.badge-super-admin::before {
+    content: '👑';
+    font-size: 12px;
+}
+
+/* ==================== 企微信息 ==================== */
+.wecom-info {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--apple-gray-4);
+}
+
+.wecom-info::before {
+    content: '企微';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 16px;
+    border-radius: 4px;
+    background: #07C160;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+/* ==================== 操作按钮 ==================== */
+.table-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-icon {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 8px;
+    background: var(--apple-gray-1);
+    color: var(--apple-gray-5);
+    cursor: pointer;
+    transition: var(--apple-transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-icon:hover {
+    background: var(--apple-blue);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+}
+
+.btn-icon.btn-danger:hover {
+    background: var(--apple-red);
+    box-shadow: 0 4px 12px rgba(255, 59, 48, 0.3);
+}
+
+.btn-icon i {
+    font-size: 14px;
+}
+
+/* ==================== 分页样式 ==================== */
+#employeePagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+    padding: 16px;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.page-btn {
+    min-width: 40px;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid var(--apple-gray-2);
+    border-radius: 8px;
+    background: white;
+    color: var(--apple-dark);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--apple-transition);
+}
+
+.page-btn:hover {
+    background: var(--apple-gray-1);
+    border-color: var(--apple-gray-3);
+}
+
+.page-btn.active {
+    background: var(--apple-blue);
+    color: white;
+    border-color: var(--apple-blue);
+    font-weight: 600;
+}
+
+.page-ellipsis {
+    padding: 0 8px;
+    color: var(--apple-gray-4);
+}
+
+/* ==================== 部门卡片样式 ==================== */
+#departmentList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+.department-card {
+    background: white;
+    border-radius: var(--apple-radius-lg);
+    box-shadow: var(--apple-shadow);
+    padding: 24px;
+    transition: var(--apple-transition);
+    border: 1px solid transparent;
+}
+
+.department-card:hover {
+    box-shadow: var(--apple-shadow-hover);
+    border-color: var(--apple-blue);
+    transform: translateY(-2px);
+}
+
+.dept-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.dept-info {
+    flex: 1;
+}
+
+.dept-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--apple-dark);
+    margin: 0 0 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dept-name i {
+    font-size: 18px;
+    color: var(--apple-blue);
+}
+
+.dept-desc {
+    font-size: 14px;
+    color: var(--apple-gray-4);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.dept-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dept-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-top: 16px;
+    margin-top: 16px;
+    border-top: 1px solid var(--apple-gray-2);
+}
+
+.dept-stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--apple-gray-5);
+}
+
+.dept-stat i {
+    color: var(--apple-blue);
+}
+
+.dept-stat strong {
+    color: var(--apple-dark);
+    font-weight: 600;
+}
+
+/* ==================== 空状态样式 ==================== */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    background: white;
+    border-radius: var(--apple-radius-lg);
+    box-shadow: var(--apple-shadow);
+}
+
+.empty-state i {
+    font-size: 64px;
+    color: var(--apple-gray-3);
+    margin-bottom: 16px;
+}
+
+.empty-state p {
+    font-size: 16px;
+    color: var(--apple-gray-4);
+    margin: 8px 0;
+}
+
+.empty-hint {
+    font-size: 14px;
+    color: var(--apple-gray-4);
+}
+
+/* ==================== 模态框样式 ==================== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    border-radius: var(--apple-radius-lg);
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    padding: 24px;
+    border-bottom: 1px solid var(--apple-gray-2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-header h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--apple-dark);
+    margin: 0;
+}
+
+.modal-close {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 8px;
+    background: var(--apple-gray-1);
+    color: var(--apple-gray-5);
+    font-size: 20px;
+    cursor: pointer;
+    transition: var(--apple-transition);
+}
+
+.modal-close:hover {
+    background: var(--apple-gray-2);
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    padding: 24px;
+    max-height: calc(90vh - 160px);
+    overflow-y: auto;
+}
+
+.modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--apple-gray-2);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+/* ==================== 表单样式 ==================== */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--apple-dark);
+    margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    height: 44px;
+    padding: 0 16px;
+    border: 1px solid var(--apple-gray-2);
+    border-radius: 10px;
+    font-size: 15px;
+    background: white;
+    transition: var(--apple-transition);
+}
+
+.form-group textarea {
+    height: 100px;
+    padding: 12px 16px;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--apple-blue);
+    box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
+}
+
+.form-group small {
+    display: block;
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--apple-gray-4);
+}
+
+/* ==================== 按钮组样式 ==================== */
+.btn-cancel,
+.btn-save,
+.btn-delete {
+    height: 44px;
+    padding: 0 24px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--apple-transition);
+}
+
+.btn-cancel {
+    background: var(--apple-gray-1);
+    color: var(--apple-dark);
+}
+
+.btn-cancel:hover {
+    background: var(--apple-gray-2);
+}
+
+.btn-save {
+    background: var(--apple-blue);
+    color: white;
+}
+
+.btn-save:hover {
+    background: #0051D5;
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+}
+
+.btn-delete {
+    background: var(--apple-red);
+    color: white;
+}
+
+.btn-delete:hover {
+    background: #D70015;
+    box-shadow: 0 4px 12px rgba(255, 59, 48, 0.3);
+}
+
+/* ==================== Toast 提示样式 ==================== */
+.toast {
+    position: fixed;
+    top: 80px;
+    right: 24px;
+    background: white;
+    padding: 16px 24px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    transform: translateX(100px);
+    transition: var(--apple-transition);
+    z-index: 10001;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.toast i {
+    font-size: 20px;
+}
+
+.toast-success {
+    border-left: 4px solid var(--apple-green);
+}
+
+.toast-success i {
+    color: var(--apple-green);
+}
+
+.toast-error {
+    border-left: 4px solid var(--apple-red);
+}
+
+.toast-error i {
+    color: var(--apple-red);
+}
+
+.toast-warning {
+    border-left: 4px solid var(--apple-orange);
+}
+
+.toast-warning i {
+    color: var(--apple-orange);
+}
+
+.toast-info {
+    border-left: 4px solid var(--apple-blue);
+}
+
+.toast-info i {
+    color: var(--apple-blue);
+}
+
+/* ==================== 响应式设计 ==================== */
+@media (max-width: 1024px) {
+    .employee-manage-container,
+    .permission-manage-container {
+        padding: 24px;
+    }
+    
+    #departmentList {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .employee-manage-container,
+    .permission-manage-container {
+        padding: 16px;
+    }
+    
+    .employee-header h2,
+    .permission-header h2 {
+        font-size: 24px;
+    }
+    
+    .employee-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-box {
+        max-width: none;
+    }
+    
+    #departmentList {
+        grid-template-columns: 1fr;
+    }
+    
+    .employee-table-container {
+        overflow-x: auto;
+    }
+    
+    #employeeTable {
+        min-width: 800px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        max-height: 95vh;
+    }
+}
+
+/* ==================== 加载动画 ==================== */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.loading-skeleton {
+    background: linear-gradient(90deg, var(--apple-gray-1) 25%, var(--apple-gray-2) 50%, var(--apple-gray-1) 75%);
+    background-size: 2000px 100%;
+    animation: shimmer 2s infinite;
+    border-radius: 8px;
+}

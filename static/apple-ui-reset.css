@@ -1,0 +1,170 @@
+/**
+ * Apple UI Reset Styles
+ * 重置原有样式，确保 Apple UI 样式正确应用
+ * 版本：1.0
+ * 日期：2026-01-27
+ */
+
+/* ==================== 禁用原有 style.css 的干扰样式 ==================== */
+
+/* 重置所有橙色 */
+*[style*="orange"],
+*[style*="#ff9500"],
+*[style*="rgb(255, 149, 0)"] {
+    color: var(--color-primary) !important;
+    background-color: transparent !important;
+    border-color: var(--color-primary) !important;
+}
+
+/* 重置旧的按钮样式 */
+button:not(.apple-ui-ready),
+.btn:not(.apple-ui-ready),
+input[type="button"]:not(.apple-ui-ready),
+input[type="submit"]:not(.apple-ui-ready) {
+    /* 移除旧样式的影响 */
+    box-shadow: none !important;
+    text-shadow: none !important;
+    background-image: none !important;
+    background: transparent !important;
+}
+
+/* 重置旧的表格样式 */
+table:not(.apple-ui-ready) {
+    border-collapse: collapse !important;
+    border-spacing: 0 !important;
+}
+
+table:not(.apple-ui-ready) th,
+table:not(.apple-ui-ready) td {
+    border: none !important;
+    background-image: none !important;
+}
+
+/* 重置旧的输入框样式 */
+input:not(.apple-ui-ready),
+textarea:not(.apple-ui-ready),
+select:not(.apple-ui-ready) {
+    box-shadow: none !important;
+    border: none !important;
+    background-image: none !important;
+}
+
+/* 重置旧的卡片样式 */
+.card:not(.apple-ui-ready),
+.panel:not(.apple-ui-ready) {
+    box-shadow: none !important;
+    border: none !important;
+    background-image: none !important;
+}
+
+/* 移除所有渐变背景（除了我们自己定义的） */
+*:not([class*="gradient"]):not([class*="apple-"]) {
+    background-image: none !important;
+}
+
+/* 重置字体阴影 */
+* {
+    text-shadow: none !important;
+}
+
+/* 重置旧的圆角 */
+*:not(.apple-ui-ready) {
+    border-radius: 0 !important;
+}
+
+/* ==================== 标记为 Apple UI 的元素 ==================== */
+
+/* 所有 Apple UI 组件添加标记类 */
+.apple-btn,
+.apple-input,
+.apple-select,
+.apple-table,
+.apple-card,
+.apple-modal,
+.apple-toast,
+.apple-badge,
+.apple-tag {
+    /* 这些类会在下一个文件中定义样式 */
+}
+
+/* ==================== 全局重置 ==================== */
+
+/* 移除所有元素的默认 margin 和 padding（仅针对特定元素） */
+h1, h2, h3, h4, h5, h6,
+p, ul, ol, li,
+blockquote, pre {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* 重置列表样式 */
+ul, ol {
+    list-style: none !important;
+}
+
+/* 重置链接样式 */
+a {
+    text-decoration: none !important;
+    color: inherit !important;
+}
+
+a:hover {
+    text-decoration: none !important;
+}
+
+/* ==================== 禁用特定的旧样式类 ==================== */
+
+/* 如果旧的 style.css 中有这些类，覆盖它们 */
+.btn-orange,
+.orange-btn,
+[class*="orange"] {
+    background: var(--color-primary) !important;
+    color: white !important;
+    border-color: var(--color-primary) !important;
+}
+
+/* 移除旧的 box-sizing 设置 */
+* {
+    box-sizing: border-box !important;
+}
+
+/* ==================== 确保变量可用 ==================== */
+
+:root {
+    /* 确保 CSS 变量在所有地方可用 */
+    --color-primary: #007AFF;
+    --color-success: #34c759;
+    --color-warning: #ff9f0a;
+    --color-danger: #ff3b30;
+    
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-6: 24px;
+    --space-8: 32px;
+}
+
+/* ==================== 最终保险 ==================== */
+
+/* 确保所有颜色使用 Apple 色系 */
+*[style*="color: #ff9500"],
+*[style*="color:#ff9500"],
+*[style*="color: orange"],
+*[style*="background-color: #ff9500"],
+*[style*="background-color:#ff9500"],
+*[style*="background-color: orange"],
+*[style*="border-color: #ff9500"],
+*[style*="border-color:#ff9500"],
+*[style*="border-color: orange"] {
+    color: var(--color-primary) !important;
+    background-color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+}
+
+/* ==================== 结束 ==================== */

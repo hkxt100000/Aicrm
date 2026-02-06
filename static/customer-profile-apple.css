@@ -1,0 +1,374 @@
+/**
+ * 客户画像页面 - Apple 风格样式（完全重构 v3）
+ * 统一设计，保持一致性
+ */
+
+/* ==================== 页面头部 ==================== */
+
+#module-customer-profile .page-header {
+    background: white !important;
+    border-radius: 16px !important;
+    padding: 24px !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    margin-bottom: 24px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+#module-customer-profile .page-header:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+#module-customer-profile .page-title {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    color: var(--text-primary) !important;
+    margin: 0 !important;
+}
+
+#module-customer-profile .page-title i {
+    color: var(--color-primary) !important;
+}
+
+#module-customer-profile .page-actions .btn {
+    height: 36px !important;
+    padding: 0 20px !important;
+    background: var(--color-primary) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 10px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+}
+
+#module-customer-profile .page-actions .btn:hover {
+    background: #0051d5 !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3) !important;
+}
+
+/* ==================== 统一卡片样式 ==================== */
+
+/* 所有白色卡片容器 */
+#module-customer-profile .portrait-section > div[style*="background: white"] {
+    background: white !important;
+    border-radius: 16px !important;
+    padding: 24px !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    margin-bottom: 24px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+#module-customer-profile .portrait-section > div[style*="background: white"]:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ==================== 核心标签统计卡片 ==================== */
+
+.stat-card-minimal {
+    background: white !important;
+    border-radius: 12px !important;
+    padding: 20px !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    cursor: pointer !important;
+}
+
+.stat-card-minimal:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+    border-color: var(--color-primary) !important;
+}
+
+.stat-icon-minimal {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 20px !important;
+    flex-shrink: 0 !important;
+}
+
+.stat-content-minimal {
+    flex: 1 !important;
+    min-width: 0 !important;
+}
+
+.stat-label-minimal {
+    font-size: 13px !important;
+    color: #637381 !important;
+    margin-bottom: 4px !important;
+    font-weight: 500 !important;
+}
+
+.stat-value-minimal {
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    color: #212B36 !important;
+    line-height: 1 !important;
+}
+
+/* ==================== 添加方式和性别图表 ==================== */
+
+/* 添加方式：最多9个，自适应排满 */
+#add-way-chart {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important;
+    gap: 12px !important;
+    min-height: auto !important;
+}
+
+/* 性别分布：固定3个，自适应排满 */
+#gender-chart {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 12px !important;
+    min-height: auto !important;
+}
+
+/* 单个数据卡片 */
+#add-way-chart > div,
+#gender-chart > div {
+    background: #F9FAFB !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    border-radius: 10px !important;
+    padding: 16px !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    cursor: pointer !important;
+}
+
+#add-way-chart > div:hover,
+#gender-chart > div:hover {
+    transform: translateY(-2px) !important;
+    background: white !important;
+    border-color: var(--color-primary) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ==================== 省份标签 ==================== */
+
+#province-list {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+}
+
+.province-tag {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 8px 14px !important;
+    background: #F9FAFB !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    border-radius: 8px !important;
+    font-size: 13px !important;
+    color: #212B36 !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.province-tag:hover {
+    background: white !important;
+    border-color: var(--color-primary) !important;
+    color: var(--color-primary) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+.province-tag .count {
+    color: #637381 !important;
+    font-weight: 600 !important;
+}
+
+.province-tag:hover .count {
+    color: var(--color-primary) !important;
+}
+
+/* ==================== 下拉选择器 ==================== */
+
+#module-customer-profile select {
+    height: 36px !important;
+    padding: 0 32px 0 12px !important;
+    background: #F5F5F7 !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    border-radius: 10px !important;
+    font-size: 13px !important;
+    color: #212B36 !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    appearance: none !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23637381' d='M6 8L2 4h8z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 12px center !important;
+}
+
+#module-customer-profile select:hover {
+    background-color: #E8E8ED !important;
+    border-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+#module-customer-profile select:focus {
+    outline: none !important;
+    background-color: white !important;
+    border-color: var(--color-primary) !important;
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1) !important;
+}
+
+/* ==================== 员工排行榜 ==================== */
+
+.ranking-item {
+    display: flex !important;
+    align-items: center !important;
+    padding: 16px !important;
+    background: #F9FAFB !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    border-radius: 10px !important;
+    margin-bottom: 12px !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    cursor: pointer !important;
+}
+
+.ranking-item:hover {
+    background: white !important;
+    border-color: var(--color-primary) !important;
+    transform: translateX(4px) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+.ranking-number {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    margin-right: 16px !important;
+    flex-shrink: 0 !important;
+}
+
+.ranking-item:nth-child(1) .ranking-number {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%) !important;
+    color: white !important;
+}
+
+.ranking-item:nth-child(2) .ranking-number {
+    background: linear-gradient(135deg, #C0C0C0 0%, #808080 100%) !important;
+    color: white !important;
+}
+
+.ranking-item:nth-child(3) .ranking-number {
+    background: linear-gradient(135deg, #CD7F32 0%, #8B4513 100%) !important;
+    color: white !important;
+}
+
+.ranking-item:nth-child(n+4) .ranking-number {
+    background: #F9FAFB !important;
+    color: #637381 !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+.ranking-name {
+    flex: 1 !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #212B36 !important;
+}
+
+.ranking-count {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    color: var(--color-primary) !important;
+}
+
+/* ==================== 响应式 ==================== */
+
+@media (max-width: 1200px) {
+    #add-way-chart {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important;
+    }
+    
+    #gender-chart {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    #add-way-chart {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    #gender-chart {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+    
+    .stat-card-minimal {
+        padding: 16px !important;
+    }
+    
+    .stat-icon-minimal {
+        width: 40px !important;
+        height: 40px !important;
+    }
+}
+
+/* ==================== 暗黑模式 ==================== */
+
+@media (prefers-color-scheme: dark) {
+    #module-customer-profile .page-header,
+    #module-customer-profile .portrait-section > div[style*="background: white"] {
+        background: rgba(255, 255, 255, 0.06) !important;
+        border-color: rgba(255, 255, 255, 0.12) !important;
+    }
+    
+    .stat-card-minimal {
+        background: rgba(255, 255, 255, 0.06) !important;
+        border-color: rgba(255, 255, 255, 0.12) !important;
+    }
+    
+    #add-way-chart > div,
+    #gender-chart > div,
+    .province-tag,
+    .ranking-item {
+        background: rgba(255, 255, 255, 0.04) !important;
+        border-color: rgba(255, 255, 255, 0.08) !important;
+    }
+    
+    #add-way-chart > div:hover,
+    #gender-chart > div:hover,
+    .province-tag:hover,
+    .ranking-item:hover {
+        background: rgba(255, 255, 255, 0.08) !important;
+        border-color: var(--color-primary) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    #module-customer-profile select {
+        background-color: rgba(255, 255, 255, 0.06) !important;
+        border-color: rgba(255, 255, 255, 0.12) !important;
+        color: white !important;
+    }
+    
+    #module-customer-profile select:hover {
+        background-color: rgba(255, 255, 255, 0.08) !important;
+    }
+}

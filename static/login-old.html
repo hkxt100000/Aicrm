@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - 天号城企微CRM系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'PingFang SC', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #e8f0ff 0%, #f5f8ff 50%, #ffffff 100%);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 科技网格背景 */
+        .tech-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(100, 149, 237, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(100, 149, 237, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: grid-flow 30s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes grid-flow {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(40px, 40px);
+            }
+        }
+
+        /* 扫描线效果 */
+        .scan-line {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent 0%,
+                rgba(100, 149, 237, 0.4) 20%,
+                rgba(100, 149, 237, 0.8) 50%,
+                rgba(100, 149, 237, 0.4) 80%,
+                transparent 100%
+            );
+            box-shadow: 0 0 20px rgba(100, 149, 237, 0.6);
+            animation: scan 4s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes scan {
+            0% {
+                transform: translateY(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        /* 浮动几何图形 */
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            border: 1px solid rgba(100, 149, 237, 0.15);
+            animation: float-shape 20s infinite ease-in-out;
+        }
+
+        .shape-circle {
+            border-radius: 50%;
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            left: 5%;
+            animation-duration: 25s;
+        }
+
+        .shape-triangle {
+            width: 0;
+            height: 0;
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-bottom: 173px solid rgba(100, 149, 237, 0.08);
+            top: 60%;
+            right: 8%;
+            animation-duration: 30s;
+        }
+
+        .shape-square {
+            width: 150px;
+            height: 150px;
+            bottom: 15%;
+            left: 10%;
+            transform: rotate(45deg);
+            animation-duration: 28s;
+        }
+
+        .shape-hexagon {
+            width: 120px;
+            height: 69px;
+            background: rgba(100, 149, 237, 0.05);
+            position: relative;
+            top: 30%;
+            right: 5%;
+            animation-duration: 32s;
+        }
+
+        .shape-hexagon:before {
+            content: "";
+            position: absolute;
+            top: -34.5px;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 60px solid transparent;
+            border-right: 60px solid transparent;
+            border-bottom: 34.5px solid rgba(100, 149, 237, 0.05);
+        }
+
+        .shape-hexagon:after {
+            content: "";
+            position: absolute;
+            bottom: -34.5px;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 60px solid transparent;
+            border-right: 60px solid transparent;
+            border-top: 34.5px solid rgba(100, 149, 237, 0.05);
+        }
+
+        @keyframes float-shape {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 0.3;
+            }
+            25% {
+                transform: translate(30px, -30px) rotate(90deg);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translate(-20px, -50px) rotate(180deg);
+                opacity: 0.7;
+            }
+            75% {
+                transform: translate(-40px, -20px) rotate(270deg);
+                opacity: 0.5;
+            }
+        }
+
+        /* 光点粒子 */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(100, 149, 237, 0.6);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(100, 149, 237, 0.8);
+            animation: particle-rise 15s infinite ease-in;
+        }
+
+        @keyframes particle-rise {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(50px);
+                opacity: 0;
+            }
+        }
+
+        /* 科技光效 */
+        .tech-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.15;
+            z-index: 1;
+            animation: glow-pulse 8s ease-in-out infinite;
+        }
+
+        .tech-glow-1 {
+            top: -200px;
+            left: -200px;
+            background: radial-gradient(circle, rgba(100, 149, 237, 0.6) 0%, transparent 70%);
+        }
+
+        .tech-glow-2 {
+            bottom: -200px;
+            right: -200px;
+            background: radial-gradient(circle, rgba(135, 206, 250, 0.5) 0%, transparent 70%);
+            animation-delay: 4s;
+        }
+
+        @keyframes glow-pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.15;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.25;
+            }
+        }
+
+        /* 登录容器 */
+        .login-container {
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(30px) saturate(180%);
+            border-radius: 24px;
+            box-shadow: 
+                0 8px 32px rgba(100, 149, 237, 0.15),
+                0 0 0 1px rgba(255, 255, 255, 0.8),
+                inset 0 1px 0 rgba(255, 255, 255, 1);
+            border: 1px solid rgba(100, 149, 237, 0.2);
+            width: 100%;
+            max-width: 480px;
+            overflow: hidden;
+            animation: container-entrance 1s ease-out;
+        }
+
+        @keyframes container-entrance {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* 容器顶部光带 */
+        .container-glow-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent 0%,
+                rgba(100, 149, 237, 0.5) 20%,
+                rgba(100, 149, 237, 1) 50%,
+                rgba(100, 149, 237, 0.5) 80%,
+                transparent 100%
+            );
+            animation: bar-slide 3s linear infinite;
+        }
+
+        @keyframes bar-slide {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        /* 头部 */
+        .login-header {
+            padding: 50px 40px 35px;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(180deg, rgba(100, 149, 237, 0.03) 0%, transparent 100%);
+        }
+
+        .logo-wrapper {
+            display: inline-block;
+            position: relative;
+            margin-bottom: 28px;
+        }
+
+        .logo-icon {
+            font-size: 72px;
+            filter: drop-shadow(0 4px 20px rgba(100, 149, 237, 0.3));
+            animation: logo-float 4s ease-in-out infinite;
+        }
+
+        @keyframes logo-float {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-12px) scale(1.05);
+            }
+        }
+
+        /* Logo 扫描环 */
+        .logo-scan-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 120px;
+            height: 120px;
+            transform: translate(-50%, -50%);
+            border: 2px solid transparent;
+            border-top-color: rgba(100, 149, 237, 0.6);
+            border-radius: 50%;
+            animation: ring-spin 3s linear infinite;
+        }
+
+        .logo-scan-ring-2 {
+            width: 140px;
+            height: 140px;
+            border-top-color: rgba(135, 206, 250, 0.5);
+            animation-duration: 4s;
+            animation-direction: reverse;
+        }
+
+        @keyframes ring-spin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        /* 标题 */
+        .login-header h1 {
+            font-size: 34px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #4169E1 0%, #6495ED 50%, #87CEEB 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+            position: relative;
+            animation: title-glow 4s ease-in-out infinite;
+        }
+
+        @keyframes title-glow {
+            0%, 100% {
+                filter: brightness(1) contrast(1);
+            }
+            50% {
+                filter: brightness(1.2) contrast(1.1);
+            }
+        }
+
+        .login-header p {
+            font-size: 15px;
+            color: #6495ED;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        /* 表单区域 */
+        .login-body {
+            padding: 25px 40px 50px;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .error-message {
+            background: linear-gradient(135deg, rgba(244, 63, 94, 0.1) 0%, rgba(244, 63, 94, 0.05) 100%);
+            border: 1px solid rgba(244, 63, 94, 0.3);
+            color: #dc2626;
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            margin-bottom: 24px;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            animation: error-shake 0.5s ease;
+        }
+
+        @keyframes error-shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        .error-message.show {
+            display: flex;
+        }
+
+        .error-icon {
+            font-size: 18px;
+        }
+
+        /* 表单组 */
+        .form-group {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #4169E1;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            height: 56px;
+            padding: 0 20px 0 54px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(100, 149, 237, 0.2);
+            border-radius: 12px;
+            color: #1e3a8a;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            outline: none;
+            box-shadow: 0 2px 8px rgba(100, 149, 237, 0.05);
+        }
+
+        .input-wrapper input::placeholder {
+            color: rgba(100, 149, 237, 0.4);
+        }
+
+        .input-wrapper input:focus {
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(100, 149, 237, 0.6);
+            box-shadow: 
+                0 0 0 4px rgba(100, 149, 237, 0.1),
+                0 4px 16px rgba(100, 149, 237, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .input-wrapper input:focus + .input-icon {
+            transform: translateY(-50%) scale(1.15);
+            filter: drop-shadow(0 0 8px rgba(100, 149, 237, 0.6));
+        }
+
+        /* 扫描线效果 */
+        .input-scan-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent 0%,
+                rgba(100, 149, 237, 0.6) 50%,
+                transparent 100%
+            );
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+
+        .input-wrapper input:focus ~ .input-scan-line {
+            animation: input-scan 2s ease-in-out infinite;
+        }
+
+        @keyframes input-scan {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        /* 记住密码 */
+        .remember-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .remember-row label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 14px;
+            color: #6495ED;
+            transition: all 0.3s ease;
+        }
+
+        .remember-row label:hover {
+            color: #4169E1;
+        }
+
+        .remember-row input[type="checkbox"] {
+            margin-right: 8px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: #4169E1;
+        }
+
+        /* 登录按钮 */
+        .login-btn {
+            width: 100%;
+            height: 56px;
+            background: linear-gradient(135deg, #4169E1 0%, #6495ED 50%, #87CEEB 100%);
+            background-size: 200% 200%;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            box-shadow: 
+                0 8px 24px rgba(100, 149, 237, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            animation: btn-gradient 5s ease infinite;
+        }
+
+        @keyframes btn-gradient {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.4) 50%,
+                transparent 100%
+            );
+            animation: btn-shine 2.5s linear infinite;
+        }
+
+        @keyframes btn-shine {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 12px 32px rgba(100, 149, 237, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        .login-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Loading 动画 */
+        .loading-spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spinner-spin 0.8s linear infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes spinner-spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 底部 */
+        .login-footer {
+            text-align: center;
+            padding: 24px;
+            background: linear-gradient(180deg, transparent 0%, rgba(100, 149, 237, 0.03) 100%);
+            color: #6495ED;
+            font-size: 13px;
+            border-top: 1px solid rgba(100, 149, 237, 0.1);
+        }
+
+        /* 响应式 */
+        @media (max-width: 480px) {
+            .login-container {
+                border-radius: 0;
+                max-width: 100%;
+            }
+
+            .login-header {
+                padding: 40px 30px 30px;
+            }
+
+            .login-header h1 {
+                font-size: 28px;
+            }
+
+            .login-body {
+                padding: 20px 30px 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 科技网格背景 -->
+    <div class="tech-grid"></div>
+    
+    <!-- 扫描线 -->
+    <div class="scan-line"></div>
+    
+    <!-- 科技光效 -->
+    <div class="tech-glow tech-glow-1"></div>
+    <div class="tech-glow tech-glow-2"></div>
+    
+    <!-- 浮动几何图形 -->
+    <div class="floating-shapes">
+        <div class="shape shape-circle"></div>
+        <div class="shape shape-triangle"></div>
+        <div class="shape shape-square"></div>
+        <div class="shape shape-hexagon"></div>
+    </div>
+    
+    <!-- 粒子效果 -->
+    <div class="particles" id="particles"></div>
+
+    <!-- 登录容器 -->
+    <div class="login-container">
+        <div class="container-glow-bar"></div>
+        
+        <div class="login-header">
+            <div class="logo-wrapper">
+                <div class="logo-scan-ring"></div>
+                <div class="logo-scan-ring logo-scan-ring-2"></div>
+                <div class="logo-icon">🏢</div>
+            </div>
+            <h1>天号城企微CRM</h1>
+            <p>ENTERPRISE WECHAT CRM SYSTEM</p>
+        </div>
+
+        <div class="login-body">
+            <div class="error-message" id="errorMessage">
+                <span class="error-icon">⚠️</span>
+                <span id="errorText"></span>
+            </div>
+
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="account">Account</label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            id="account" 
+                            name="account" 
+                            placeholder="请输入账号"
+                            required
+                            autocomplete="username"
+                        >
+                        <span class="input-icon">👤</span>
+                        <div class="input-scan-line"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            placeholder="请输入密码"
+                            required
+                            autocomplete="current-password"
+                        >
+                        <span class="input-icon">🔒</span>
+                        <div class="input-scan-line"></div>
+                    </div>
+                </div>
+
+                <div class="remember-row">
+                    <label>
+                        <input type="checkbox" id="remember" name="remember">
+                        记住我（7天）
+                    </label>
+                </div>
+
+                <button type="submit" class="login-btn" id="loginBtn">
+                    Login
+                </button>
+            </form>
+        </div>
+
+        <div class="login-footer">
+            © 2025 天号城科技 · 企业微信CRM系统
+        </div>
+    </div>
+
+    <script>
+        // 创建粒子
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 40;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.bottom = '-10px';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 5 + 12) + 's';
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        createParticles();
+
+        // 鼠标移动效果
+        document.addEventListener('mousemove', (e) => {
+            const moveX = (e.clientX - window.innerWidth / 2) / 100;
+            const moveY = (e.clientY - window.innerHeight / 2) / 100;
+            
+            const shapes = document.querySelectorAll('.shape');
+            shapes.forEach((shape, index) => {
+                const speed = (index + 1) * 0.3;
+                shape.style.transform = `translate(${moveX * speed}px, ${moveY * speed}px)`;
+            });
+        });
+
+        // 检查是否已登录
+        (function checkLogin() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                fetch('/api/auth/current', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.code === 0) {
+                        window.location.href = '/';
+                    }
+                })
+                .catch(() => {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('userInfo');
+                });
+            }
+        })();
+
+        // 显示错误
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            errorText.textContent = message;
+            errorDiv.classList.add('show');
+
+            setTimeout(() => {
+                errorDiv.classList.remove('show');
+            }, 3000);
+        }
+
+        // 处理登录
+        async function handleLogin(event) {
+            event.preventDefault();
+
+            const loginBtn = document.getElementById('loginBtn');
+            const account = document.getElementById('account').value.trim();
+            const password = document.getElementById('password').value;
+            const remember = document.getElementById('remember').checked;
+
+            if (!account || !password) {
+                showError('请输入账号和密码');
+                return;
+            }
+
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<span class="loading-spinner"></span>Loading...';
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ account, password, remember })
+                });
+
+                const data = await response.json();
+
+                if (data.code === 0) {
+                    const { token, user } = data.data;
+                    localStorage.setItem('token', token);
+                    localStorage.setItem('userInfo', JSON.stringify(user));
+                    
+                    loginBtn.innerHTML = '✓ Success';
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 500);
+                } else {
+                    showError(data.message || '登录失败，请重试');
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Login';
+                }
+            } catch (error) {
+                console.error('登录错误:', error);
+                showError('网络错误，请检查连接后重试');
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Login';
+            }
+        }
+
+        // 回车登录
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const form = document.getElementById('loginForm');
+                if (form) {
+                    form.dispatchEvent(new Event('submit'));
+                }
+            }
+        });
+    </script>
+</body>
+</html>
