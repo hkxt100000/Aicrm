@@ -2380,7 +2380,9 @@ def sync_task_disabled():
         # 同步客户
         print("[定时任务] 2/2 同步客户...")
         try:
-            customers = wecom_client.sync_all_customers()
+            # 从配置中读取指定的同步员工ID
+            from config import SYNC_OWNER_USERID
+            customers = wecom_client.sync_all_customers(owner_userid=SYNC_OWNER_USERID)
             
             if customers:
                 conn = get_db()

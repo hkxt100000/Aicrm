@@ -687,9 +687,12 @@ class WeComClient:
             print(f"[更新标签] 请求异常: {e}")
             return False
     
-    def sync_all_customers(self) -> List[Dict]:
+    def sync_all_customers(self, owner_userid: str = None) -> List[Dict]:
         """
-        同步所有客户数据
+        同步客户数据
+        
+        Args:
+            owner_userid: 指定员工ID，只同步该员工的客户。如果为None，则同步所有员工的客户
         """
         print("[同步] 开始同步客户数据...")
         
@@ -697,9 +700,17 @@ class WeComClient:
         users = self.get_user_list()
         print(f"[同步] 获取到 {len(users)} 个成员")
         
+        # 2. 如果指定了 owner_userid，只同步该员工的客户
+        if owner_userid:
+            users = [u for u in users if u['userid'] == owner_userid]
+            if not users:
+                print(f"[同步] 警告: 未找到员工 {owner_userid}")
+                return []
+            print(f"[同步] 只同步员工 {owner_userid} 的客户")
+        
         all_customers = []
         
-        # 2. 遍历每个成员，获取其客户列表
+        # 3. 遍历每个成员，获取其客户列表
         for user in users:
             userid = user['userid']
             username = user['name']

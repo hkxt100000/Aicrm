@@ -237,6 +237,16 @@ class SyncService:
                 )
                 return
             
+            # 从配置中读取指定的同步员工ID
+            from config import SYNC_OWNER_USERID
+            if SYNC_OWNER_USERID:
+                users = [u for u in users if u['userid'] == SYNC_OWNER_USERID]
+                if not users:
+                    print(f"⚠️  警告: 未找到指定员工 {SYNC_OWNER_USERID}，将同步所有员工")
+                    users = self.wecom_client.get_user_list()
+                else:
+                    print(f"👤 只同步员工 {SYNC_OWNER_USERID} 的客户")
+            
             print(f"👥 获取到 {len(users)} 个成员")
             
             # 检查是否被停止
